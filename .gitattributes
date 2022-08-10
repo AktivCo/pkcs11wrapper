@@ -1,0 +1,4 @@
+*.kt idea-format
+*.kts idea-format
+*.java idea-format
+*.xml idea-format
