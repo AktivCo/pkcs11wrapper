@@ -6,5 +6,6 @@ pluginManagement {
 }
 
 include(
-    ":lib.pkcs11wrapper"
+    ":lib.pkcs11wrapper",
+    ":lib.pkcs11wrapper-ktx"
 )

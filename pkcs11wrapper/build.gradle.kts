@@ -1,5 +1,9 @@
 setBuildDir("gradleBuild")
 
+plugins {
+    kotlin("jvm") version AppConfig.kotlinVersion apply false
+}
+
 allprojects {
     repositories {
         google()
