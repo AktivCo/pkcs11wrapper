@@ -95,7 +95,7 @@ public class Pkcs11JnaLowLevelApi implements IPkcs11LowLevelApi {
             return;
         if ((null != longs && null != nativeLongs) && longs.length == nativeLongs.length) {
             for (int l = 0; l < nativeLongs.length; l++) {
-                longs[l] = nativeLongs[l].longValue();
+                longs[l] = unsigned(nativeLongs[l]);
             }
         } else {
             throw new IllegalArgumentException("arrays are not in same state");
