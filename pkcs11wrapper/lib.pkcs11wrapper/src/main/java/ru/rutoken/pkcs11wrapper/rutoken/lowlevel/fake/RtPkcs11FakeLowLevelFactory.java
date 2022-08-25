@@ -7,6 +7,7 @@ import ru.rutoken.pkcs11wrapper.rutoken.constant.RtPkcs11KeyType;
 import ru.rutoken.pkcs11wrapper.rutoken.constant.RtPkcs11MechanismType;
 import ru.rutoken.pkcs11wrapper.rutoken.constant.RtPkcs11ReturnValue;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.IRtPkcs11LowLevelFactory;
+import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkRutokenInitParam;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkVendorX509Store;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.fake.RtPkcs11FakeLowLevelFactory.Builder;
 
@@ -23,6 +24,11 @@ public final class RtPkcs11FakeLowLevelFactory extends Pkcs11BaseFakeLowLevelFac
     @Override
     public CkVendorX509Store makeVendorX509Store() {
         return new FakeCkVendorX509StoreImpl();
+    }
+
+    @Override
+    public CkRutokenInitParam makeRutokenInitParam() {
+        return new FakeCkRutokenInitParamImpl();
     }
 
     /*package*/ static class Builder extends Pkcs11BaseFakeLowLevelFactory.Builder<Builder> {

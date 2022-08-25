@@ -5,6 +5,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 import ru.rutoken.pkcs11wrapper.lowlevel.main.IPkcs11LowLevelApi;
+import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkRutokenInitParam;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkTokenInfoExtended;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkVendorX509Store;
 import ru.rutoken.pkcs11wrapper.util.Mutable;
@@ -17,13 +18,21 @@ import ru.rutoken.pkcs11wrapper.util.MutableLong;
 public interface IRtPkcs11LowLevelApi extends IPkcs11LowLevelApi {
     long C_EX_GetTokenInfoExtended(long slotId, Mutable<CkTokenInfoExtended> info);
 
+    long C_EX_InitToken(long slotId, byte[] pin, CkRutokenInitParam initInfo);
+
     long C_EX_SetActivationPassword(long slotId, byte[] password);
 
     long C_EX_UnblockUserPIN(long session);
 
     long C_EX_SetTokenName(long session, byte[] label);
 
+    long C_EX_SetLicense(long session, long licenseNum, byte[] license);
+
+    long C_EX_GetLicense(long session, long licenseNum, byte[] license, MutableLong licenseLen);
+
     long C_EX_GetTokenName(long session, byte[] label, MutableLong labelLen);
+
+    long C_EX_SetLocalPIN(long slotId, byte[] userPin, byte[] newLocalPin, long localId);
 
     long C_EX_CreateCSR(long session, long publicKey, String[] dn, Mutable<byte[]> csr, long privateKey,
                         String[] attributes, String[] extensions);

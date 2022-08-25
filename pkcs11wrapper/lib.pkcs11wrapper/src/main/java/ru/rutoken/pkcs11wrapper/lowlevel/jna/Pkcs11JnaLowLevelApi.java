@@ -116,7 +116,7 @@ public class Pkcs11JnaLowLevelApi implements IPkcs11LowLevelApi {
     }
 
     protected static void assign(MutableLong value, NativeLongByReference nativeValue) {
-        value.value = nativeValue.getValue().longValue();
+        value.value = unsigned(nativeValue.getValue());
     }
 
     protected static NativeLong length(byte @Nullable [] data) {

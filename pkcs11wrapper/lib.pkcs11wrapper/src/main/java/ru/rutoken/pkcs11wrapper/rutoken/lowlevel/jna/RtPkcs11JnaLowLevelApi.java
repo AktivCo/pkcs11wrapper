@@ -11,13 +11,11 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-import ru.rutoken.pkcs11jna.CK_TOKEN_INFO_EXTENDED;
-import ru.rutoken.pkcs11jna.CK_VENDOR_BUFFER;
-import ru.rutoken.pkcs11jna.CK_VENDOR_X509_STORE;
-import ru.rutoken.pkcs11jna.RtPkcs11;
+import ru.rutoken.pkcs11jna.*;
 import ru.rutoken.pkcs11wrapper.lowlevel.jna.Pkcs11JnaLowLevelApi;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.IRtPkcs11LowLevelApi;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.IRtPkcs11LowLevelFactory;
+import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkRutokenInitParam;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkTokenInfoExtended;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkVendorX509Store;
 import ru.rutoken.pkcs11wrapper.util.Mutable;
@@ -57,6 +55,12 @@ public class RtPkcs11JnaLowLevelApi extends Pkcs11JnaLowLevelApi implements IRtP
     }
 
     @Override
+    public long C_EX_InitToken(long slotId, byte[] pin, CkRutokenInitParam initInfo) {
+        return unsigned(getRtPkcs11().C_EX_InitToken(new NativeLong(slotId), pin, new NativeLong(pin.length),
+                ((CkRutokenInitParamImpl) initInfo).getJnaValue()));
+    }
+
+    @Override
     public long C_EX_SetActivationPassword(long slotId, byte[] password) {
         return unsigned(getRtPkcs11().C_EX_SetActivationPassword(new NativeLong(slotId), password));
     }
@@ -72,11 +76,35 @@ public class RtPkcs11JnaLowLevelApi extends Pkcs11JnaLowLevelApi implements IRtP
     }
 
     @Override
+    public long C_EX_SetLicense(long session, long licenseNum, byte[] license) {
+        return unsigned(getRtPkcs11().C_EX_SetLicense(new NativeLong(session), new NativeLong(licenseNum),
+                license, new NativeLong(license.length)));
+    }
+
+    @Override
+    public long C_EX_GetLicense(long session, long licenseNum, byte[] license, MutableLong licenseLen) {
+        NativeLongByReference licenseLenRef = new NativeLongByReference();
+        final long result = unsigned(getRtPkcs11().C_EX_GetLicense(new NativeLong(session), new NativeLong(licenseNum),
+                license, licenseLenRef));
+
+        if (result == CKR_OK)
+            assign(licenseLen, licenseLenRef);
+
+        return result;
+    }
+
+    @Override
     public long C_EX_GetTokenName(long session, byte[] label, MutableLong labelLen) {
         final NativeLongByReference lengthRef = makeNativeLongRef(labelLen);
         final long result = unsigned(getRtPkcs11().C_EX_GetTokenName(new NativeLong(session), label, lengthRef));
         assign(labelLen, lengthRef);
         return result;
+    }
+
+    @Override
+    public long C_EX_SetLocalPIN(long slotId, byte[] userPin, byte[] newLocalPin, long localId) {
+        return unsigned(getRtPkcs11().C_EX_SetLocalPIN(new NativeLong(slotId), userPin, new NativeLong(userPin.length),
+                newLocalPin, new NativeLong(newLocalPin.length), new NativeLong(localId)));
     }
 
     @Override

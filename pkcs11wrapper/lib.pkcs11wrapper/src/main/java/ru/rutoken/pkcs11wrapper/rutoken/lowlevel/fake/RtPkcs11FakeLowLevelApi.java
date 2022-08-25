@@ -10,6 +10,7 @@ import ru.rutoken.pkcs11wrapper.lowlevel.fake.FakeSlot;
 import ru.rutoken.pkcs11wrapper.lowlevel.fake.FakeToken;
 import ru.rutoken.pkcs11wrapper.lowlevel.fake.Pkcs11FakeLowLevelApi;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.IRtPkcs11LowLevelApi;
+import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkRutokenInitParam;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkTokenInfoExtended;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkVendorX509Store;
 import ru.rutoken.pkcs11wrapper.util.Mutable;
@@ -33,6 +34,11 @@ public class RtPkcs11FakeLowLevelApi extends Pkcs11FakeLowLevelApi implements IR
     }
 
     @Override
+    synchronized public long C_EX_InitToken(long slotId, byte[] pin, CkRutokenInitParam initInfo) {
+        return ok();
+    }
+
+    @Override
     synchronized public long C_EX_SetActivationPassword(long slotId, byte[] password) {
         return ok();
     }
@@ -48,7 +54,22 @@ public class RtPkcs11FakeLowLevelApi extends Pkcs11FakeLowLevelApi implements IR
     }
 
     @Override
+    public long C_EX_SetLicense(long session, long licenseNum, byte[] license) {
+        return ok();
+    }
+
+    @Override
+    public long C_EX_GetLicense(long session, long licenseNum, byte[] license, MutableLong licenseLen) {
+        return ok();
+    }
+
+    @Override
     public long C_EX_GetTokenName(long session, byte[] label, MutableLong labelLen) {
+        return ok();
+    }
+
+    @Override
+    public long C_EX_SetLocalPIN(long slotId, byte[] userPin, byte[] newLocalPin, long localId) {
         return ok();
     }
 
