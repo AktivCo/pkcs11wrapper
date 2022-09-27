@@ -10,6 +10,7 @@ import ru.rutoken.pkcs11wrapper.lowlevel.fake.FakeSlot;
 import ru.rutoken.pkcs11wrapper.lowlevel.fake.FakeToken;
 import ru.rutoken.pkcs11wrapper.lowlevel.fake.Pkcs11FakeLowLevelApi;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.IRtPkcs11LowLevelApi;
+import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkFunctionListExtended;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkRutokenInitParam;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkTokenInfoExtended;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkVendorX509Store;
@@ -19,6 +20,11 @@ import ru.rutoken.pkcs11wrapper.util.MutableLong;
 public class RtPkcs11FakeLowLevelApi extends Pkcs11FakeLowLevelApi implements IRtPkcs11LowLevelApi {
     public RtPkcs11FakeLowLevelApi() {
         super(new RtPkcs11FakeLowLevelFactory());
+    }
+
+    @Override
+    public long C_EX_GetFunctionListExtended(Mutable<CkFunctionListExtended> functionList) {
+        return ok();
     }
 
     @Override

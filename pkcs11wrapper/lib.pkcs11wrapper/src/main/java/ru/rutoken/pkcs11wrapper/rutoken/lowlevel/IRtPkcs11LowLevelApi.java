@@ -5,6 +5,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 import ru.rutoken.pkcs11wrapper.lowlevel.main.IPkcs11LowLevelApi;
+import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkFunctionListExtended;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkRutokenInitParam;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkTokenInfoExtended;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkVendorX509Store;
@@ -16,6 +17,8 @@ import ru.rutoken.pkcs11wrapper.util.MutableLong;
  */
 // TODO add all extended Rutoken functions support
 public interface IRtPkcs11LowLevelApi extends IPkcs11LowLevelApi {
+    long C_EX_GetFunctionListExtended(Mutable<CkFunctionListExtended> functionList);
+
     long C_EX_GetTokenInfoExtended(long slotId, Mutable<CkTokenInfoExtended> info);
 
     long C_EX_InitToken(long slotId, byte[] pin, CkRutokenInitParam initInfo);

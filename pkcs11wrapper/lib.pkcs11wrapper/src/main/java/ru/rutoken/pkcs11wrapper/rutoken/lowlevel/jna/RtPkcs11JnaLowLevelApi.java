@@ -8,18 +8,19 @@ import com.sun.jna.ptr.PointerByReference;
 
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ru.rutoken.pkcs11jna.*;
 import ru.rutoken.pkcs11wrapper.lowlevel.jna.Pkcs11JnaLowLevelApi;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.IRtPkcs11LowLevelApi;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.IRtPkcs11LowLevelFactory;
+import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkFunctionListExtended;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkRutokenInitParam;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkTokenInfoExtended;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkVendorX509Store;
 import ru.rutoken.pkcs11wrapper.util.Mutable;
 import ru.rutoken.pkcs11wrapper.util.MutableLong;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static ru.rutoken.pkcs11jna.Pkcs11Constants.CKR_OK;
 
@@ -42,6 +43,22 @@ public class RtPkcs11JnaLowLevelApi extends Pkcs11JnaLowLevelApi implements IRtP
         pointer.write(0, data, 0, data.length);
 
         return pointer;
+    }
+
+    @Override
+    public long C_EX_GetFunctionListExtended(Mutable<CkFunctionListExtended> functionList) {
+        final PointerByReference functionListPointerRef = new PointerByReference();
+        final long result = unsigned(getRtPkcs11().C_EX_GetFunctionListExtended(functionListPointerRef));
+
+        if (result == CKR_OK) {
+            final Pointer functionListPointer = functionListPointerRef.getValue();
+            if (functionListPointer != null) {
+                CK_FUNCTION_LIST_EXTENDED ckFunctionList = new CK_FUNCTION_LIST_EXTENDED(functionListPointer);
+                functionList.value = new CkFunctionListExtendedImpl(ckFunctionList);
+            }
+        }
+
+        return result;
     }
 
     @Override

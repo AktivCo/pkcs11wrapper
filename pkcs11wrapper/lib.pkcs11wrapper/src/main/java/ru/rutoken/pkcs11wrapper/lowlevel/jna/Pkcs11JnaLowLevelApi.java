@@ -4,37 +4,23 @@ import com.sun.jna.Callback;
 import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
 import com.sun.jna.ptr.NativeLongByReference;
+import com.sun.jna.ptr.PointerByReference;
 
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
-import java.util.Objects;
-
-import ru.rutoken.pkcs11jna.CK_ATTRIBUTE;
-import ru.rutoken.pkcs11jna.CK_C_INITIALIZE_ARGS;
-import ru.rutoken.pkcs11jna.CK_FUNCTION_LIST;
-import ru.rutoken.pkcs11jna.CK_INFO;
-import ru.rutoken.pkcs11jna.CK_MECHANISM;
-import ru.rutoken.pkcs11jna.CK_MECHANISM_INFO;
-import ru.rutoken.pkcs11jna.CK_SESSION_INFO;
-import ru.rutoken.pkcs11jna.CK_SLOT_INFO;
-import ru.rutoken.pkcs11jna.CK_TOKEN_INFO;
-import ru.rutoken.pkcs11jna.Pkcs11;
-import ru.rutoken.pkcs11wrapper.lowlevel.datatype.CkAttribute;
-import ru.rutoken.pkcs11wrapper.lowlevel.datatype.CkCInitializeArgs;
-import ru.rutoken.pkcs11wrapper.lowlevel.datatype.CkFunctionList;
-import ru.rutoken.pkcs11wrapper.lowlevel.datatype.CkInfo;
-import ru.rutoken.pkcs11wrapper.lowlevel.datatype.CkMechanism;
-import ru.rutoken.pkcs11wrapper.lowlevel.datatype.CkMechanismInfo;
-import ru.rutoken.pkcs11wrapper.lowlevel.datatype.CkSessionInfo;
-import ru.rutoken.pkcs11wrapper.lowlevel.datatype.CkSlotInfo;
-import ru.rutoken.pkcs11wrapper.lowlevel.datatype.CkTokenInfo;
+import ru.rutoken.pkcs11jna.*;
+import ru.rutoken.pkcs11wrapper.lowlevel.datatype.*;
 import ru.rutoken.pkcs11wrapper.lowlevel.main.IPkcs11LowLevelApi;
 import ru.rutoken.pkcs11wrapper.lowlevel.main.IPkcs11LowLevelFactory;
 import ru.rutoken.pkcs11wrapper.main.CkNotify;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.jna.RtPkcs11JnaLowLevelApi;
 import ru.rutoken.pkcs11wrapper.util.Mutable;
 import ru.rutoken.pkcs11wrapper.util.MutableLong;
+
+import java.util.List;
+import java.util.Objects;
+
+import static ru.rutoken.pkcs11jna.Pkcs11Constants.CKR_OK;
 
 /**
  * Implements standard pkcs11 low-level API.
@@ -163,9 +149,17 @@ public class Pkcs11JnaLowLevelApi implements IPkcs11LowLevelApi {
 
     @Override
     public long C_GetFunctionList(Mutable<CkFunctionList> functionList) {
-        final CK_FUNCTION_LIST ckFunctionList = new CK_FUNCTION_LIST();
-        final long r = unsigned(mJnaPkcs11.C_GetFunctionList(ckFunctionList));
-        functionList.value = new CkFunctionListImpl(ckFunctionList);
+        final PointerByReference functionListPointerRef = new PointerByReference();
+        final long r = unsigned(mJnaPkcs11.C_GetFunctionList(functionListPointerRef));
+
+        if (r == CKR_OK) {
+            final Pointer functionListPointer = functionListPointerRef.getValue();
+            if (functionListPointer != null) {
+                CK_FUNCTION_LIST ckFunctionList = new CK_FUNCTION_LIST(functionListPointer);
+                functionList.value = new CkFunctionListImpl(ckFunctionList);
+            }
+        }
+
         return r;
     }
 
