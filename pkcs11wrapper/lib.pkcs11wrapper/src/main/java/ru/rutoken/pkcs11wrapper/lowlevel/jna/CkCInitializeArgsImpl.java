@@ -10,8 +10,6 @@ import ru.rutoken.pkcs11wrapper.main.IPkcs11MutexHandler;
 
 class CkCInitializeArgsImpl implements CkCInitializeArgs {
     private final CK_C_INITIALIZE_ARGS mData;
-    @Nullable
-    private IPkcs11MutexHandler mMutexHandler;
 
     CkCInitializeArgsImpl(CK_C_INITIALIZE_ARGS data) {
         mData = Objects.requireNonNull(data);
@@ -21,16 +19,9 @@ class CkCInitializeArgsImpl implements CkCInitializeArgs {
         return mData;
     }
 
-    @Nullable
-    @Override
-    public IPkcs11MutexHandler getMutexHandler() {
-        return mMutexHandler;
-    }
-
     @Override
     public void setMutexHandler(@Nullable IPkcs11MutexHandler mutexHandler) {
-        mMutexHandler = mutexHandler;
-        if (mMutexHandler != null) {
+        if (mutexHandler != null) {
             throw new RuntimeException("external mutex locking not implemented yet");
             // TODO implement
 //            // set mutexHandler callbacks to be called from inside the library
@@ -85,17 +76,7 @@ class CkCInitializeArgsImpl implements CkCInitializeArgs {
     }
 
     @Override
-    public long getFlags() {
-        return mData.flags.longValue();
-    }
-
-    @Override
     public void setFlags(long flags) {
         mData.flags.setValue(flags);
-    }
-
-    @Override
-    public Object getReserved() {
-        return mData.pReserved;
     }
 }

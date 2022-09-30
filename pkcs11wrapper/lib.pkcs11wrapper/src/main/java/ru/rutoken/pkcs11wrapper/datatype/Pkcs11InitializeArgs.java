@@ -20,12 +20,6 @@ public class Pkcs11InitializeArgs implements IPkcs11InitializeArgs {
         mBuilder = Objects.requireNonNull(builder);
     }
 
-    @Nullable
-    @Override
-    public IPkcs11MutexHandler getMutexHandler() {
-        return mBuilder.mutexHandler;
-    }
-
     @Override
     public boolean isLibraryCantCreateOsThreads() {
         return checkFlag(Pkcs11Flag.CKF_LIBRARY_CANT_CREATE_OS_THREADS);
@@ -37,11 +31,6 @@ public class Pkcs11InitializeArgs implements IPkcs11InitializeArgs {
     }
 
     @Override
-    public long getFlags() {
-        return mBuilder.flags;
-    }
-
-    @Override
     public CkCInitializeArgs toCkCInitializeArgs(IPkcs11LowLevelFactory factory) {
         final CkCInitializeArgs args = factory.makeCInitializeArgs();
         args.setMutexHandler(mBuilder.mutexHandler);
@@ -50,7 +39,7 @@ public class Pkcs11InitializeArgs implements IPkcs11InitializeArgs {
     }
 
     private boolean checkFlag(Pkcs11Flag flag) {
-        return (getFlags() & flag.getAsLong()) != 0L;
+        return (mBuilder.flags & flag.getAsLong()) != 0L;
     }
 
     public static class Builder {

@@ -22,21 +22,6 @@ public class VendorX509Store {
         mCrls = crls;
     }
 
-    @Nullable
-    public List<byte[]> getTrustedCertificates() {
-        return mTrustedCertificates;
-    }
-
-    @Nullable
-    public List<byte[]> getCertificates() {
-        return mCertificates;
-    }
-
-    @Nullable
-    public List<byte[]> getCrls() {
-        return mCrls;
-    }
-
     public CkVendorX509Store toCkVendorX509Store(IRtPkcs11LowLevelFactory factory) {
         final CkVendorX509Store store = factory.makeVendorX509Store();
         store.setTrustedCertificates(mTrustedCertificates);
