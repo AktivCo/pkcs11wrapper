@@ -10,10 +10,7 @@ import ru.rutoken.pkcs11wrapper.lowlevel.fake.FakeSlot;
 import ru.rutoken.pkcs11wrapper.lowlevel.fake.FakeToken;
 import ru.rutoken.pkcs11wrapper.lowlevel.fake.Pkcs11FakeLowLevelApi;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.IRtPkcs11LowLevelApi;
-import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkFunctionListExtended;
-import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkRutokenInitParam;
-import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkTokenInfoExtended;
-import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkVendorX509Store;
+import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.*;
 import ru.rutoken.pkcs11wrapper.util.Mutable;
 import ru.rutoken.pkcs11wrapper.util.MutableLong;
 
@@ -45,7 +42,38 @@ public class RtPkcs11FakeLowLevelApi extends Pkcs11FakeLowLevelApi implements IR
     }
 
     @Override
-    synchronized public long C_EX_SetActivationPassword(long slotId, byte[] password) {
+    public long C_EX_GetVolumesInfo(long slotId, CkVolumeInfoExtended @Nullable [] info, MutableLong infoCount) {
+        return ok();
+    }
+
+    @Override
+    public long C_EX_GetDriveSize(long slotId, MutableLong driveSize) {
+        return ok();
+    }
+
+    @Override
+    public long C_EX_ChangeVolumeAttributes(long slotId, long userType, byte[] pin, long idVolume, long newAccessMode,
+                                            boolean permanent) {
+        return ok();
+    }
+
+    @Override
+    public long C_EX_FormatDrive(long slotId, long userType, byte[] pin, List<CkVolumeFormatInfoExtended> initParams) {
+        return ok();
+    }
+
+    @Override
+    public long C_EX_TokenManage(long session, long mode, PointerParameter value) {
+        return ok();
+    }
+
+    @Override
+    public long C_EX_GetJournal(long slotId, byte @Nullable [] journal, MutableLong journalSize) {
+        return ok();
+    }
+
+    @Override
+    public long C_EX_SlotManage(long slotId, long mode, PointerParameter value) {
         return ok();
     }
 
@@ -65,12 +93,18 @@ public class RtPkcs11FakeLowLevelApi extends Pkcs11FakeLowLevelApi implements IR
     }
 
     @Override
-    public long C_EX_GetLicense(long session, long licenseNum, byte[] license, MutableLong licenseLen) {
+    public long C_EX_GetLicense(long session, long licenseNum, byte @Nullable [] license, MutableLong licenseLen) {
         return ok();
     }
 
     @Override
-    public long C_EX_GetTokenName(long session, byte[] label, MutableLong labelLen) {
+    public long C_EX_GetCertificateInfoText(long session, long certificate, Mutable<byte[]> certificateInfo) {
+        certificateInfo.value = new byte[0];
+        return ok();
+    }
+
+    @Override
+    public long C_EX_GetTokenName(long session, byte @Nullable [] label, MutableLong labelLen) {
         return ok();
     }
 
@@ -80,15 +114,15 @@ public class RtPkcs11FakeLowLevelApi extends Pkcs11FakeLowLevelApi implements IR
     }
 
     @Override
-    public long C_EX_CreateCSR(long session, long publicKey, String[] dn, Mutable<byte[]> csr, long privateKey,
-                               String[] attributes, String[] extensions) {
+    public long C_EX_CreateCSR(long session, long publicKey, String @Nullable [] dn, Mutable<byte[]> csr,
+                               long privateKey, String @Nullable [] attributes, String @Nullable [] extensions) {
         csr.value = new byte[0];
         return ok();
     }
 
     @Override
     public long C_EX_PKCS7Sign(long session, byte[] data, long signerCertificate, Mutable<byte[]> cms,
-                               long signerPrivateKey, long[] additionalCertificates, long flags) {
+                               long signerPrivateKey, long @Nullable [] additionalCertificates, long flags) {
         cms.value = new byte[0];
         return ok();
     }

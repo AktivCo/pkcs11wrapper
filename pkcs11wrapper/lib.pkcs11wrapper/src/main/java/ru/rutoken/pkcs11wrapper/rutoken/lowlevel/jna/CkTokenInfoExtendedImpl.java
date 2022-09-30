@@ -5,16 +5,11 @@ import java.util.Objects;
 import ru.rutoken.pkcs11jna.CK_TOKEN_INFO_EXTENDED;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkTokenInfoExtended;
 
-public class CkTokenInfoExtendedImpl implements CkTokenInfoExtended {
+class CkTokenInfoExtendedImpl implements CkTokenInfoExtended {
     private final CK_TOKEN_INFO_EXTENDED mData;
 
     CkTokenInfoExtendedImpl(CK_TOKEN_INFO_EXTENDED data) {
         mData = Objects.requireNonNull(data);
-    }
-
-    @Override
-    public long getSizeofThisStructure() {
-        return mData.ulSizeofThisStructure.longValue();
     }
 
     @Deprecated

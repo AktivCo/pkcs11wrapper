@@ -9,7 +9,7 @@ public interface CkRutokenInitParam {
 
     void setNewUserPin(byte[] userPin);
 
-    void setChangeUserPINPolicy(long pinPolicy);
+    void setChangeUserPinPolicy(long pinPolicy);
 
     void setMinAdminPinLen(long pinLen);
 

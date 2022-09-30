@@ -3,7 +3,7 @@ package ru.rutoken.pkcs11wrapper.rutoken.lowlevel.fake;
 import org.jetbrains.annotations.Nullable;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkRutokenInitParam;
 
-public class FakeCkRutokenInitParamImpl implements CkRutokenInitParam {
+class FakeCkRutokenInitParamImpl implements CkRutokenInitParam {
     @Override
     public void setUseRepairMode(long mode) {
 
@@ -20,7 +20,7 @@ public class FakeCkRutokenInitParamImpl implements CkRutokenInitParam {
     }
 
     @Override
-    public void setChangeUserPINPolicy(long pinPolicy) {
+    public void setChangeUserPinPolicy(long pinPolicy) {
 
     }
 

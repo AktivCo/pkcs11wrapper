@@ -1,8 +1,6 @@
 package ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype;
 
 public interface CkTokenInfoExtended {
-    long getSizeofThisStructure();
-
     @Deprecated
     long getTokenType();
 

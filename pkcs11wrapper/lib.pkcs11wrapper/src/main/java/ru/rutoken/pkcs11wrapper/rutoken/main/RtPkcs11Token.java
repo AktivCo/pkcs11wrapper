@@ -13,10 +13,6 @@ public class RtPkcs11Token extends Pkcs11TokenImpl {
         return getApi().C_EX_GetTokenInfoExtended(getSlot().getId());
     }
 
-    public void setActivationPassword(String password) {
-        getApi().C_EX_SetActivationPassword(getSlot().getId(), (password + '\000').getBytes());
-    }
-
     @Override
     public RtPkcs11Api getApi() {
         return (RtPkcs11Api) super.getApi();

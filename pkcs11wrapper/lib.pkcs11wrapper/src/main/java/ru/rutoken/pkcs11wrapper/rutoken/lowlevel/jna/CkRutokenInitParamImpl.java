@@ -11,12 +11,11 @@ import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkRutokenInitParam;
 
 import static ru.rutoken.pkcs11wrapper.rutoken.lowlevel.jna.RtPkcs11JnaLowLevelApi.makePointerFromBytes;
 
-public class CkRutokenInitParamImpl implements CkRutokenInitParam {
+class CkRutokenInitParamImpl implements CkRutokenInitParam {
     private final CK_RUTOKEN_INIT_PARAM mData;
 
     CkRutokenInitParamImpl(CK_RUTOKEN_INIT_PARAM data) {
         mData = Objects.requireNonNull(data);
-        mData.ulSizeofThisStructure = new NativeLong(mData.size());
     }
 
     CK_RUTOKEN_INIT_PARAM getJnaValue() {
@@ -41,7 +40,7 @@ public class CkRutokenInitParamImpl implements CkRutokenInitParam {
     }
 
     @Override
-    public void setChangeUserPINPolicy(long pinPolicy) {
+    public void setChangeUserPinPolicy(long pinPolicy) {
         mData.ChangeUserPINPolicy = new NativeLong(pinPolicy);
     }
 

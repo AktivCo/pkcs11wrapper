@@ -4,7 +4,7 @@ object Dependencies {
     const val androidGradlePlugin = "com.android.tools.build:gradle:7.1.2"
     const val bouncyCastleBcpkixJdk15on = "org.bouncycastle:bcpkix-jdk15on:1.70"
     const val bouncyCastleBcprovJdk15on = "org.bouncycastle:bcprov-jdk15on:1.70"
-    const val pkcs11jna = "ru.rutoken:pkcs11jna:3.3.0@jar"
+    const val pkcs11jna = "ru.rutoken:pkcs11jna:4.0.0-c37478f@jar"
     const val jna = "net.java.dev.jna:jna:5.11.0@aar"
 
     object Test {

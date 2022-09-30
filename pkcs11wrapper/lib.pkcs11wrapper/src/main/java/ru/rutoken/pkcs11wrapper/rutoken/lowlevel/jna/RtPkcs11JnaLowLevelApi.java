@@ -12,10 +12,7 @@ import ru.rutoken.pkcs11jna.*;
 import ru.rutoken.pkcs11wrapper.lowlevel.jna.Pkcs11JnaLowLevelApi;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.IRtPkcs11LowLevelApi;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.IRtPkcs11LowLevelFactory;
-import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkFunctionListExtended;
-import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkRutokenInitParam;
-import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkTokenInfoExtended;
-import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkVendorX509Store;
+import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.*;
 import ru.rutoken.pkcs11wrapper.util.Mutable;
 import ru.rutoken.pkcs11wrapper.util.MutableLong;
 
@@ -32,6 +29,48 @@ public class RtPkcs11JnaLowLevelApi extends Pkcs11JnaLowLevelApi implements IRtP
     @Nullable
     private static CK_VENDOR_X509_STORE convertCkVendorX509Store(@Nullable CkVendorX509Store store) {
         return store != null ? ((CkVendorX509StoreImpl) store).getJnaValue() : null;
+    }
+
+    @Nullable
+    private static CK_VOLUME_INFO_EXTENDED[] convertCkVolumeInfoExtendedArray(CkVolumeInfoExtended @Nullable [] info) {
+        if (info == null)
+            return null;
+
+        final CK_VOLUME_INFO_EXTENDED[] ckInfo =
+                (CK_VOLUME_INFO_EXTENDED[]) new CK_VOLUME_INFO_EXTENDED().toArray(info.length);
+        for (int i = 0; i < info.length; ++i) {
+            ((CkVolumeInfoExtendedImpl) info[i]).copyToJnaStructure(ckInfo[i]);
+        }
+
+        return ckInfo;
+    }
+
+    private static void assignCkVolumeInfoExtendedArray(CkVolumeInfoExtended @Nullable [] info,
+                                                        CK_VOLUME_INFO_EXTENDED @Nullable [] nativeInfo) {
+        if (info == null && nativeInfo == null)
+            return;
+
+        if ((info != null && nativeInfo != null) && info.length == nativeInfo.length) {
+            for (int i = 0; i < nativeInfo.length; i++) {
+                info[i] = new CkVolumeInfoExtendedImpl(nativeInfo[i]);
+            }
+        } else {
+            throw new IllegalArgumentException("Arrays are not in the same state");
+        }
+    }
+
+    @Nullable
+    private static CK_VOLUME_FORMAT_INFO_EXTENDED[] convertCkVolumeFormatInfoExtendedList(
+            List<CkVolumeFormatInfoExtended> info) {
+        if (info.isEmpty())
+            return null;
+
+        final CK_VOLUME_FORMAT_INFO_EXTENDED[] nativeInfo = new CK_VOLUME_FORMAT_INFO_EXTENDED[info.size()];
+        for (int i = 0; i < info.size(); i++) {
+            nativeInfo[i] = ((CkVolumeFormatInfoExtendedImpl) info.get(i)).getJnaValue();
+        }
+
+        return nativeInfo;
     }
 
     @Nullable
@@ -78,8 +117,58 @@ public class RtPkcs11JnaLowLevelApi extends Pkcs11JnaLowLevelApi implements IRtP
     }
 
     @Override
-    public long C_EX_SetActivationPassword(long slotId, byte[] password) {
-        return unsigned(getRtPkcs11().C_EX_SetActivationPassword(new NativeLong(slotId), password));
+    public long C_EX_GetVolumesInfo(long slotId, CkVolumeInfoExtended @Nullable [] info, MutableLong infoCount) {
+        NativeLongByReference infoCountRef = makeNativeLongRef(infoCount);
+        final CK_VOLUME_INFO_EXTENDED[] nativeInfo = convertCkVolumeInfoExtendedArray(info);
+        final long result = unsigned(getRtPkcs11().C_EX_GetVolumesInfo(new NativeLong(slotId), nativeInfo,
+                infoCountRef));
+        assign(infoCount, infoCountRef);
+        if (result == CKR_OK)
+            assignCkVolumeInfoExtendedArray(info, nativeInfo);
+        return result;
+    }
+
+    @Override
+    public long C_EX_GetDriveSize(long slotId, MutableLong driveSize) {
+        final NativeLongByReference driveSizeRef = makeNativeLongRef(driveSize);
+        final long result = unsigned(getRtPkcs11().C_EX_GetDriveSize(new NativeLong(slotId), driveSizeRef));
+        assign(driveSize, driveSizeRef);
+        return result;
+    }
+
+    @Override
+    public long C_EX_ChangeVolumeAttributes(long slotId, long userType, byte[] pin, long idVolume, long newAccessMode,
+                                            boolean permanent) {
+        return unsigned(getRtPkcs11().C_EX_ChangeVolumeAttributes(new NativeLong(slotId), new NativeLong(userType), pin,
+                new NativeLong(pin.length), new NativeLong(idVolume), new NativeLong(newAccessMode),
+                (byte) (permanent ? 1 : 0)));
+    }
+
+    @Override
+    public long C_EX_FormatDrive(long slotId, long userType, byte[] pin, List<CkVolumeFormatInfoExtended> initParams) {
+        return unsigned(getRtPkcs11().C_EX_FormatDrive(new NativeLong(slotId), new NativeLong(userType), pin,
+                new NativeLong(pin.length), convertCkVolumeFormatInfoExtendedList(initParams),
+                new NativeLong(initParams.size())));
+    }
+
+    @Override
+    public long C_EX_TokenManage(long session, long mode, PointerParameter value) {
+        return unsigned(getRtPkcs11().C_EX_TokenManage(new NativeLong(session), new NativeLong(mode),
+                value == null ? null : ((JnaPointerParameterImpl) value).getPointer()));
+    }
+
+    @Override
+    public long C_EX_GetJournal(long slotId, byte @Nullable [] journal, MutableLong journalSize) {
+        NativeLongByReference journalSizeRef = makeNativeLongRef(journalSize);
+        final long result = unsigned(getRtPkcs11().C_EX_GetJournal(new NativeLong(slotId), journal, journalSizeRef));
+        assign(journalSize, journalSizeRef);
+        return result;
+    }
+
+    @Override
+    public long C_EX_SlotManage(long slotId, long mode, PointerParameter value) {
+        return unsigned(getRtPkcs11().C_EX_SlotManage(new NativeLong(slotId), new NativeLong(mode),
+                value == null ? null : ((JnaPointerParameterImpl) value).getPointer()));
     }
 
     @Override
@@ -99,19 +188,39 @@ public class RtPkcs11JnaLowLevelApi extends Pkcs11JnaLowLevelApi implements IRtP
     }
 
     @Override
-    public long C_EX_GetLicense(long session, long licenseNum, byte[] license, MutableLong licenseLen) {
-        NativeLongByReference licenseLenRef = new NativeLongByReference();
+    public long C_EX_GetLicense(long session, long licenseNum, byte @Nullable [] license, MutableLong licenseLen) {
+        NativeLongByReference licenseLenRef = makeNativeLongRef(licenseLen);
         final long result = unsigned(getRtPkcs11().C_EX_GetLicense(new NativeLong(session), new NativeLong(licenseNum),
                 license, licenseLenRef));
+        assign(licenseLen, licenseLenRef);
+        return result;
+    }
 
-        if (result == CKR_OK)
-            assign(licenseLen, licenseLenRef);
+    /**
+     * C_EX_FreeBuffer is called in this implementation.
+     */
+    @Override
+    public long C_EX_GetCertificateInfoText(long session, long certificate, Mutable<byte[]> certificateInfo) {
+        final PointerByReference certificateInfoPointerRef = new PointerByReference();
+        final NativeLongByReference certificateInfoLengthRef = new NativeLongByReference();
+
+        final long result = unsigned(getRtPkcs11().C_EX_GetCertificateInfoText(new NativeLong(session),
+                new NativeLong(certificate), certificateInfoPointerRef, certificateInfoLengthRef));
+
+        if (result == CKR_OK) {
+            final Pointer certificateInfoPointer = certificateInfoPointerRef.getValue();
+            if (certificateInfoPointer != null) {
+                certificateInfo.value =
+                        certificateInfoPointer.getByteArray(0, certificateInfoLengthRef.getValue().intValue());
+                getRtPkcs11().C_EX_FreeBuffer(certificateInfoPointer);
+            }
+        }
 
         return result;
     }
 
     @Override
-    public long C_EX_GetTokenName(long session, byte[] label, MutableLong labelLen) {
+    public long C_EX_GetTokenName(long session, byte @Nullable [] label, MutableLong labelLen) {
         final NativeLongByReference lengthRef = makeNativeLongRef(labelLen);
         final long result = unsigned(getRtPkcs11().C_EX_GetTokenName(new NativeLong(session), label, lengthRef));
         assign(labelLen, lengthRef);
@@ -124,9 +233,12 @@ public class RtPkcs11JnaLowLevelApi extends Pkcs11JnaLowLevelApi implements IRtP
                 newLocalPin, new NativeLong(newLocalPin.length), new NativeLong(localId)));
     }
 
+    /**
+     * C_EX_FreeBuffer is called in this implementation.
+     */
     @Override
-    public long C_EX_CreateCSR(long session, long publicKey, String[] dn, Mutable<byte[]> csr, long privateKey,
-                               String[] attributes, String[] extensions) {
+    public long C_EX_CreateCSR(long session, long publicKey, String @Nullable [] dn, Mutable<byte[]> csr,
+                               long privateKey, String @Nullable [] attributes, String @Nullable [] extensions) {
         final PointerByReference csrPointerRef = new PointerByReference();
         final NativeLongByReference csrLengthRef = new NativeLongByReference();
 
@@ -151,9 +263,12 @@ public class RtPkcs11JnaLowLevelApi extends Pkcs11JnaLowLevelApi implements IRtP
         return result;
     }
 
+    /**
+     * C_EX_FreeBuffer is called in this implementation.
+     */
     @Override
     public long C_EX_PKCS7Sign(long session, byte[] data, long signerCertificate, Mutable<byte[]> cms,
-                               long signerPrivateKey, long[] additionalCertificates, long flags) {
+                               long signerPrivateKey, long @Nullable [] additionalCertificates, long flags) {
         final PointerByReference envelopePointerRef = new PointerByReference();
         final NativeLongByReference envelopeLengthRef = new NativeLongByReference();
 
@@ -195,6 +310,9 @@ public class RtPkcs11JnaLowLevelApi extends Pkcs11JnaLowLevelApi implements IRtP
         ));
     }
 
+    /**
+     * C_EX_FreeBuffer is called in this implementation.
+     */
     @Override
     public long C_EX_PKCS7Verify(long session, @Nullable Mutable<byte[]> data,
                                  @Nullable Mutable<List<byte[]>> signerCertificates) {
@@ -238,6 +356,9 @@ public class RtPkcs11JnaLowLevelApi extends Pkcs11JnaLowLevelApi implements IRtP
         return unsigned(getRtPkcs11().C_EX_PKCS7VerifyUpdate(new NativeLong(session), data, length(data)));
     }
 
+    /**
+     * C_EX_FreeBuffer is called in this implementation.
+     */
     @Override
     public long C_EX_PKCS7VerifyFinal(long session, @Nullable Mutable<List<byte[]>> signerCertificates) {
         final PointerByReference signerCertificatesPointerRef = signerCertificates == null ? null :

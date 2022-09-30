@@ -5,7 +5,7 @@ import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkFunctionListExtended
 
 import java.util.Objects;
 
-public class CkFunctionListExtendedImpl implements CkFunctionListExtended {
+class CkFunctionListExtendedImpl implements CkFunctionListExtended {
     private final CK_FUNCTION_LIST_EXTENDED mData;
 
     CkFunctionListExtendedImpl(CK_FUNCTION_LIST_EXTENDED data) {

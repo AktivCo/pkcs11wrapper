@@ -9,11 +9,6 @@ public class FakeCkTokenInfoExtendedImpl implements CkTokenInfoExtended {
         mTokenType = tokenType;
     }
 
-    @Override
-    public long getSizeofThisStructure() {
-        return 0;
-    }
-
     @Deprecated
     @Override
     public long getTokenType() {

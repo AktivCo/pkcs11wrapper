@@ -1,21 +1,16 @@
 package ru.rutoken.pkcs11wrapper.rutoken.lowlevel;
 
 import org.jetbrains.annotations.Nullable;
-
-import java.util.List;
-
 import ru.rutoken.pkcs11wrapper.lowlevel.main.IPkcs11LowLevelApi;
-import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkFunctionListExtended;
-import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkRutokenInitParam;
-import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkTokenInfoExtended;
-import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkVendorX509Store;
+import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.*;
 import ru.rutoken.pkcs11wrapper.util.Mutable;
 import ru.rutoken.pkcs11wrapper.util.MutableLong;
+
+import java.util.List;
 
 /**
  * Defines Rutoken C_EX_ (extended) functions.
  */
-// TODO add all extended Rutoken functions support
 public interface IRtPkcs11LowLevelApi extends IPkcs11LowLevelApi {
     long C_EX_GetFunctionListExtended(Mutable<CkFunctionListExtended> functionList);
 
@@ -23,7 +18,20 @@ public interface IRtPkcs11LowLevelApi extends IPkcs11LowLevelApi {
 
     long C_EX_InitToken(long slotId, byte[] pin, CkRutokenInitParam initInfo);
 
-    long C_EX_SetActivationPassword(long slotId, byte[] password);
+    long C_EX_GetVolumesInfo(long slotId, CkVolumeInfoExtended @Nullable [] info, MutableLong infoCount);
+
+    long C_EX_GetDriveSize(long slotId, MutableLong driveSize);
+
+    long C_EX_ChangeVolumeAttributes(long slotId, long userType, byte[] pin, long idVolume, long newAccessMode,
+                                     boolean permanent);
+
+    long C_EX_FormatDrive(long slotId, long userType, byte[] pin, List<CkVolumeFormatInfoExtended> initParams);
+
+    long C_EX_TokenManage(long session, long mode, PointerParameter value);
+
+    long C_EX_GetJournal(long slotId, byte @Nullable [] journal, MutableLong journalSize);
+
+    long C_EX_SlotManage(long slotId, long mode, PointerParameter value);
 
     long C_EX_UnblockUserPIN(long session);
 
@@ -31,17 +39,19 @@ public interface IRtPkcs11LowLevelApi extends IPkcs11LowLevelApi {
 
     long C_EX_SetLicense(long session, long licenseNum, byte[] license);
 
-    long C_EX_GetLicense(long session, long licenseNum, byte[] license, MutableLong licenseLen);
+    long C_EX_GetLicense(long session, long licenseNum, byte @Nullable [] license, MutableLong licenseLen);
 
-    long C_EX_GetTokenName(long session, byte[] label, MutableLong labelLen);
+    long C_EX_GetCertificateInfoText(long session, long certificate, Mutable<byte[]> certificateInfo);
+
+    long C_EX_GetTokenName(long session, byte @Nullable [] label, MutableLong labelLen);
 
     long C_EX_SetLocalPIN(long slotId, byte[] userPin, byte[] newLocalPin, long localId);
 
-    long C_EX_CreateCSR(long session, long publicKey, String[] dn, Mutable<byte[]> csr, long privateKey,
-                        String[] attributes, String[] extensions);
+    long C_EX_CreateCSR(long session, long publicKey, String @Nullable [] dn, Mutable<byte[]> csr, long privateKey,
+                        String @Nullable [] attributes, String @Nullable [] extensions);
 
     long C_EX_PKCS7Sign(long session, byte[] data, long signerCertificate, Mutable<byte[]> cms, long signerPrivateKey,
-                        long[] additionalCertificates, long flags);
+                        long @Nullable [] additionalCertificates, long flags);
 
     long C_EX_PKCS7VerifyInit(long session, byte[] cms, @Nullable CkVendorX509Store store, long mode, long flags);
 
@@ -51,4 +61,7 @@ public interface IRtPkcs11LowLevelApi extends IPkcs11LowLevelApi {
     long C_EX_PKCS7VerifyUpdate(long session, byte[] data);
 
     long C_EX_PKCS7VerifyFinal(long session, @Nullable Mutable<List<byte[]>> signerCertificates);
+
+    interface PointerParameter {
+    }
 }

@@ -7,8 +7,7 @@ import ru.rutoken.pkcs11wrapper.rutoken.constant.RtPkcs11KeyType;
 import ru.rutoken.pkcs11wrapper.rutoken.constant.RtPkcs11MechanismType;
 import ru.rutoken.pkcs11wrapper.rutoken.constant.RtPkcs11ReturnValue;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.IRtPkcs11LowLevelFactory;
-import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkRutokenInitParam;
-import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkVendorX509Store;
+import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.*;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.fake.RtPkcs11FakeLowLevelFactory.Builder;
 
 public final class RtPkcs11FakeLowLevelFactory extends Pkcs11BaseFakeLowLevelFactory<Builder>
@@ -29,6 +28,26 @@ public final class RtPkcs11FakeLowLevelFactory extends Pkcs11BaseFakeLowLevelFac
     @Override
     public CkRutokenInitParam makeRutokenInitParam() {
         return new FakeCkRutokenInitParamImpl();
+    }
+
+    @Override
+    public CkVolumeFormatInfoExtended makeVolumeFormatInfoExtended() {
+        return new FakeCkVolumeFormatInfoExtendedImpl();
+    }
+
+    @Override
+    public CkVendorPinParams makeVendorPinParams() {
+        return new FakeCkVendorPinParamsImpl();
+    }
+
+    @Override
+    public CkLocalPinInfo makeLocalPinInfo() {
+        return new FakeCkLocalPinInfoImpl();
+    }
+
+    @Override
+    public CkVendorRestoreFactoryDefaultsParams makeVendorRestoreFactoryDefaultsParams() {
+        return new FakeCkVendorRestoreFactoryDefaultsParamsImpl();
     }
 
     /*package*/ static class Builder extends Pkcs11BaseFakeLowLevelFactory.Builder<Builder> {

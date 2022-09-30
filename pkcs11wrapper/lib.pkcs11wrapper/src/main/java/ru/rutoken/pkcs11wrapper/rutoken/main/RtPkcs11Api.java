@@ -39,13 +39,6 @@ public class RtPkcs11Api extends Pkcs11Api {
         return info.value;
     }
 
-    /**
-     * @param password null terminated string
-     */
-    public void C_EX_SetActivationPassword(long slotId, byte[] password) {
-        call(getLowLevelApi().C_EX_SetActivationPassword(slotId, password));
-    }
-
     public void C_EX_UnblockUserPIN(long session) {
         call(getLowLevelApi().C_EX_UnblockUserPIN(session));
     }
