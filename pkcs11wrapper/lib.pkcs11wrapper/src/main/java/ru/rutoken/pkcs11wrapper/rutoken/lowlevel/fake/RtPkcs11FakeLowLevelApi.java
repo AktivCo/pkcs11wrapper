@@ -37,7 +37,7 @@ public class RtPkcs11FakeLowLevelApi extends Pkcs11FakeLowLevelApi implements IR
     }
 
     @Override
-    synchronized public long C_EX_InitToken(long slotId, byte[] pin, CkRutokenInitParam initInfo) {
+    synchronized public long C_EX_InitToken(long slotId, byte @Nullable [] adminPin, CkRutokenInitParam initInfo) {
         return ok();
     }
 
@@ -109,7 +109,7 @@ public class RtPkcs11FakeLowLevelApi extends Pkcs11FakeLowLevelApi implements IR
     }
 
     @Override
-    public long C_EX_SetLocalPIN(long slotId, byte[] userPin, byte[] newLocalPin, long localId) {
+    public long C_EX_SetLocalPIN(long slotId, byte[] currentPin, byte[] newLocalPin, long localPinId) {
         return ok();
     }
 

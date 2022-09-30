@@ -16,7 +16,7 @@ public interface IRtPkcs11LowLevelApi extends IPkcs11LowLevelApi {
 
     long C_EX_GetTokenInfoExtended(long slotId, Mutable<CkTokenInfoExtended> info);
 
-    long C_EX_InitToken(long slotId, byte[] pin, CkRutokenInitParam initInfo);
+    long C_EX_InitToken(long slotId, byte @Nullable [] adminPin, CkRutokenInitParam initInfo);
 
     long C_EX_GetVolumesInfo(long slotId, CkVolumeInfoExtended @Nullable [] info, MutableLong infoCount);
 
@@ -45,7 +45,7 @@ public interface IRtPkcs11LowLevelApi extends IPkcs11LowLevelApi {
 
     long C_EX_GetTokenName(long session, byte @Nullable [] label, MutableLong labelLen);
 
-    long C_EX_SetLocalPIN(long slotId, byte[] userPin, byte[] newLocalPin, long localId);
+    long C_EX_SetLocalPIN(long slotId, byte[] currentPin, byte[] newLocalPin, long localPinId);
 
     long C_EX_CreateCSR(long session, long publicKey, String @Nullable [] dn, Mutable<byte[]> csr, long privateKey,
                         String @Nullable [] attributes, String @Nullable [] extensions);

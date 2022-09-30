@@ -4,6 +4,7 @@ import java.util.List;
 
 import ru.rutoken.pkcs11wrapper.constant.IPkcs11ReturnValue;
 import ru.rutoken.pkcs11wrapper.main.Pkcs11SessionImpl;
+import ru.rutoken.pkcs11wrapper.object.certificate.Pkcs11CertificateObject;
 import ru.rutoken.pkcs11wrapper.object.key.Pkcs11PrivateKeyObject;
 import ru.rutoken.pkcs11wrapper.object.key.Pkcs11PublicKeyObject;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.IRtPkcs11LowLevelApi;
@@ -42,6 +43,31 @@ public class RtPkcs11Session extends Pkcs11SessionImpl {
 
     public void setTokenName(String label) {
         getApi().C_EX_SetTokenName(getSessionHandle(), label.getBytes());
+    }
+
+    public void setLicense(long licenseNum, byte[] license) {
+        getApi().C_EX_SetLicense(getSessionHandle(), licenseNum, license);
+    }
+
+    public byte[] getLicense(long licenseNum) {
+        return new ByteArrayCallConvention("C_EX_GetLicense") {
+            @Override
+            protected int getLength() {
+                final MutableLong length = new MutableLong();
+                getApi().C_EX_GetLicense(getSessionHandle(), licenseNum, null, length);
+                return (int) length.value;
+            }
+
+            @Override
+            protected IPkcs11ReturnValue fillValues(byte[] values, MutableLong length) {
+                return IPkcs11ReturnValue.getInstance(getLowLevelApi().C_EX_GetLicense(
+                        getSessionHandle(), licenseNum, values, length));
+            }
+        }.call().values;
+    }
+
+    public String getCertificateInfo(Pkcs11CertificateObject certificate) {
+        return getApi().C_EX_GetCertificateInfoText(getSessionHandle(), certificate.getHandle());
     }
 
     public byte[] createCsr(Pkcs11PublicKeyObject publicKey, List<String> dn, Pkcs11PrivateKeyObject privateKey,

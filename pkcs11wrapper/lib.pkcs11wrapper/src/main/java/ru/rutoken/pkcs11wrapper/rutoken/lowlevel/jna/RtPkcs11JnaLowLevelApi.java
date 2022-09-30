@@ -111,8 +111,8 @@ public class RtPkcs11JnaLowLevelApi extends Pkcs11JnaLowLevelApi implements IRtP
     }
 
     @Override
-    public long C_EX_InitToken(long slotId, byte[] pin, CkRutokenInitParam initInfo) {
-        return unsigned(getRtPkcs11().C_EX_InitToken(new NativeLong(slotId), pin, new NativeLong(pin.length),
+    public long C_EX_InitToken(long slotId, byte @Nullable [] adminPin, CkRutokenInitParam initInfo) {
+        return unsigned(getRtPkcs11().C_EX_InitToken(new NativeLong(slotId), adminPin, length(adminPin),
                 ((CkRutokenInitParamImpl) initInfo).getJnaValue()));
     }
 
@@ -228,9 +228,10 @@ public class RtPkcs11JnaLowLevelApi extends Pkcs11JnaLowLevelApi implements IRtP
     }
 
     @Override
-    public long C_EX_SetLocalPIN(long slotId, byte[] userPin, byte[] newLocalPin, long localId) {
-        return unsigned(getRtPkcs11().C_EX_SetLocalPIN(new NativeLong(slotId), userPin, new NativeLong(userPin.length),
-                newLocalPin, new NativeLong(newLocalPin.length), new NativeLong(localId)));
+    public long C_EX_SetLocalPIN(long slotId, byte[] currentPin, byte[] newLocalPin, long localPinId) {
+        return unsigned(getRtPkcs11().C_EX_SetLocalPIN(new NativeLong(slotId), currentPin,
+                new NativeLong(currentPin.length), newLocalPin, new NativeLong(newLocalPin.length),
+                new NativeLong(localPinId)));
     }
 
     /**

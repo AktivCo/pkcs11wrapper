@@ -3,12 +3,14 @@ package ru.rutoken.pkcs11wrapper.rutoken.main;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.Objects;
 
 import ru.rutoken.pkcs11wrapper.constant.IPkcs11ReturnValue;
 import ru.rutoken.pkcs11wrapper.main.Pkcs11Api;
 import ru.rutoken.pkcs11wrapper.rutoken.datatype.AttachedCmsVerifyResult;
 import ru.rutoken.pkcs11wrapper.rutoken.datatype.DetachedCmsVerifyResult;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.IRtPkcs11LowLevelApi;
+import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkRutokenInitParam;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkTokenInfoExtended;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkVendorX509Store;
 import ru.rutoken.pkcs11wrapper.util.Mutable;
@@ -39,6 +41,10 @@ public class RtPkcs11Api extends Pkcs11Api {
         return info.value;
     }
 
+    public void C_EX_InitToken(long slotId, byte @Nullable [] adminPin, CkRutokenInitParam initInfo) {
+        call(getLowLevelApi().C_EX_InitToken(slotId, adminPin, initInfo));
+    }
+
     public void C_EX_UnblockUserPIN(long session) {
         call(getLowLevelApi().C_EX_UnblockUserPIN(session));
     }
@@ -47,8 +53,26 @@ public class RtPkcs11Api extends Pkcs11Api {
         call(getLowLevelApi().C_EX_SetTokenName(session, label));
     }
 
+    public void C_EX_SetLicense(long session, long licenseNum, byte[] license) {
+        call(getLowLevelApi().C_EX_SetLicense(session, licenseNum, license));
+    }
+
+    public void C_EX_GetLicense(long session, long licenseNum, byte[] license, MutableLong licenseLen) {
+        call(getLowLevelApi().C_EX_GetLicense(session, licenseNum, license, licenseLen));
+    }
+
+    public String C_EX_GetCertificateInfoText(long session, long certificate) {
+        final Mutable<byte[]> certificateInfo = new Mutable<>();
+        call(getLowLevelApi().C_EX_GetCertificateInfoText(session, certificate, certificateInfo));
+        return new String(Objects.requireNonNull(certificateInfo.value));
+    }
+
     public void C_EX_GetTokenName(long session, byte[] label, MutableLong labelLen) {
         call(getLowLevelApi().C_EX_GetTokenName(session, label, labelLen));
+    }
+
+    public void C_EX_SetLocalPIN(long slotId, byte[] currentPin, byte[] newLocalPin, long localPinId) {
+        call(getLowLevelApi().C_EX_SetLocalPIN(slotId, currentPin, newLocalPin, localPinId));
     }
 
     public byte[] C_EX_CreateCSR(long session, long publicKey, List<String> dn, long privateKey,
