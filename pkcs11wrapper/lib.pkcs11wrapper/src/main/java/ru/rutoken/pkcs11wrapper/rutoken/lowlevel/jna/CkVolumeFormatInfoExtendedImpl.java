@@ -13,8 +13,11 @@ class CkVolumeFormatInfoExtendedImpl implements CkVolumeFormatInfoExtended {
         mData = Objects.requireNonNull(data);
     }
 
-    CK_VOLUME_FORMAT_INFO_EXTENDED getJnaValue() {
-        return mData;
+    void copyToJnaStructure(CK_VOLUME_FORMAT_INFO_EXTENDED to) {
+        to.ulVolumeSize.setValue(mData.ulVolumeSize.longValue());
+        to.accessMode.setValue(mData.accessMode.longValue());
+        to.volumeOwner.setValue(mData.volumeOwner.longValue());
+        to.flags.setValue(mData.flags.longValue());
     }
 
     @Override

@@ -65,9 +65,10 @@ public class RtPkcs11JnaLowLevelApi extends Pkcs11JnaLowLevelApi implements IRtP
         if (info.isEmpty())
             return null;
 
-        final CK_VOLUME_FORMAT_INFO_EXTENDED[] nativeInfo = new CK_VOLUME_FORMAT_INFO_EXTENDED[info.size()];
+        final CK_VOLUME_FORMAT_INFO_EXTENDED[] nativeInfo =
+                (CK_VOLUME_FORMAT_INFO_EXTENDED[]) new CK_VOLUME_FORMAT_INFO_EXTENDED().toArray(info.size());
         for (int i = 0; i < info.size(); i++) {
-            nativeInfo[i] = ((CkVolumeFormatInfoExtendedImpl) info.get(i)).getJnaValue();
+            ((CkVolumeFormatInfoExtendedImpl) info.get(i)).copyToJnaStructure(nativeInfo[i]);
         }
 
         return nativeInfo;
@@ -147,18 +148,19 @@ public class RtPkcs11JnaLowLevelApi extends Pkcs11JnaLowLevelApi implements IRtP
     }
 
     @Override
-    public long C_EX_ChangeVolumeAttributes(long slotId, long userType, byte[] pin, long idVolume, long newAccessMode,
+    public long C_EX_ChangeVolumeAttributes(long slotId, long userType, byte[] pin, long volumeId, long newAccessMode,
                                             boolean permanent) {
         return unsigned(getRtPkcs11().C_EX_ChangeVolumeAttributes(new NativeLong(slotId), new NativeLong(userType), pin,
-                new NativeLong(pin.length), new NativeLong(idVolume), new NativeLong(newAccessMode),
+                new NativeLong(pin.length), new NativeLong(volumeId), new NativeLong(newAccessMode),
                 (byte) (permanent ? 1 : 0)));
     }
 
     @Override
-    public long C_EX_FormatDrive(long slotId, long userType, byte[] pin, List<CkVolumeFormatInfoExtended> initParams) {
+    public long C_EX_FormatDrive(long slotId, long userType, byte[] pin,
+                                 List<CkVolumeFormatInfoExtended> formatParams) {
         return unsigned(getRtPkcs11().C_EX_FormatDrive(new NativeLong(slotId), new NativeLong(userType), pin,
-                new NativeLong(pin.length), convertCkVolumeFormatInfoExtendedList(initParams),
-                new NativeLong(initParams.size())));
+                new NativeLong(pin.length), convertCkVolumeFormatInfoExtendedList(formatParams),
+                new NativeLong(formatParams.size())));
     }
 
     @Override

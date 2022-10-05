@@ -8,6 +8,8 @@ public interface IRtPkcs11LowLevelFactory extends IPkcs11LowLevelFactory {
 
     CkRutokenInitParam makeRutokenInitParam();
 
+    CkVolumeInfoExtended makeVolumeInfoExtended();
+
     CkVolumeFormatInfoExtended makeVolumeFormatInfoExtended();
 
     CkVendorPinParams makeVendorPinParams();

@@ -1,21 +1,21 @@
 package ru.rutoken.pkcs11wrapper.rutoken.main;
 
 import org.jetbrains.annotations.Nullable;
-
-import java.util.List;
-import java.util.Objects;
-
 import ru.rutoken.pkcs11wrapper.constant.IPkcs11ReturnValue;
 import ru.rutoken.pkcs11wrapper.main.Pkcs11Api;
 import ru.rutoken.pkcs11wrapper.rutoken.datatype.AttachedCmsVerifyResult;
 import ru.rutoken.pkcs11wrapper.rutoken.datatype.DetachedCmsVerifyResult;
+import ru.rutoken.pkcs11wrapper.rutoken.datatype.VolumeFormatInfoExtended;
+import ru.rutoken.pkcs11wrapper.rutoken.datatype.VolumeInfoExtended;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.IRtPkcs11LowLevelApi;
-import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkRutokenInitParam;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.IRtPkcs11LowLevelFactory;
-import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkTokenInfoExtended;
-import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkVendorX509Store;
+import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.*;
 import ru.rutoken.pkcs11wrapper.util.Mutable;
 import ru.rutoken.pkcs11wrapper.util.MutableLong;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 import static ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11ReturnValue.CKR_SIGNATURE_INVALID;
 import static ru.rutoken.pkcs11wrapper.rutoken.constant.RtPkcs11ReturnValue.CKR_CERT_CHAIN_NOT_VERIFIED;
@@ -44,6 +44,32 @@ public class RtPkcs11Api extends Pkcs11Api {
 
     public void C_EX_InitToken(long slotId, byte @Nullable [] adminPin, CkRutokenInitParam initInfo) {
         call(getLowLevelApi().C_EX_InitToken(slotId, adminPin, initInfo));
+    }
+
+    public void C_EX_GetVolumesInfo(long slotId, @Nullable List<VolumeInfoExtended> info, MutableLong infoCount) {
+        final CkVolumeInfoExtended[] lowLevelInfo = makeCkVolumeInfoExtendedArray(info);
+        call(getLowLevelApi().C_EX_GetVolumesInfo(slotId, lowLevelInfo, infoCount));
+
+        if (lowLevelInfo != null) {
+            for (int i = 0; i < info.size(); i++) {
+                info.set(i, new VolumeInfoExtended(lowLevelInfo[i]));
+            }
+        }
+    }
+
+    public long C_EX_GetDriveSize(long slotId) {
+        final MutableLong driveSize = new MutableLong();
+        call(getLowLevelApi().C_EX_GetDriveSize(slotId, driveSize));
+        return driveSize.value;
+    }
+
+    public void C_EX_ChangeVolumeAttributes(long slotId, long userType, byte[] pin, long volumeId, long newAccessMode,
+                                            boolean permanent) {
+        call(getLowLevelApi().C_EX_ChangeVolumeAttributes(slotId, userType, pin, volumeId, newAccessMode, permanent));
+    }
+
+    public void C_EX_FormatDrive(long slotId, long userType, byte[] pin, List<VolumeFormatInfoExtended> formatParams) {
+        call(getLowLevelApi().C_EX_FormatDrive(slotId, userType, pin, toCkVolumeFormatInfoExtendedList(formatParams)));
     }
 
     public void C_EX_UnblockUserPIN(long session) {
@@ -116,5 +142,28 @@ public class RtPkcs11Api extends Pkcs11Api {
                         CKR_SIGNATURE_INVALID, CKR_CERT_CHAIN_NOT_VERIFIED);
 
         return new DetachedCmsVerifyResult(result, signerCertificates.value);
+    }
+
+    @Nullable
+    private CkVolumeInfoExtended[] makeCkVolumeInfoExtendedArray(@Nullable List<VolumeInfoExtended> list) {
+        if (list == null)
+            return null;
+
+        final CkVolumeInfoExtended[] result = new CkVolumeInfoExtended[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            // We cannot set fields of this object as its datatype interface has no setters (it's a read-only structure)
+            result[i] = getLowLevelFactory().makeVolumeInfoExtended();
+        }
+
+        return result;
+    }
+
+    private List<CkVolumeFormatInfoExtended> toCkVolumeFormatInfoExtendedList(
+            List<VolumeFormatInfoExtended> formatInfo) {
+        final List<CkVolumeFormatInfoExtended> result = new ArrayList<>(formatInfo.size());
+        for (VolumeFormatInfoExtended i : formatInfo) {
+            result.add(i.toCkVolumeFormatInfoExtended(getLowLevelFactory()));
+        }
+        return result;
     }
 }

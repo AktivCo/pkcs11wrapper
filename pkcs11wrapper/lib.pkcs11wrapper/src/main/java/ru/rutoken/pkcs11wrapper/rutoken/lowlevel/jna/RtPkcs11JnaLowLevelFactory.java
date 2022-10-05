@@ -33,6 +33,11 @@ public final class RtPkcs11JnaLowLevelFactory extends Pkcs11BaseJnaLowLevelFacto
     }
 
     @Override
+    public CkVolumeInfoExtended makeVolumeInfoExtended() {
+        return new CkVolumeInfoExtendedImpl(new CK_VOLUME_INFO_EXTENDED());
+    }
+
+    @Override
     public CkVolumeFormatInfoExtended makeVolumeFormatInfoExtended() {
         return new CkVolumeFormatInfoExtendedImpl(new CK_VOLUME_FORMAT_INFO_EXTENDED());
     }

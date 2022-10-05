@@ -25,10 +25,10 @@ public interface IRtPkcs11LowLevelApi extends IPkcs11LowLevelApi {
 
     long C_EX_GetDriveSize(long slotId, MutableLong driveSize);
 
-    long C_EX_ChangeVolumeAttributes(long slotId, long userType, byte[] pin, long idVolume, long newAccessMode,
+    long C_EX_ChangeVolumeAttributes(long slotId, long userType, byte[] pin, long volumeId, long newAccessMode,
                                      boolean permanent);
 
-    long C_EX_FormatDrive(long slotId, long userType, byte[] pin, List<CkVolumeFormatInfoExtended> initParams);
+    long C_EX_FormatDrive(long slotId, long userType, byte[] pin, List<CkVolumeFormatInfoExtended> formatParams);
 
     long C_EX_TokenManage(long session, long mode, PointerParameter value);
 

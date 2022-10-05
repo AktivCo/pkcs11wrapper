@@ -31,6 +31,11 @@ public final class RtPkcs11FakeLowLevelFactory extends Pkcs11BaseFakeLowLevelFac
     }
 
     @Override
+    public CkVolumeInfoExtended makeVolumeInfoExtended() {
+        return new FakeCkVolumeInfoExtendedImpl();
+    }
+
+    @Override
     public CkVolumeFormatInfoExtended makeVolumeFormatInfoExtended() {
         return new FakeCkVolumeFormatInfoExtendedImpl();
     }

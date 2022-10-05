@@ -58,13 +58,14 @@ public class RtPkcs11FakeLowLevelApi extends Pkcs11FakeLowLevelApi implements IR
     }
 
     @Override
-    public long C_EX_ChangeVolumeAttributes(long slotId, long userType, byte[] pin, long idVolume, long newAccessMode,
+    public long C_EX_ChangeVolumeAttributes(long slotId, long userType, byte[] pin, long volumeId, long newAccessMode,
                                             boolean permanent) {
         return ok();
     }
 
     @Override
-    public long C_EX_FormatDrive(long slotId, long userType, byte[] pin, List<CkVolumeFormatInfoExtended> initParams) {
+    public long C_EX_FormatDrive(long slotId, long userType, byte[] pin,
+                                 List<CkVolumeFormatInfoExtended> formatParams) {
         return ok();
     }
 

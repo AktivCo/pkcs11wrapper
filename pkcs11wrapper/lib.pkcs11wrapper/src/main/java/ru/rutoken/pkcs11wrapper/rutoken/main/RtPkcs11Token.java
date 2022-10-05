@@ -7,10 +7,14 @@ import ru.rutoken.pkcs11wrapper.rutoken.datatype.RutokenInitParam;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.IRtPkcs11LowLevelApi;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.IRtPkcs11LowLevelFactory;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkTokenInfoExtended;
+import ru.rutoken.pkcs11wrapper.rutoken.manager.RtPkcs11FlashManager;
 
 public class RtPkcs11Token extends Pkcs11TokenImpl {
+    private final RtPkcs11FlashManager mFlashManager;
+
     RtPkcs11Token(Pkcs11Slot slot) {
         super(slot);
+        mFlashManager = new RtPkcs11FlashManager(this);
     }
 
     public CkTokenInfoExtended getTokenInfoExtended() {
@@ -24,6 +28,10 @@ public class RtPkcs11Token extends Pkcs11TokenImpl {
 
     public void setLocalPin(String currentPin, String newLocalPin, long localPinId) {
         getApi().C_EX_SetLocalPIN(getSlot().getId(), currentPin.getBytes(), newLocalPin.getBytes(), localPinId);
+    }
+
+    public RtPkcs11FlashManager getFlashManager() {
+        return mFlashManager;
     }
 
     @Override
