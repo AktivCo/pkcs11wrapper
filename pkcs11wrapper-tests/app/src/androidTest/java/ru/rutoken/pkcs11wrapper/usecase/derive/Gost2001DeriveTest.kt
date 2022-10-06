@@ -13,7 +13,7 @@ import ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11UserType
 import ru.rutoken.pkcs11wrapper.main.*
 import ru.rutoken.pkcs11wrapper.mechanism.Pkcs11Mechanism
 import ru.rutoken.pkcs11wrapper.mechanism.parameter.CkGostR3410DeriveParams
-import ru.rutoken.pkcs11wrapper.rule.*
+import ru.rutoken.pkcs11wrapper.rule.highlevel.*
 import ru.rutoken.pkcs11wrapper.rutoken.constant.RtPkcs11KeyDerivationFunction.CKD_CPDIVERSIFY_KDF_JRT
 
 private val UKM = byteArrayOf(1, 2, 3, 4, 5, 6, 7, 8)

@@ -6,8 +6,8 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldNotBeSameInstanceAs
 import org.junit.ClassRule
 import org.junit.Test
-import ru.rutoken.pkcs11wrapper.rule.ModuleRule
-import ru.rutoken.pkcs11wrapper.rule.rtFakeModule
+import ru.rutoken.pkcs11wrapper.rule.highlevel.ModuleRule
+import ru.rutoken.pkcs11wrapper.rule.highlevel.rtFakeModule
 
 class ModuleTest {
     @Test

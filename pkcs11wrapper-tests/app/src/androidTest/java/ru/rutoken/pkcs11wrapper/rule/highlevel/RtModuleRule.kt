@@ -1,4 +1,4 @@
-package ru.rutoken.pkcs11wrapper.rule
+package ru.rutoken.pkcs11wrapper.rule.highlevel
 
 import com.sun.jna.Native
 import ru.rutoken.pkcs11jna.RtPkcs11

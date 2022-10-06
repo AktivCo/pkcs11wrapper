@@ -13,7 +13,7 @@ import ru.rutoken.pkcs11wrapper.attribute.longvalue.Pkcs11ObjectClassAttribute;
 import ru.rutoken.pkcs11wrapper.constant.IPkcs11AttributeType;
 import ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11AttributeType;
 import ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11ObjectClass;
-import ru.rutoken.pkcs11wrapper.rule.ModuleRule;
+import ru.rutoken.pkcs11wrapper.rule.highlevel.ModuleRule;
 
 /**
  * We have to use instrumented tests because of unit tests problems with native libraries.

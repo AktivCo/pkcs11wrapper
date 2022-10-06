@@ -14,11 +14,11 @@ import org.junit.rules.TestRule;
 
 import ru.rutoken.pkcs11wrapper.attribute.longvalue.Pkcs11ObjectClassAttribute;
 import ru.rutoken.pkcs11wrapper.object.data.Pkcs11DataObject;
-import ru.rutoken.pkcs11wrapper.rule.CreateObjectRule;
-import ru.rutoken.pkcs11wrapper.rule.ModuleRule;
-import ru.rutoken.pkcs11wrapper.rule.SessionRule;
-import ru.rutoken.pkcs11wrapper.rule.SlotRule;
-import ru.rutoken.pkcs11wrapper.rule.TokenRule;
+import ru.rutoken.pkcs11wrapper.rule.highlevel.CreateObjectRule;
+import ru.rutoken.pkcs11wrapper.rule.highlevel.ModuleRule;
+import ru.rutoken.pkcs11wrapper.rule.highlevel.SessionRule;
+import ru.rutoken.pkcs11wrapper.rule.highlevel.SlotRule;
+import ru.rutoken.pkcs11wrapper.rule.highlevel.TokenRule;
 
 public class AttributesTest {
     private static final ModuleRule sModule = new ModuleRule();

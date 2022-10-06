@@ -6,10 +6,10 @@ import org.junit.ClassRule
 import org.junit.Test
 import org.junit.rules.RuleChain
 import org.junit.rules.TestRule
-import ru.rutoken.pkcs11wrapper.rule.RtModuleRule
-import ru.rutoken.pkcs11wrapper.rule.SessionRule
-import ru.rutoken.pkcs11wrapper.rule.SlotRule
-import ru.rutoken.pkcs11wrapper.rule.TokenRule
+import ru.rutoken.pkcs11wrapper.rule.highlevel.RtModuleRule
+import ru.rutoken.pkcs11wrapper.rule.highlevel.SessionRule
+import ru.rutoken.pkcs11wrapper.rule.highlevel.SlotRule
+import ru.rutoken.pkcs11wrapper.rule.highlevel.TokenRule
 import ru.rutoken.pkcs11wrapper.rutoken.constant.RtPkcs11AttributeType.CKA_VENDOR_CURRENT_TOKEN_INTERFACE
 
 const val VENDOR_DEFINED_VALUE = 0x800000FFL

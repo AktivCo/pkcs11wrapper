@@ -19,7 +19,7 @@ import ru.rutoken.pkcs11wrapper.main.makeRsaKeyPairRule
 import ru.rutoken.pkcs11wrapper.main.isMechanismSupported
 import ru.rutoken.pkcs11wrapper.mechanism.Pkcs11Mechanism
 import ru.rutoken.pkcs11wrapper.mechanism.parameter.CkRsaPkcsPssParams
-import ru.rutoken.pkcs11wrapper.rule.*
+import ru.rutoken.pkcs11wrapper.rule.highlevel.*
 
 class RsaSignVerifyTest {
     @Test

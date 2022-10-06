@@ -14,12 +14,12 @@ import org.junit.rules.TestRule;
 
 import ru.rutoken.pkcs11wrapper.constant.IPkcs11ReturnValue;
 import ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11UserType;
-import ru.rutoken.pkcs11wrapper.rule.GenerateKeyPairRule;
-import ru.rutoken.pkcs11wrapper.rule.LoginRule;
-import ru.rutoken.pkcs11wrapper.rule.RtModuleRule;
-import ru.rutoken.pkcs11wrapper.rule.SessionRule;
-import ru.rutoken.pkcs11wrapper.rule.SlotRule;
-import ru.rutoken.pkcs11wrapper.rule.TokenRule;
+import ru.rutoken.pkcs11wrapper.rule.highlevel.GenerateKeyPairRule;
+import ru.rutoken.pkcs11wrapper.rule.highlevel.LoginRule;
+import ru.rutoken.pkcs11wrapper.rule.highlevel.RtModuleRule;
+import ru.rutoken.pkcs11wrapper.rule.highlevel.SessionRule;
+import ru.rutoken.pkcs11wrapper.rule.highlevel.SlotRule;
+import ru.rutoken.pkcs11wrapper.rule.highlevel.TokenRule;
 import ru.rutoken.pkcs11wrapper.rutoken.constant.RtPkcs11ReturnValue;
 import ru.rutoken.pkcs11wrapper.rutoken.main.RtPkcs11Session;
 import ru.rutoken.pkcs11wrapper.rutoken.main.RtPkcs11Token;

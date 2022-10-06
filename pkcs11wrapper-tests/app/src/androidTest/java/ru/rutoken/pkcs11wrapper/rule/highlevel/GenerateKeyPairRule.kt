@@ -1,4 +1,4 @@
-package ru.rutoken.pkcs11wrapper.rule
+package ru.rutoken.pkcs11wrapper.rule.highlevel
 
 import org.junit.Assume.assumeTrue
 import org.junit.rules.ExternalResource

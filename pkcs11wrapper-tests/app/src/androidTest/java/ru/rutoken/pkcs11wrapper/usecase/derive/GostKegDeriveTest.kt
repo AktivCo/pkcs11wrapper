@@ -13,7 +13,7 @@ import ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11UserType.CKU_USER
 import ru.rutoken.pkcs11wrapper.main.*
 import ru.rutoken.pkcs11wrapper.mechanism.Pkcs11Mechanism
 import ru.rutoken.pkcs11wrapper.mechanism.parameter.CkEcdh1DeriveParams
-import ru.rutoken.pkcs11wrapper.rule.*
+import ru.rutoken.pkcs11wrapper.rule.highlevel.*
 import ru.rutoken.pkcs11wrapper.rutoken.constant.RtPkcs11MechanismType.CKM_GOST_KEG
 
 /** Must be 24 bytes long for 256 key pair and 16 bytes long for 512 key pair */

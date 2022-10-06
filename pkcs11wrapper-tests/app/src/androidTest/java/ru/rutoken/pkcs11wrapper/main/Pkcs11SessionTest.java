@@ -8,10 +8,10 @@ import org.junit.rules.TestRule;
 import ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11ReturnValue;
 import ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11SessionState;
 import ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11UserType;
-import ru.rutoken.pkcs11wrapper.rule.ModuleRule;
-import ru.rutoken.pkcs11wrapper.rule.SessionRule;
-import ru.rutoken.pkcs11wrapper.rule.SlotRule;
-import ru.rutoken.pkcs11wrapper.rule.TokenRule;
+import ru.rutoken.pkcs11wrapper.rule.highlevel.ModuleRule;
+import ru.rutoken.pkcs11wrapper.rule.highlevel.SessionRule;
+import ru.rutoken.pkcs11wrapper.rule.highlevel.SlotRule;
+import ru.rutoken.pkcs11wrapper.rule.highlevel.TokenRule;
 
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;

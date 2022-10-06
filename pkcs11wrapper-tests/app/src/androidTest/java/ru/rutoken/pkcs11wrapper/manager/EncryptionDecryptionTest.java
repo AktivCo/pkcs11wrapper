@@ -17,12 +17,12 @@ import org.junit.rules.TestRule;
 
 import ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11UserType;
 import ru.rutoken.pkcs11wrapper.mechanism.Pkcs11Mechanism;
-import ru.rutoken.pkcs11wrapper.rule.GenerateKeyPairRule;
-import ru.rutoken.pkcs11wrapper.rule.LoginRule;
-import ru.rutoken.pkcs11wrapper.rule.ModuleRule;
-import ru.rutoken.pkcs11wrapper.rule.SessionRule;
-import ru.rutoken.pkcs11wrapper.rule.SlotRule;
-import ru.rutoken.pkcs11wrapper.rule.TokenRule;
+import ru.rutoken.pkcs11wrapper.rule.highlevel.GenerateKeyPairRule;
+import ru.rutoken.pkcs11wrapper.rule.highlevel.LoginRule;
+import ru.rutoken.pkcs11wrapper.rule.highlevel.ModuleRule;
+import ru.rutoken.pkcs11wrapper.rule.highlevel.SessionRule;
+import ru.rutoken.pkcs11wrapper.rule.highlevel.SlotRule;
+import ru.rutoken.pkcs11wrapper.rule.highlevel.TokenRule;
 
 public class EncryptionDecryptionTest {
     private static final ModuleRule sModule = new ModuleRule();

@@ -4,7 +4,7 @@ import io.kotest.matchers.shouldNotBe
 import org.junit.Test
 import ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11AttributeType.CKA_DECRYPT
 import ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11AttributeType.CKA_DERIVE
-import ru.rutoken.pkcs11wrapper.rule.ModuleRule
+import ru.rutoken.pkcs11wrapper.rule.highlevel.ModuleRule
 
 class TemplateBuilderTest {
     @Test

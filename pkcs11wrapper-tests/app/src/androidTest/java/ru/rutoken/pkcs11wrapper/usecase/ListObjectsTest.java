@@ -14,10 +14,10 @@ import ru.rutoken.pkcs11wrapper.object.Pkcs11Object;
 import ru.rutoken.pkcs11wrapper.object.certificate.Pkcs11CertificateObject;
 import ru.rutoken.pkcs11wrapper.object.certificate.Pkcs11X509PublicKeyCertificateObject;
 import ru.rutoken.pkcs11wrapper.object.key.Pkcs11KeyObject;
-import ru.rutoken.pkcs11wrapper.rule.ModuleRule;
-import ru.rutoken.pkcs11wrapper.rule.SessionRule;
-import ru.rutoken.pkcs11wrapper.rule.SlotRule;
-import ru.rutoken.pkcs11wrapper.rule.TokenRule;
+import ru.rutoken.pkcs11wrapper.rule.highlevel.ModuleRule;
+import ru.rutoken.pkcs11wrapper.rule.highlevel.SessionRule;
+import ru.rutoken.pkcs11wrapper.rule.highlevel.SlotRule;
+import ru.rutoken.pkcs11wrapper.rule.highlevel.TokenRule;
 
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.greaterThan;

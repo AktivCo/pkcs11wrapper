@@ -1,4 +1,4 @@
-package ru.rutoken.pkcs11wrapper.rule
+package ru.rutoken.pkcs11wrapper.rule.highlevel
 
 import androidx.test.platform.app.InstrumentationRegistry
 import com.sun.jna.Native

@@ -12,7 +12,7 @@ import ru.rutoken.pkcs11jna.RtPkcs11Constants.*
 import ru.rutoken.pkcs11wrapper.`object`.certificate.Pkcs11CertificateObject
 import ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11UserType
 import ru.rutoken.pkcs11wrapper.main.*
-import ru.rutoken.pkcs11wrapper.rule.*
+import ru.rutoken.pkcs11wrapper.rule.highlevel.*
 import ru.rutoken.pkcs11wrapper.rutoken.GostDemoCA.getRootCertificate
 import ru.rutoken.pkcs11wrapper.rutoken.GostDemoCA.issueCertificate
 import ru.rutoken.pkcs11wrapper.rutoken.datatype.VendorX509Store

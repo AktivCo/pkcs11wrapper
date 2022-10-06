@@ -17,8 +17,8 @@ import ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11MechanismType.CKM_GOSTR3
 import ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11MechanismType.CKM_RSA_PKCS_KEY_PAIR_GEN
 import ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11ObjectClass.*
 import ru.rutoken.pkcs11wrapper.mechanism.Pkcs11Mechanism
-import ru.rutoken.pkcs11wrapper.rule.GenerateKeyPairRule
-import ru.rutoken.pkcs11wrapper.rule.SessionRule
+import ru.rutoken.pkcs11wrapper.rule.highlevel.GenerateKeyPairRule
+import ru.rutoken.pkcs11wrapper.rule.highlevel.SessionRule
 import ru.rutoken.pkcs11wrapper.rutoken.constant.RtPkcs11KeyType.*
 import ru.rutoken.pkcs11wrapper.rutoken.constant.RtPkcs11MechanismType.CKM_GOSTR3410_512_KEY_PAIR_GEN
 

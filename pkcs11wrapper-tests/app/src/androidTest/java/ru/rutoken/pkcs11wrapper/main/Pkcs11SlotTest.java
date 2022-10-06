@@ -5,8 +5,8 @@ import org.junit.Test;
 import org.junit.rules.RuleChain;
 import org.junit.rules.TestRule;
 
-import ru.rutoken.pkcs11wrapper.rule.ModuleRule;
-import ru.rutoken.pkcs11wrapper.rule.SlotRule;
+import ru.rutoken.pkcs11wrapper.rule.highlevel.ModuleRule;
+import ru.rutoken.pkcs11wrapper.rule.highlevel.SlotRule;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.assertThat;

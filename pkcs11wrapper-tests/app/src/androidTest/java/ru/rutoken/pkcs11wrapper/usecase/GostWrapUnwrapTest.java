@@ -27,12 +27,12 @@ import ru.rutoken.pkcs11wrapper.main.UtilsKt;
 import ru.rutoken.pkcs11wrapper.mechanism.Pkcs11Mechanism;
 import ru.rutoken.pkcs11wrapper.mechanism.parameter.Pkcs11ByteArrayMechanismParams;
 import ru.rutoken.pkcs11wrapper.object.key.Pkcs11KeyObject;
-import ru.rutoken.pkcs11wrapper.rule.GenerateSecretKeyRule;
-import ru.rutoken.pkcs11wrapper.rule.LoginRule;
-import ru.rutoken.pkcs11wrapper.rule.ModuleRule;
-import ru.rutoken.pkcs11wrapper.rule.SessionRule;
-import ru.rutoken.pkcs11wrapper.rule.SlotRule;
-import ru.rutoken.pkcs11wrapper.rule.TokenRule;
+import ru.rutoken.pkcs11wrapper.rule.highlevel.GenerateSecretKeyRule;
+import ru.rutoken.pkcs11wrapper.rule.highlevel.LoginRule;
+import ru.rutoken.pkcs11wrapper.rule.highlevel.ModuleRule;
+import ru.rutoken.pkcs11wrapper.rule.highlevel.SessionRule;
+import ru.rutoken.pkcs11wrapper.rule.highlevel.SlotRule;
+import ru.rutoken.pkcs11wrapper.rule.highlevel.TokenRule;
 
 public class GostWrapUnwrapTest {
     private static final ModuleRule sModule = new ModuleRule();

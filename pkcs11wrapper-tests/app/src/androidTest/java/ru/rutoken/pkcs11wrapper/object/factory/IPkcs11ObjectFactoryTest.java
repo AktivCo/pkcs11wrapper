@@ -20,7 +20,7 @@ import ru.rutoken.pkcs11wrapper.object.key.Pkcs11GostPrivateKeyObject;
 import ru.rutoken.pkcs11wrapper.object.key.Pkcs11GostPublicKeyObject;
 import ru.rutoken.pkcs11wrapper.object.key.Pkcs11KeyObject;
 import ru.rutoken.pkcs11wrapper.object.key.Pkcs11RsaPrivateKeyObject;
-import ru.rutoken.pkcs11wrapper.rule.ModuleRule;
+import ru.rutoken.pkcs11wrapper.rule.highlevel.ModuleRule;
 
 @RunWith(AndroidJUnit4.class)
 public class IPkcs11ObjectFactoryTest {

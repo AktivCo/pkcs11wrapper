@@ -1,4 +1,4 @@
-package ru.rutoken.pkcs11wrapper.rule
+package ru.rutoken.pkcs11wrapper.rule.highlevel
 
 import org.junit.rules.ExternalResource
 import ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11UserType

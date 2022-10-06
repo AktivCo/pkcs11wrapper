@@ -1,4 +1,4 @@
-package ru.rutoken.pkcs11wrapper.rule
+package ru.rutoken.pkcs11wrapper.rule.highlevel
 
 import io.kotest.assertions.withClue
 import io.kotest.matchers.ints.shouldBeGreaterThan

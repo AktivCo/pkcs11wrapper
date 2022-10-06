@@ -1,10 +1,11 @@
-package ru.rutoken.pkcs11wrapper.rule
+package ru.rutoken.pkcs11wrapper.rule.highlevel
 
 import io.kotest.matchers.types.shouldBeSameInstanceAs
 import org.junit.rules.TestRule
 import org.junit.runner.Description
 import org.junit.runners.model.Statement
 import ru.rutoken.pkcs11wrapper.main.Pkcs11Token
+import ru.rutoken.pkcs11wrapper.rule.highlevel.SlotRule
 
 class TokenRule(private val slot: SlotRule) : TestRule {
     private lateinit var _value: Pkcs11Token
