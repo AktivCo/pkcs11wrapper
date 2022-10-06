@@ -2,6 +2,7 @@ package ru.rutoken.pkcs11wrapper.rule.highlevel
 
 import com.sun.jna.Native
 import ru.rutoken.pkcs11jna.RtPkcs11
+import ru.rutoken.pkcs11wrapper.datatype.Pkcs11InitializeArgs
 import ru.rutoken.pkcs11wrapper.main.IPkcs11Module
 import ru.rutoken.pkcs11wrapper.main.Pkcs11BaseModule
 import ru.rutoken.pkcs11wrapper.rutoken.attribute.RtPkcs11AttributeFactory
@@ -22,7 +23,7 @@ class RtModuleRule : ModuleRule() {
     override val value: IPkcs11Module = rtModule
 
     override fun before() {
-        value.initializeModule(null)
+        value.initializeModule(Pkcs11InitializeArgs.Builder().setOsLockingOk(true).build())
     }
 
     override fun after() {

@@ -4,6 +4,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.sun.jna.Native
 import org.junit.rules.ExternalResource
 import ru.rutoken.pkcs11jna.Pkcs11
+import ru.rutoken.pkcs11wrapper.datatype.Pkcs11InitializeArgs
 import ru.rutoken.pkcs11wrapper.lowlevel.fake.Pkcs11FakeLowLevelApi
 import ru.rutoken.pkcs11wrapper.lowlevel.jna.Pkcs11JnaLowLevelApi
 import ru.rutoken.pkcs11wrapper.lowlevel.jna.Pkcs11JnaLowLevelFactory
@@ -22,7 +23,7 @@ open class ModuleRule : ExternalResource() {
     open val value: IPkcs11Module = pkcs11Module
 
     override fun before() {
-        value.initializeModule(null)
+        value.initializeModule(Pkcs11InitializeArgs.Builder().setOsLockingOk(true).build())
     }
 
     override fun after() {
