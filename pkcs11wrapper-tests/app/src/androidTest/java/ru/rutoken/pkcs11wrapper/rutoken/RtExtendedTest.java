@@ -14,20 +14,19 @@ import org.junit.rules.TestRule;
 
 import ru.rutoken.pkcs11wrapper.constant.IPkcs11ReturnValue;
 import ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11UserType;
+import ru.rutoken.pkcs11wrapper.rule.highlevel.RtTokenRule;
 import ru.rutoken.pkcs11wrapper.rule.highlevel.GenerateKeyPairRule;
 import ru.rutoken.pkcs11wrapper.rule.highlevel.LoginRule;
 import ru.rutoken.pkcs11wrapper.rule.highlevel.RtModuleRule;
 import ru.rutoken.pkcs11wrapper.rule.highlevel.SessionRule;
 import ru.rutoken.pkcs11wrapper.rule.highlevel.SlotRule;
-import ru.rutoken.pkcs11wrapper.rule.highlevel.TokenRule;
 import ru.rutoken.pkcs11wrapper.rutoken.constant.RtPkcs11ReturnValue;
 import ru.rutoken.pkcs11wrapper.rutoken.main.RtPkcs11Session;
-import ru.rutoken.pkcs11wrapper.rutoken.main.RtPkcs11Token;
 
 public class RtExtendedTest {
     private static final RtModuleRule sModule = new RtModuleRule();
     private static final SlotRule sSlot = new SlotRule(sModule);
-    private static final TokenRule sToken = new TokenRule(sSlot);
+    private static final RtTokenRule sToken = new RtTokenRule(sSlot);
     private static final SessionRule sSession = new SessionRule(sToken);
     private static final LoginRule sLogin = new LoginRule(sSession, Pkcs11UserType.CKU_USER, DEFAULT_USER_PIN);
     private static final GenerateKeyPairRule<?, ?> sKeyPair =
@@ -38,7 +37,7 @@ public class RtExtendedTest {
 
     @Test
     public void getTokenInfoExtended() {
-        final var info = ((RtPkcs11Token) sToken.getValue()).getTokenInfoExtended();
+        final var info = sToken.getValue().getTokenInfoExtended();
     }
 
     @Test

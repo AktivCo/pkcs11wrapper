@@ -1,4 +1,4 @@
-package ru.rutoken.pkcs11wrapper.rutoken
+package ru.rutoken.pkcs11wrapper.rutoken.manager
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import io.kotest.matchers.shouldBe
