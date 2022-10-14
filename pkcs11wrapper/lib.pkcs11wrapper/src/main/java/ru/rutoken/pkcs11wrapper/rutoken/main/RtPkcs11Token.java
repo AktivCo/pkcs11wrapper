@@ -4,6 +4,7 @@ import org.jetbrains.annotations.Nullable;
 import ru.rutoken.pkcs11wrapper.main.Pkcs11Slot;
 import ru.rutoken.pkcs11wrapper.main.Pkcs11TokenImpl;
 import ru.rutoken.pkcs11wrapper.rutoken.datatype.RutokenInitParam;
+import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.IRtPkcs11LowLevelApi;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.IRtPkcs11LowLevelFactory;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkTokenInfoExtended;
 
@@ -28,6 +29,16 @@ public class RtPkcs11Token extends Pkcs11TokenImpl {
     @Override
     public RtPkcs11Api getApi() {
         return (RtPkcs11Api) super.getApi();
+    }
+
+    @Override
+    public IRtPkcs11LowLevelApi getLowLevelApi() {
+        return getApi().getLowLevelApi();
+    }
+
+    @Override
+    public IRtPkcs11LowLevelFactory getLowLevelFactory() {
+        return getApi().getLowLevelFactory();
     }
 
     @Override

@@ -10,6 +10,7 @@ import ru.rutoken.pkcs11wrapper.lowlevel.fake.FakeSlot;
 import ru.rutoken.pkcs11wrapper.lowlevel.fake.FakeToken;
 import ru.rutoken.pkcs11wrapper.lowlevel.fake.Pkcs11FakeLowLevelApi;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.IRtPkcs11LowLevelApi;
+import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.IRtPkcs11LowLevelFactory;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.*;
 import ru.rutoken.pkcs11wrapper.util.Mutable;
 import ru.rutoken.pkcs11wrapper.util.MutableLong;
@@ -17,6 +18,11 @@ import ru.rutoken.pkcs11wrapper.util.MutableLong;
 public class RtPkcs11FakeLowLevelApi extends Pkcs11FakeLowLevelApi implements IRtPkcs11LowLevelApi {
     public RtPkcs11FakeLowLevelApi() {
         super(new RtPkcs11FakeLowLevelFactory());
+    }
+
+    @Override
+    public IRtPkcs11LowLevelFactory getLowLevelFactory() {
+        return (IRtPkcs11LowLevelFactory) super.getLowLevelFactory();
     }
 
     @Override

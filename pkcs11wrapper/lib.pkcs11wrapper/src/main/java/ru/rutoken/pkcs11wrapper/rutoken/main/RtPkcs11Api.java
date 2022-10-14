@@ -11,6 +11,7 @@ import ru.rutoken.pkcs11wrapper.rutoken.datatype.AttachedCmsVerifyResult;
 import ru.rutoken.pkcs11wrapper.rutoken.datatype.DetachedCmsVerifyResult;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.IRtPkcs11LowLevelApi;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkRutokenInitParam;
+import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.IRtPkcs11LowLevelFactory;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkTokenInfoExtended;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkVendorX509Store;
 import ru.rutoken.pkcs11wrapper.util.Mutable;
@@ -33,6 +34,11 @@ public class RtPkcs11Api extends Pkcs11Api {
     @Override
     public IRtPkcs11LowLevelApi getLowLevelApi() {
         return (IRtPkcs11LowLevelApi) super.getLowLevelApi();
+    }
+
+    @Override
+    public IRtPkcs11LowLevelFactory getLowLevelFactory() {
+        return getLowLevelApi().getLowLevelFactory();
     }
 
     public CkTokenInfoExtended C_EX_GetTokenInfoExtended(long slotId) {

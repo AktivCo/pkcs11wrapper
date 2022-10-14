@@ -85,6 +85,11 @@ public class RtPkcs11JnaLowLevelApi extends Pkcs11JnaLowLevelApi implements IRtP
     }
 
     @Override
+    public IRtPkcs11LowLevelFactory getLowLevelFactory() {
+        return (IRtPkcs11LowLevelFactory) super.getLowLevelFactory();
+    }
+
+    @Override
     public long C_EX_GetFunctionListExtended(Mutable<CkFunctionListExtended> functionList) {
         final PointerByReference functionListPointerRef = new PointerByReference();
         final long result = unsigned(getRtPkcs11().C_EX_GetFunctionListExtended(functionListPointerRef));

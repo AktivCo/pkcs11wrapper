@@ -8,6 +8,7 @@ import ru.rutoken.pkcs11wrapper.object.certificate.Pkcs11CertificateObject;
 import ru.rutoken.pkcs11wrapper.object.key.Pkcs11PrivateKeyObject;
 import ru.rutoken.pkcs11wrapper.object.key.Pkcs11PublicKeyObject;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.IRtPkcs11LowLevelApi;
+import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.IRtPkcs11LowLevelFactory;
 import ru.rutoken.pkcs11wrapper.rutoken.manager.RtPkcs11CmsManager;
 import ru.rutoken.pkcs11wrapper.util.MutableLong;
 import ru.rutoken.pkcs11wrapper.util.callconvention.ByteArrayCallConvention;
@@ -87,7 +88,12 @@ public class RtPkcs11Session extends Pkcs11SessionImpl {
 
     @Override
     public IRtPkcs11LowLevelApi getLowLevelApi() {
-        return (IRtPkcs11LowLevelApi) super.getLowLevelApi();
+        return getApi().getLowLevelApi();
+    }
+
+    @Override
+    public IRtPkcs11LowLevelFactory getLowLevelFactory() {
+        return getApi().getLowLevelFactory();
     }
 
     @Override

@@ -12,6 +12,9 @@ import java.util.List;
  * Defines Rutoken C_EX_ (extended) functions.
  */
 public interface IRtPkcs11LowLevelApi extends IPkcs11LowLevelApi {
+    @Override
+    IRtPkcs11LowLevelFactory getLowLevelFactory();
+
     long C_EX_GetFunctionListExtended(Mutable<CkFunctionListExtended> functionList);
 
     long C_EX_GetTokenInfoExtended(long slotId, Mutable<CkTokenInfoExtended> info);
