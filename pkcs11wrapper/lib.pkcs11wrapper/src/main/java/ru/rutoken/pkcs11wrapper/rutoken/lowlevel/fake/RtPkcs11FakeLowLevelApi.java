@@ -120,8 +120,8 @@ public class RtPkcs11FakeLowLevelApi extends Pkcs11FakeLowLevelApi implements IR
     }
 
     @Override
-    public long C_EX_CreateCSR(long session, long publicKey, String @Nullable [] dn, Mutable<byte[]> csr,
-                               long privateKey, String @Nullable [] attributes, String @Nullable [] extensions) {
+    public long C_EX_CreateCSR(long session, long publicKey, @Nullable List<String> dn, Mutable<byte[]> csr,
+                               long privateKey, @Nullable List<String> attributes, @Nullable List<String> extensions) {
         csr.value = new byte[0];
         return ok();
     }

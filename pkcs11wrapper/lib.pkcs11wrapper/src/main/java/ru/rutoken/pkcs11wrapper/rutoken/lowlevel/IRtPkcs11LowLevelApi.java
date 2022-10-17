@@ -50,8 +50,8 @@ public interface IRtPkcs11LowLevelApi extends IPkcs11LowLevelApi {
 
     long C_EX_SetLocalPIN(long slotId, byte[] currentPin, byte[] newLocalPin, long localPinId);
 
-    long C_EX_CreateCSR(long session, long publicKey, String @Nullable [] dn, Mutable<byte[]> csr, long privateKey,
-                        String @Nullable [] attributes, String @Nullable [] extensions);
+    long C_EX_CreateCSR(long session, long publicKey, @Nullable List<String> dn, Mutable<byte[]> csr, long privateKey,
+                        @Nullable List<String> attributes, @Nullable List<String> extensions);
 
     long C_EX_PKCS7Sign(long session, byte[] data, long signerCertificate, Mutable<byte[]> cms, long signerPrivateKey,
                         long @Nullable [] additionalCertificates, long flags);

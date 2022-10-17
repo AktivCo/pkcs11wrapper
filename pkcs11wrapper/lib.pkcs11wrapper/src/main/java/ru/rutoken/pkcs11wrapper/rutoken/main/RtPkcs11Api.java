@@ -26,11 +26,6 @@ public class RtPkcs11Api extends Pkcs11Api {
         super(api);
     }
 
-    @Nullable
-    private static String[] toArray(@Nullable List<String> array) {
-        return array != null ? array.toArray(new String[0]) : null;
-    }
-
     @Override
     public IRtPkcs11LowLevelApi getLowLevelApi() {
         return (IRtPkcs11LowLevelApi) super.getLowLevelApi();
@@ -84,8 +79,7 @@ public class RtPkcs11Api extends Pkcs11Api {
     public byte[] C_EX_CreateCSR(long session, long publicKey, List<String> dn, long privateKey,
                                  List<String> attributes, List<String> extensions) {
         final Mutable<byte[]> csr = new Mutable<>();
-        call(getLowLevelApi().C_EX_CreateCSR(session, publicKey, toArray(dn), csr, privateKey, toArray(attributes),
-                toArray(extensions)));
+        call(getLowLevelApi().C_EX_CreateCSR(session, publicKey, dn, csr, privateKey, attributes, extensions));
         return csr.value;
     }
 

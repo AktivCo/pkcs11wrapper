@@ -74,6 +74,11 @@ public class RtPkcs11JnaLowLevelApi extends Pkcs11JnaLowLevelApi implements IRtP
     }
 
     @Nullable
+    private static String[] toArray(@Nullable List<String> array) {
+        return array != null ? array.toArray(new String[0]) : null;
+    }
+
+    @Nullable
     static Pointer makePointerFromBytes(byte @Nullable [] data) {
         if (null == data)
             return null;
@@ -243,19 +248,19 @@ public class RtPkcs11JnaLowLevelApi extends Pkcs11JnaLowLevelApi implements IRtP
      * C_EX_FreeBuffer is called in this implementation.
      */
     @Override
-    public long C_EX_CreateCSR(long session, long publicKey, String @Nullable [] dn, Mutable<byte[]> csr,
-                               long privateKey, String @Nullable [] attributes, String @Nullable [] extensions) {
+    public long C_EX_CreateCSR(long session, long publicKey, @Nullable List<String> dn, Mutable<byte[]> csr,
+                               long privateKey, @Nullable List<String> attributes, @Nullable List<String> extensions) {
         final PointerByReference csrPointerRef = new PointerByReference();
         final NativeLongByReference csrLengthRef = new NativeLongByReference();
 
         final long result = unsigned(getRtPkcs11().C_EX_CreateCSR(
                 new NativeLong(session),
                 new NativeLong(publicKey),
-                dn, length(dn),
+                toArray(dn), length(dn),
                 csrPointerRef, csrLengthRef,
                 new NativeLong(privateKey),
-                attributes, length(attributes),
-                extensions, length(extensions)
+                toArray(attributes), length(attributes),
+                toArray(extensions), length(extensions)
         ));
 
         if (result == CKR_OK) {

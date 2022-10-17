@@ -109,8 +109,8 @@ public class Pkcs11JnaLowLevelApi implements IPkcs11LowLevelApi {
         return new NativeLong(data != null ? data.length : 0);
     }
 
-    protected static NativeLong length(String @Nullable [] data) {
-        return new NativeLong(data != null ? data.length : 0);
+    protected static NativeLong length(@Nullable List<String> data) {
+        return new NativeLong(data != null ? data.size() : 0);
     }
 
     protected static NativeLong length(long @Nullable [] data) {
