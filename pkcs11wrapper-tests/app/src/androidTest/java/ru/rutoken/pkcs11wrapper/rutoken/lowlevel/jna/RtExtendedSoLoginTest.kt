@@ -5,13 +5,30 @@ import org.junit.Test
 import org.junit.rules.RuleChain
 import org.junit.rules.TestRule
 import ru.rutoken.pkcs11jna.Pkcs11Constants.CKU_SO
+import ru.rutoken.pkcs11jna.Pkcs11Constants.CKU_USER
+import ru.rutoken.pkcs11jna.RtPkcs11Constants.MODE_CHANGE_DEFAULT_PIN
+import ru.rutoken.pkcs11jna.RtPkcs11Constants.MODE_RESET_PIN_TO_DEFAULT
 import ru.rutoken.pkcs11wrapper.main.DEFAULT_ADMIN_PIN
+import ru.rutoken.pkcs11wrapper.main.DEFAULT_USER_PIN
 import ru.rutoken.pkcs11wrapper.rule.lowlevel.jna.*
 
 class RtExtendedSoLoginTest {
     @Test
     fun unblockUserPin() {
         module.value.C_EX_UnblockUserPIN(session.value).shouldBeOk()
+    }
+
+    @Test
+    fun tokenManage() {
+        with(module.value) {
+            C_EX_TokenManage(session.value, MODE_RESET_PIN_TO_DEFAULT, JnaPointerParameterImpl(CKU_USER)).shouldBeOk()
+
+            val pinParams = lowLevelFactory.makeVendorPinParams().apply {
+                setUserType(CKU_USER)
+                setPin(DEFAULT_USER_PIN.toByteArray())
+            }
+            C_EX_TokenManage(session.value, MODE_CHANGE_DEFAULT_PIN, JnaPointerParameterImpl(pinParams)).shouldBeOk()
+        }
     }
 
     companion object {
