@@ -80,7 +80,7 @@ public class RtPkcs11FakeLowLevelApi extends Pkcs11FakeLowLevelApi implements IR
     }
 
     @Override
-    public long C_EX_SlotManage(long slotId, long mode, PointerParameter value) {
+    public long C_EX_SlotManage(long slotId, long mode, Mutable<PointerParameter> value) {
         return ok();
     }
 

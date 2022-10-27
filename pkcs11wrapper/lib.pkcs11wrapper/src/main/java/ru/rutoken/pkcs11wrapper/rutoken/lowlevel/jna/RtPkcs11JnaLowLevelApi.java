@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static ru.rutoken.pkcs11jna.Pkcs11Constants.CKR_OK;
+import static ru.rutoken.pkcs11jna.RtPkcs11Constants.MODE_GET_LOCAL_PIN_INFO;
 
 public class RtPkcs11JnaLowLevelApi extends Pkcs11JnaLowLevelApi implements IRtPkcs11LowLevelApi {
     public RtPkcs11JnaLowLevelApi(RtPkcs11 jnaPkcs11, IRtPkcs11LowLevelFactory lowLevelFactory) {
@@ -178,9 +179,20 @@ public class RtPkcs11JnaLowLevelApi extends Pkcs11JnaLowLevelApi implements IRtP
     }
 
     @Override
-    public long C_EX_SlotManage(long slotId, long mode, PointerParameter value) {
-        return unsigned(getRtPkcs11().C_EX_SlotManage(new NativeLong(slotId), new NativeLong(mode),
-                value == null ? null : ((JnaPointerParameterImpl) value).getPointer()));
+    public long C_EX_SlotManage(long slotId, long mode, Mutable<PointerParameter> value) {
+        if (value.value == null)
+            return unsigned(getRtPkcs11().C_EX_SlotManage(new NativeLong(slotId), new NativeLong(mode), null));
+
+        Pointer pointer = ((JnaPointerParameterImpl) value.value).getPointer();
+        final long result =
+                unsigned(getRtPkcs11().C_EX_SlotManage(new NativeLong(slotId), new NativeLong(mode), pointer));
+
+        if (mode == MODE_GET_LOCAL_PIN_INFO) {
+            CkLocalPinInfoImpl localPinInfo = new CkLocalPinInfoImpl(new CK_LOCAL_PIN_INFO(pointer));
+            value.value = new JnaPointerParameterImpl(localPinInfo);
+        }
+
+        return result;
     }
 
     @Override

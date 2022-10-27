@@ -7,7 +7,6 @@ import com.sun.jna.ptr.NativeLongByReference;
 
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.IRtPkcs11LowLevelApi.PointerParameter;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkLocalPinInfo;
-import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkRutokenInitParam;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkVendorPinParams;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkVendorRestoreFactoryDefaultsParams;
 
@@ -17,36 +16,46 @@ import java.util.Objects;
  * Helps to write data into raw memory to pass into pkcs11 as void*.
  */
 public class JnaPointerParameterImpl implements PointerParameter {
+    private final Object mValue;
     /**
      * Store value to prevent garbage collection.
      */
-    private final Object mValue;
+    private final Object mJnaValue;
     private final Pointer mPointer;
 
     public JnaPointerParameterImpl(long value) {
-        mValue = new NativeLongByReference(new NativeLong(value));
-        mPointer = ((NativeLongByReference) mValue).getPointer();
+        mValue = value;
+        mJnaValue = new NativeLongByReference(new NativeLong(value));
+        mPointer = ((NativeLongByReference) mJnaValue).getPointer();
     }
 
     public JnaPointerParameterImpl(CkVendorPinParams value) {
-        this(((CkVendorPinParamsImpl) value).getJnaValue());
+        this(Objects.requireNonNull(value), ((CkVendorPinParamsImpl) value).getJnaValue());
     }
 
     public JnaPointerParameterImpl(CkLocalPinInfo value) {
-        this(((CkLocalPinInfoImpl) value).getJnaValue());
+        this(Objects.requireNonNull(value), ((CkLocalPinInfoImpl) value).getJnaValue());
     }
 
     public JnaPointerParameterImpl(CkVendorRestoreFactoryDefaultsParams value) {
-        this(((CkVendorRestoreFactoryDefaultsParamsImpl) value).getJnaValue());
+        this(Objects.requireNonNull(value), ((CkVendorRestoreFactoryDefaultsParamsImpl) value).getJnaValue());
     }
 
-    private JnaPointerParameterImpl(Structure value) {
-        mValue = Objects.requireNonNull(value);
-        value.write();
-        mPointer = value.getPointer();
+    private JnaPointerParameterImpl(Object value, Structure jnaValue) {
+        mValue = value;
+        mJnaValue = jnaValue;
+        jnaValue.write();
+        mPointer = jnaValue.getPointer();
     }
 
     public Pointer getPointer() {
         return mPointer;
+    }
+
+    public CkLocalPinInfo getCkLocalPinInfo() {
+        if (!(mValue instanceof CkLocalPinInfo))
+            throw new IllegalStateException("Value must be an instance of a CkLocalPinInfo class");
+
+        return (CkLocalPinInfo) mValue;
     }
 }

@@ -34,7 +34,7 @@ public interface IRtPkcs11LowLevelApi extends IPkcs11LowLevelApi {
 
     long C_EX_GetJournal(long slotId, byte @Nullable [] journal, MutableLong journalSize);
 
-    long C_EX_SlotManage(long slotId, long mode, PointerParameter value);
+    long C_EX_SlotManage(long slotId, long mode, Mutable<PointerParameter> value);
 
     long C_EX_UnblockUserPIN(long session);
 
