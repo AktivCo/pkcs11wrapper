@@ -5,15 +5,12 @@ import ru.rutoken.pkcs11wrapper.constant.IPkcs11ReturnValue;
 import ru.rutoken.pkcs11wrapper.main.Pkcs11Api;
 import ru.rutoken.pkcs11wrapper.rutoken.datatype.AttachedCmsVerifyResult;
 import ru.rutoken.pkcs11wrapper.rutoken.datatype.DetachedCmsVerifyResult;
-import ru.rutoken.pkcs11wrapper.rutoken.datatype.VolumeFormatInfoExtended;
-import ru.rutoken.pkcs11wrapper.rutoken.datatype.VolumeInfoExtended;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.IRtPkcs11LowLevelApi;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.IRtPkcs11LowLevelFactory;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.*;
 import ru.rutoken.pkcs11wrapper.util.Mutable;
 import ru.rutoken.pkcs11wrapper.util.MutableLong;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -46,15 +43,8 @@ public class RtPkcs11Api extends Pkcs11Api {
         call(getLowLevelApi().C_EX_InitToken(slotId, adminPin, initInfo));
     }
 
-    public void C_EX_GetVolumesInfo(long slotId, @Nullable List<VolumeInfoExtended> info, MutableLong infoCount) {
-        final CkVolumeInfoExtended[] lowLevelInfo = makeCkVolumeInfoExtendedArray(info);
-        call(getLowLevelApi().C_EX_GetVolumesInfo(slotId, lowLevelInfo, infoCount));
-
-        if (lowLevelInfo != null) {
-            for (int i = 0; i < info.size(); i++) {
-                info.set(i, new VolumeInfoExtended(lowLevelInfo[i]));
-            }
-        }
+    public void C_EX_GetVolumesInfo(long slotId, CkVolumeInfoExtended @Nullable [] info, MutableLong infoCount) {
+        call(getLowLevelApi().C_EX_GetVolumesInfo(slotId, info, infoCount));
     }
 
     public long C_EX_GetDriveSize(long slotId) {
@@ -68,8 +58,9 @@ public class RtPkcs11Api extends Pkcs11Api {
         call(getLowLevelApi().C_EX_ChangeVolumeAttributes(slotId, userType, pin, volumeId, newAccessMode, permanent));
     }
 
-    public void C_EX_FormatDrive(long slotId, long userType, byte[] pin, List<VolumeFormatInfoExtended> formatParams) {
-        call(getLowLevelApi().C_EX_FormatDrive(slotId, userType, pin, toCkVolumeFormatInfoExtendedList(formatParams)));
+    public void C_EX_FormatDrive(long slotId, long userType, byte[] pin,
+                                 List<CkVolumeFormatInfoExtended> formatParams) {
+        call(getLowLevelApi().C_EX_FormatDrive(slotId, userType, pin, formatParams));
     }
 
     public void C_EX_UnblockUserPIN(long session) {
@@ -142,28 +133,5 @@ public class RtPkcs11Api extends Pkcs11Api {
                         CKR_SIGNATURE_INVALID, CKR_CERT_CHAIN_NOT_VERIFIED);
 
         return new DetachedCmsVerifyResult(result, signerCertificates.value);
-    }
-
-    @Nullable
-    private CkVolumeInfoExtended[] makeCkVolumeInfoExtendedArray(@Nullable List<VolumeInfoExtended> list) {
-        if (list == null)
-            return null;
-
-        final CkVolumeInfoExtended[] result = new CkVolumeInfoExtended[list.size()];
-        for (int i = 0; i < list.size(); i++) {
-            // We cannot set fields of this object as its datatype interface has no setters (it's a read-only structure)
-            result[i] = getLowLevelFactory().makeVolumeInfoExtended();
-        }
-
-        return result;
-    }
-
-    private List<CkVolumeFormatInfoExtended> toCkVolumeFormatInfoExtendedList(
-            List<VolumeFormatInfoExtended> formatInfo) {
-        final List<CkVolumeFormatInfoExtended> result = new ArrayList<>(formatInfo.size());
-        for (VolumeFormatInfoExtended i : formatInfo) {
-            result.add(i.toCkVolumeFormatInfoExtended(getLowLevelFactory()));
-        }
-        return result;
     }
 }

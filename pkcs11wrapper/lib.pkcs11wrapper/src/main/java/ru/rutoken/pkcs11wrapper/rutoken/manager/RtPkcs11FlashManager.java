@@ -8,11 +8,14 @@ import ru.rutoken.pkcs11wrapper.rutoken.datatype.VolumeFormatInfoExtended;
 import ru.rutoken.pkcs11wrapper.rutoken.datatype.VolumeInfoExtended;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.IRtPkcs11LowLevelApi;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.IRtPkcs11LowLevelFactory;
+import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkVolumeFormatInfoExtended;
+import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkVolumeInfoExtended;
 import ru.rutoken.pkcs11wrapper.rutoken.main.RtPkcs11Api;
 import ru.rutoken.pkcs11wrapper.rutoken.main.RtPkcs11Token;
 import ru.rutoken.pkcs11wrapper.util.MutableLong;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static java.util.Collections.emptyList;
@@ -20,6 +23,14 @@ import static java.util.Collections.emptyList;
 public class RtPkcs11FlashManager extends BaseTokenManager {
     public RtPkcs11FlashManager(Pkcs11Token token) {
         super(token);
+    }
+
+    private static List<VolumeInfoExtended> toVolumeInfoExtendedList(CkVolumeInfoExtended[] ckVolumeInfoExtendedArray) {
+        final List<VolumeInfoExtended> result = new ArrayList<>(ckVolumeInfoExtendedArray.length);
+        for (CkVolumeInfoExtended ckVolumeInfoExtended : ckVolumeInfoExtendedArray) {
+            result.add(new VolumeInfoExtended(ckVolumeInfoExtended));
+        }
+        return result;
     }
 
     public List<VolumeInfoExtended> getVolumesInfo() {
@@ -32,19 +43,15 @@ public class RtPkcs11FlashManager extends BaseTokenManager {
         else if (expectedLength < 0)
             throw new IllegalStateException("Length of volumes info is less than zero");
 
-        List<VolumeInfoExtended> result = new ArrayList<>(expectedLength);
-        for (int i = 0; i < expectedLength; i++) {
-            result.add(new VolumeInfoExtended());
-        }
-
-        getApi().C_EX_GetVolumesInfo(getToken().getSlot().getId(), result, mutableLength);
+        CkVolumeInfoExtended[] lowLevelInfo = makeCkVolumeInfoExtendedArray(expectedLength);
+        getApi().C_EX_GetVolumesInfo(getToken().getSlot().getId(), lowLevelInfo, mutableLength);
 
         // Result may be shorter that was expected because pkcs convention is allowed to initially return a longer
         // length than is actually required
-        if (mutableLength.value < result.size())
-            result = result.subList(0, (int) mutableLength.value);
+        if (mutableLength.value < lowLevelInfo.length)
+            lowLevelInfo = Arrays.copyOf(lowLevelInfo, (int) mutableLength.value);
 
-        return result;
+        return toVolumeInfoExtendedList(lowLevelInfo);
     }
 
     public long getDriveSize() {
@@ -58,7 +65,8 @@ public class RtPkcs11FlashManager extends BaseTokenManager {
     }
 
     public void formatDrive(long userType, String pin, List<VolumeFormatInfoExtended> formatParams) {
-        getApi().C_EX_FormatDrive(getSlot().getId(), userType, pin.getBytes(), formatParams);
+        getApi().C_EX_FormatDrive(getSlot().getId(), userType, pin.getBytes(),
+                toCkVolumeFormatInfoExtendedList(formatParams));
     }
 
     @Override
@@ -79,6 +87,24 @@ public class RtPkcs11FlashManager extends BaseTokenManager {
     @Override
     public RtPkcs11Token getToken() {
         return (RtPkcs11Token) mToken;
+    }
+
+    private CkVolumeInfoExtended[] makeCkVolumeInfoExtendedArray(int size) {
+        final CkVolumeInfoExtended[] result = new CkVolumeInfoExtended[size];
+        for (int i = 0; i < size; i++) {
+            // We cannot set fields of this object as its datatype interface has no setters (it's a read-only structure)
+            result[i] = getLowLevelFactory().makeVolumeInfoExtended();
+        }
+        return result;
+    }
+
+    private List<CkVolumeFormatInfoExtended> toCkVolumeFormatInfoExtendedList(
+            List<VolumeFormatInfoExtended> formatInfo) {
+        final List<CkVolumeFormatInfoExtended> result = new ArrayList<>(formatInfo.size());
+        for (VolumeFormatInfoExtended info : formatInfo) {
+            result.add(info.toCkVolumeFormatInfoExtended(getLowLevelFactory()));
+        }
+        return result;
     }
 
     public enum AccessMode implements LongValueSupplier {
