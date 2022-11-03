@@ -7,7 +7,9 @@ import org.junit.ClassRule
 import org.junit.Test
 import org.junit.rules.RuleChain
 import org.junit.rules.TestRule
+import ru.rutoken.pkcs11jna.Pkcs11Constants.CKU_USER
 import ru.rutoken.pkcs11jna.Pkcs11Tc26Constants.CKM_GOSTR3410_WITH_GOSTR3411_12_256
+import ru.rutoken.pkcs11wrapper.main.DEFAULT_USER_PIN
 import ru.rutoken.pkcs11wrapper.rule.lowlevel.jna.*
 import ru.rutoken.pkcs11wrapper.util.MutableLong
 
@@ -50,12 +52,11 @@ class RtExtendedJournalTest {
         private val module = RtModuleRule()
         private val slot = SlotRule(module)
         private val session = SessionRule(module, slot)
-        private val userLogin = LoginUserRule(module, session)
+        private val login = LoginRule(module, session, CKU_USER, DEFAULT_USER_PIN)
         private val keyPair = GenerateKeyPairRule(module, session)
 
         @JvmStatic
         @get:ClassRule
-        val ruleChain: TestRule =
-            RuleChain.outerRule(module).around(slot).around(session).around(userLogin).around(keyPair)
+        val ruleChain: TestRule = RuleChain.outerRule(module).around(slot).around(session).around(login).around(keyPair)
     }
 }

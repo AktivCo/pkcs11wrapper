@@ -23,7 +23,7 @@ public class RtPkcs11Token extends Pkcs11TokenImpl {
 
     public void initToken(@Nullable String adminPin, RutokenInitParam param) {
         getApi().C_EX_InitToken(getSlot().getId(), adminPin == null ? null : adminPin.getBytes(),
-                param.toCkRutokenInitParam((IRtPkcs11LowLevelFactory) getLowLevelFactory()));
+                param.toCkRutokenInitParam(getLowLevelFactory()));
     }
 
     public void setLocalPin(String currentPin, String newLocalPin, long localPinId) {

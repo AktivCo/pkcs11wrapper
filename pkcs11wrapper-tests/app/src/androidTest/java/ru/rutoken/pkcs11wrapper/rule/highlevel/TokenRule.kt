@@ -5,9 +5,10 @@ import org.junit.rules.TestRule
 import org.junit.runner.Description
 import org.junit.runners.model.Statement
 import ru.rutoken.pkcs11wrapper.main.Pkcs11Token
+import ru.rutoken.pkcs11wrapper.rutoken.main.RtPkcs11Token
 
 open class TokenRule(protected val slot: SlotRule) : TestRule {
-    protected lateinit var _value: Pkcs11Token
+    private lateinit var _value: Pkcs11Token
     open val value get() = _value
 
     override fun apply(base: Statement, description: Description) = object : Statement() {
@@ -17,4 +18,8 @@ open class TokenRule(protected val slot: SlotRule) : TestRule {
             base.evaluate()
         }
     }
+}
+
+class RtTokenRule(slot: SlotRule) : TokenRule(slot) {
+    override val value get() = super.value as RtPkcs11Token
 }
