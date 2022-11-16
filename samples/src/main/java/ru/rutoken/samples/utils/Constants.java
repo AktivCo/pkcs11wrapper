@@ -1,0 +1,10 @@
+package ru.rutoken.samples.utils;
+
+public final class Constants {
+    public static final byte[] GOSTR3411_1994_OID = {0x06, 0x07, 0x2a, (byte) 0x85, 0x03, 0x02, 0x02, 0x1e, 0x01};
+    public static final byte[] GOSTR3411_2012_256_OID =
+            {0x06, 0x08, 0x2a, (byte) 0x85, 0x03, 0x07, 0x01, 0x01, 0x02, 0x02};
+
+    private Constants() {
+    }
+}
