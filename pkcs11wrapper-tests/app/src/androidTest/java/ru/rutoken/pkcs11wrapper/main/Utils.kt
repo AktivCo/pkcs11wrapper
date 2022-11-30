@@ -21,6 +21,7 @@ import ru.rutoken.pkcs11wrapper.rule.highlevel.GenerateKeyPairRule
 import ru.rutoken.pkcs11wrapper.rule.highlevel.SessionRule
 import ru.rutoken.pkcs11wrapper.rutoken.constant.RtPkcs11KeyType.*
 import ru.rutoken.pkcs11wrapper.rutoken.constant.RtPkcs11MechanismType.CKM_GOSTR3410_512_KEY_PAIR_GEN
+import java.util.*
 
 val CRYPTO_PRO_A_GOST28147_89_OID = byteArrayOf(0x06, 0x07, 0x2A, 0x85.toByte(), 0x03, 0x02, 0x02, 0x1f, 0x01)
 val CRYPTO_PRO_A_GOSTR3410_2001_OID = byteArrayOf(0x06, 0x07, 0x2A, 0x85.toByte(), 0x03, 0x02, 0x02, 0x23, 0x01)
@@ -246,3 +247,5 @@ fun IPkcs11AttributeFactory.makeCertificateTemplate(id: ByteArray, value: ByteAr
 
 fun Pkcs11Token.isMechanismSupported(mechanism: IPkcs11MechanismType) =
     mechanismList.any { it.asLong == mechanism.asLong }
+
+fun generateRandomData(dataSize: Int) = ByteArray(dataSize).apply { Random().nextBytes(this) }
