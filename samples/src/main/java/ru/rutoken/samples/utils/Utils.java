@@ -1,7 +1,9 @@
 package ru.rutoken.samples.utils;
 
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
+import java.util.Scanner;
 
 public final class Utils {
     private Utils() {
@@ -28,6 +30,37 @@ public final class Utils {
                 System.out.println();
         }
         System.out.println();
+    }
+
+    public static void printCsr(byte[] csrDer) {
+        println("CSR:");
+
+        final var lineWidth = 64;
+        // Encode from der to base64
+        final var csrBase64 = Base64.getEncoder().encodeToString(csrDer);
+
+        var k = 0;
+        while (k < csrBase64.length() / lineWidth) {
+            println(csrBase64.substring(k * lineWidth, (k + 1) * lineWidth));
+            k++;
+        }
+
+        println(csrBase64.substring(k * lineWidth));
+    }
+
+    public static String readCertificate() {
+        final var regexHeader = ".*-----BEGIN[^-]*(-[^-]+)*-----";
+        final var regexFooter = "-----END[^-]*(-[^-]+)*-----.*";
+        final var in = new Scanner(System.in);
+        var currentLine = in.nextLine();
+        final var certificate = new StringBuilder();
+
+        do {
+            certificate.append(currentLine);
+            currentLine = in.nextLine();
+        } while (!currentLine.isEmpty());
+
+        return certificate.toString().replaceFirst(regexHeader, "").replaceFirst(regexFooter, "");
     }
 
     public static <T> T TODO(String reason) {
