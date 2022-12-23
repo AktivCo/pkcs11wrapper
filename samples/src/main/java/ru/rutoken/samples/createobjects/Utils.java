@@ -1,4 +1,4 @@
-package ru.rutoken.samples.createKeyPairCertificate;
+package ru.rutoken.samples.createobjects;
 
 import ru.rutoken.pkcs11wrapper.attribute.IPkcs11AttributeFactory;
 import ru.rutoken.pkcs11wrapper.attribute.Pkcs11Attribute;

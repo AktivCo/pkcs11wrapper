@@ -1,18 +1,18 @@
-package ru.rutoken.samples.findObjects;
+package ru.rutoken.samples.findobjects;
 
 import org.bouncycastle.cert.X509CertificateHolder;
 
 import ru.rutoken.pkcs11wrapper.object.certificate.Pkcs11X509PublicKeyCertificateObject;
 import ru.rutoken.pkcs11wrapper.object.key.Pkcs11PublicKeyObject;
-import ru.rutoken.samples.findObjects.Container.CertificateAndKeyPairContainer;
-import ru.rutoken.samples.findObjects.Container.CertificateContainer;
-import ru.rutoken.samples.findObjects.Container.KeyPairContainer;
+import ru.rutoken.samples.findobjects.Container.CertificateAndKeyPairContainer;
+import ru.rutoken.samples.findobjects.Container.CertificateContainer;
+import ru.rutoken.samples.findobjects.Container.KeyPairContainer;
 import ru.rutoken.samples.utils.RtPkcs11Module;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static ru.rutoken.samples.findObjects.Utils.*;
+import static ru.rutoken.samples.findobjects.Utils.*;
 import static ru.rutoken.samples.utils.Pkcs11Operations.findPublicKeyByCertificate;
 import static ru.rutoken.samples.utils.Pkcs11Operations.initializePkcs11AndGetFirstToken;
 import static ru.rutoken.samples.utils.Utils.*;

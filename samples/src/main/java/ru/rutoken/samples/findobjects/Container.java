@@ -1,4 +1,4 @@
-package ru.rutoken.samples.findObjects;
+package ru.rutoken.samples.findobjects;
 
 import org.bouncycastle.cert.X509CertificateHolder;
 

@@ -1,11 +1,11 @@
-package ru.rutoken.samples.createKeyPairCertificate;
+package ru.rutoken.samples.createobjects;
 
 import ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11UserType;
 import ru.rutoken.samples.utils.GostDemoCA;
 import ru.rutoken.samples.utils.RtPkcs11Module;
 
-import static ru.rutoken.samples.createKeyPairCertificate.Utils.generateRsaKeyPair;
-import static ru.rutoken.samples.createKeyPairCertificate.Utils.makeCertificateTemplate;
+import static ru.rutoken.samples.createobjects.Utils.generateRsaKeyPair;
+import static ru.rutoken.samples.createobjects.Utils.makeCertificateTemplate;
 import static ru.rutoken.samples.utils.Constants.*;
 import static ru.rutoken.samples.utils.Pkcs11Operations.initializePkcs11AndGetFirstToken;
 import static ru.rutoken.samples.utils.Utils.*;

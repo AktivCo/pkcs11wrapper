@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.IntStream;
 
 public final class Utils {
     private Utils() {
@@ -15,6 +16,8 @@ public final class Utils {
 
     public static <T> void printSuccessfulExit(Class<T> clazz) {
         println(clazz.getSimpleName() + " has been completed successfully");
+        println("--------------------------------------------------------");
+        println("--------------------------------------------------------");
     }
 
     public static <T> void printError(Class<T> clazz, Exception e) {
@@ -48,6 +51,11 @@ public final class Utils {
         println(csrBase64.substring(k * lineWidth));
     }
 
+    public static void printString(String label, String data) {
+        println(label);
+        println(data);
+    }
+
     public static String readCertificate() {
         final var regexHeader = ".*-----BEGIN[^-]*(-[^-]+)*-----";
         final var regexFooter = "-----END[^-]*(-[^-]+)*-----.*";
@@ -73,5 +81,16 @@ public final class Utils {
                 return true;
         }
         return false;
+    }
+
+    public static byte[] dropPrecedingZeros(byte[] array) {
+        if (array.length == 0)
+            return array;
+
+        final var numPrecedingZeros = IntStream.range(0, array.length)
+                .filter(index -> array[index] != 0)
+                .findFirst().orElse(-1);
+
+        return Arrays.copyOfRange(array, numPrecedingZeros, array.length);
     }
 }

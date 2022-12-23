@@ -1,8 +1,9 @@
 package ru.rutoken.samples;
 
-import ru.rutoken.samples.createKeyPairCertificate.CreateGostKeyPairAndCertificateSample;
-import ru.rutoken.samples.createKeyPairCertificate.CreateRsaKeyPairAndCertificateSample;
-import ru.rutoken.samples.findObjects.FindObjectsSample;
+import ru.rutoken.samples.signverify.GostCmsSignVerifySample;
+import ru.rutoken.samples.createobjects.CreateGostKeyPairAndCertificateSample;
+import ru.rutoken.samples.createobjects.CreateRsaKeyPairAndCertificateSample;
+import ru.rutoken.samples.findobjects.FindObjectsSample;
 import ru.rutoken.samples.utils.RtPkcs11Module;
 
 public class GlobalRun {
@@ -12,5 +13,6 @@ public class GlobalRun {
         CreateGostKeyPairAndCertificateSample.runSample(pkcs11Module);
         CreateRsaKeyPairAndCertificateSample.runSample(pkcs11Module);
         FindObjectsSample.runSample(pkcs11Module);
+        GostCmsSignVerifySample.runSample(pkcs11Module);
     }
 }

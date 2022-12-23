@@ -1,4 +1,4 @@
-package ru.rutoken.samples.findObjects;
+package ru.rutoken.samples.findobjects;
 
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
 import org.bouncycastle.asn1.x500.style.BCStyle;
@@ -8,7 +8,7 @@ import org.jetbrains.annotations.Nullable;
 
 import ru.rutoken.pkcs11wrapper.object.key.Pkcs11PublicKeyObject;
 import ru.rutoken.pkcs11wrapper.rutoken.main.RtPkcs11Session;
-import ru.rutoken.samples.findObjects.Algorithm.*;
+import ru.rutoken.samples.findobjects.Algorithm.*;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;

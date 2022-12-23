@@ -11,18 +11,17 @@ import ru.rutoken.pkcs11wrapper.object.key.Pkcs11RsaPublicKeyObject;
 import ru.rutoken.pkcs11wrapper.rutoken.main.RtPkcs11Session;
 import ru.rutoken.pkcs11wrapper.rutoken.main.RtPkcs11Token;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.security.cert.CertificateException;
-import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.security.interfaces.RSAPublicKey;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.IntStream;
 
 import static ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11AttributeType.*;
+import static ru.rutoken.samples.utils.PkiUtils.generateX509Certificate;
+import static ru.rutoken.samples.utils.Utils.dropPrecedingZeros;
 
 public final class Pkcs11Operations {
     private Pkcs11Operations() {
@@ -45,12 +44,6 @@ public final class Pkcs11Operations {
         final var certificate = generateX509Certificate(certificateHolder);
         return certificate.getPublicKey() instanceof RSAPublicKey ? findRsaPublicKeyByCertificate(session, certificate)
                 : findGostPublicKeyByCertificate(session, certificateHolder);
-    }
-
-    private static X509Certificate generateX509Certificate(X509CertificateHolder certificateHolder)
-            throws CertificateException, IOException {
-        return (X509Certificate) CertificateFactory.getInstance("X.509")
-                .generateCertificate(new ByteArrayInputStream(certificateHolder.getEncoded()));
     }
 
     @Nullable
@@ -101,16 +94,5 @@ public final class Pkcs11Operations {
         result.add(new Pkcs11ByteArrayAttribute(CKA_PUBLIC_EXPONENT, publicExp.toByteArray()));
 
         return result;
-    }
-
-    private static byte[] dropPrecedingZeros(byte[] array) {
-        if (array.length == 0)
-            return array;
-
-        final var numPrecedingZeros = IntStream.range(0, array.length)
-                .filter(index -> array[index] != 0)
-                .findFirst().orElse(-1);
-
-        return Arrays.copyOfRange(array, numPrecedingZeros, array.length);
     }
 }

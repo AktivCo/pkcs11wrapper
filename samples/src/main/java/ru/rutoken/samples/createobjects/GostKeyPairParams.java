@@ -1,4 +1,4 @@
-package ru.rutoken.samples.createKeyPairCertificate;
+package ru.rutoken.samples.createobjects;
 
 import ru.rutoken.pkcs11wrapper.constant.IPkcs11KeyType;
 import ru.rutoken.pkcs11wrapper.constant.IPkcs11MechanismType;

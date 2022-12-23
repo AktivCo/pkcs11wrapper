@@ -1,4 +1,4 @@
-package ru.rutoken.samples.findObjects;
+package ru.rutoken.samples.findobjects;
 
 abstract class Algorithm {
     static final class GostAlgorithm2001 extends Algorithm {
