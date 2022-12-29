@@ -27,7 +27,7 @@ import static ru.rutoken.samples.utils.Utils.*;
  * Expects corresponding GOST key pair and certificate on token, you should run
  * {@link CreateGostKeyPairAndCertificateSample} to create them.
  */
-public class GostCmsSignVerifySample {
+public class SignVerifyGostCmsSample {
     /**
      * Change this flag to false if you want to create detached CMS signature.
      */
@@ -103,10 +103,10 @@ public class GostCmsSignVerifySample {
                 }
 
                 println("CMS signature is valid");
-                printSuccessfulExit(GostCmsSignVerifySample.class);
+                printSuccessfulExit(SignVerifyGostCmsSample.class);
             }
         } catch (Exception e) {
-            printError(GostCmsSignVerifySample.class, e);
+            printError(SignVerifyGostCmsSample.class, e);
         } finally {
             module.finalizeModule();
         }

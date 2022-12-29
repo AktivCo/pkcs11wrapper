@@ -6,6 +6,7 @@ import java.util.List;
 public final class Constants {
     public static final String DEFAULT_USER_PIN = "12345678";
     public static final String DEFAULT_ADMIN_PIN = "87654321";
+    public static final String TOKEN_LABEL = "Rutoken";
 
     public static final byte[] CRYPTO_PRO_A_GOSTR3410_2012_256_OID =
             {0x06, 0x07, 0x2A, (byte) 0x85, 0x03, 0x02, 0x02, 0x23, 0x01};
