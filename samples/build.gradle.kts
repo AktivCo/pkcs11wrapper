@@ -20,7 +20,6 @@ dependencies {
     compileOnly(Dependencies.jetbrainsAnnotations)
 
     implementation(fileTree("../pkcs11wrapper/lib.pkcs11wrapper/build/libs/") { include("pkcs11wrapper*.jar") })
-    implementation(fileTree("../pkcs11wrapper/lib.pkcs11wrapper-ktx/build/libs/") { include("pkcs11wrapper-ktx*.jar") })
 
     implementation(Dependencies.pkcs11jna)
     implementation(Dependencies.bouncyCastleBcpkixJdk15on)
