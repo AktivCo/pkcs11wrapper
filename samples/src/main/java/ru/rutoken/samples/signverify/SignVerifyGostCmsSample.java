@@ -109,6 +109,7 @@ public class SignVerifyGostCmsSample {
             printError(SignVerifyGostCmsSample.class, e);
         } finally {
             module.finalizeModule();
+            printSampleDelimiter();
         }
     }
 

@@ -25,9 +25,12 @@ public final class Constants {
     public static final String GOST_2012_512_PRIVATE_KEY_LABEL = "Sample GOST R 34.10-2012 (512 bits) Private Key";
     public static final String RSA_PUBLIC_KEY_LABEL = "Sample RSA Public Key";
     public static final String RSA_PRIVATE_KEY_LABEL = "Sample RSA Private Key";
+    public static final String ECDSA_PUBLIC_KEY_LABEL = "Sample ECDSA Public Key";
+    public static final String ECDSA_PRIVATE_KEY_LABEL = "Sample ECDSA Private Key";
     public static final byte[] GOST_2012_256_KEY_PAIR_ID = "Sample GOST R 34.10-2012 (256 bits) key pair".getBytes();
     public static final byte[] GOST_2012_512_KEY_PAIR_ID = "Sample GOST R 34.10-2012 (512 bits) key pair".getBytes();
     public static final byte[] RSA_KEY_PAIR_ID = "Sample RSA key pair".getBytes();
+    public static final byte[] ECDSA_KEY_PAIR_ID = "Sample ECDSA key pair".getBytes();
 
     public static final List<String> DN = Arrays.asList(
             "CN",

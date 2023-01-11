@@ -17,6 +17,7 @@ public class GetTokenInfoExtendedSample {
             printError(GetTokenInfoExtendedSample.class, e);
         } finally {
             module.finalizeModule();
+            printSampleDelimiter();
         }
     }
 

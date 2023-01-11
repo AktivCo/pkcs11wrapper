@@ -31,6 +31,7 @@ public class InitTokenExtendedSample {
             printError(InitTokenExtendedSample.class, e);
         } finally {
             module.finalizeModule();
+            printSampleDelimiter();
         }
     }
 

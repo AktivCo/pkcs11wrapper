@@ -1,11 +1,13 @@
 package ru.rutoken.samples.createobjects;
 
 import ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11UserType;
+import ru.rutoken.pkcs11wrapper.mechanism.Pkcs11Mechanism;
+import ru.rutoken.pkcs11wrapper.object.key.Pkcs11GostPrivateKeyObject;
+import ru.rutoken.pkcs11wrapper.object.key.Pkcs11GostPublicKeyObject;
 import ru.rutoken.samples.utils.GostDemoCA;
 import ru.rutoken.samples.utils.RtPkcs11Module;
 
-import static ru.rutoken.samples.createobjects.Utils.generateGostKeyPair;
-import static ru.rutoken.samples.createobjects.Utils.makeCertificateTemplate;
+import static ru.rutoken.samples.createobjects.Utils.*;
 import static ru.rutoken.samples.utils.Constants.*;
 import static ru.rutoken.samples.utils.Pkcs11Operations.initializePkcs11AndGetFirstToken;
 import static ru.rutoken.samples.utils.Utils.*;
@@ -21,9 +23,19 @@ public class CreateGostKeyPairAndCertificateSample {
 
     public static void runSample(RtPkcs11Module module) {
         try (var session = initializePkcs11AndGetFirstToken(module).openSession(true)) {
+            if (hasUnsupportedMechanisms(CreateGostKeyPairAndCertificateSample.class, session.getToken(),
+                    GOST_KEY_PAIR_PARAMS.getMechanismType()))
+                return;
+
             try (var ignore = session.login(Pkcs11UserType.CKU_USER, DEFAULT_USER_PIN)) {
                 println("Generating GOST key pair");
-                final var keyPair = generateGostKeyPair(session, GOST_KEY_PAIR_PARAMS);
+                final var keyPair = session.getKeyManager().generateKeyPair(
+                        Pkcs11GostPublicKeyObject.class,
+                        Pkcs11GostPrivateKeyObject.class,
+                        Pkcs11Mechanism.make(GOST_KEY_PAIR_PARAMS.getMechanismType()),
+                        makeGostPublicKeyTemplate(session.getAttributeFactory(), GOST_KEY_PAIR_PARAMS),
+                        makeGostPrivateKeyTemplate(session.getAttributeFactory(), GOST_KEY_PAIR_PARAMS)
+                );
 
                 println("Creating certificate signing request (CSR)");
                 final var csr =
@@ -56,6 +68,7 @@ public class CreateGostKeyPairAndCertificateSample {
             printError(CreateGostKeyPairAndCertificateSample.class, e);
         } finally {
             module.finalizeModule();
+            printSampleDelimiter();
         }
     }
 

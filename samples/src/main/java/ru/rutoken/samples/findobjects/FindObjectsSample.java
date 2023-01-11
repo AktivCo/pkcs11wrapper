@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static ru.rutoken.samples.findobjects.Utils.*;
-import static ru.rutoken.samples.utils.Pkcs11Operations.findPublicKeyByCertificate;
 import static ru.rutoken.samples.utils.Pkcs11Operations.initializePkcs11AndGetFirstToken;
 import static ru.rutoken.samples.utils.Utils.*;
 
@@ -64,6 +63,7 @@ public class FindObjectsSample {
             printError(FindObjectsSample.class, e);
         } finally {
             module.finalizeModule();
+            printSampleDelimiter();
         }
     }
 

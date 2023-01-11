@@ -30,6 +30,7 @@ public class InitTokenSample {
             printError(InitTokenSample.class, e);
         } finally {
             module.finalizeModule();
+            printSampleDelimiter();
         }
     }
 

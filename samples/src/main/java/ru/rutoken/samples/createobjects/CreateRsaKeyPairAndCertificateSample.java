@@ -1,11 +1,14 @@
 package ru.rutoken.samples.createobjects;
 
 import ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11UserType;
+import ru.rutoken.pkcs11wrapper.mechanism.Pkcs11Mechanism;
+import ru.rutoken.pkcs11wrapper.object.key.Pkcs11RsaPrivateKeyObject;
+import ru.rutoken.pkcs11wrapper.object.key.Pkcs11RsaPublicKeyObject;
 import ru.rutoken.samples.utils.GostDemoCA;
 import ru.rutoken.samples.utils.RtPkcs11Module;
 
-import static ru.rutoken.samples.createobjects.Utils.generateRsaKeyPair;
-import static ru.rutoken.samples.createobjects.Utils.makeCertificateTemplate;
+import static ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11MechanismType.CKM_RSA_PKCS_KEY_PAIR_GEN;
+import static ru.rutoken.samples.createobjects.Utils.*;
 import static ru.rutoken.samples.utils.Constants.*;
 import static ru.rutoken.samples.utils.Pkcs11Operations.initializePkcs11AndGetFirstToken;
 import static ru.rutoken.samples.utils.Utils.*;
@@ -26,10 +29,23 @@ public class CreateRsaKeyPairAndCertificateSample {
 
     public static void runSample(RtPkcs11Module module) {
         try (var session = initializePkcs11AndGetFirstToken(module).openSession(true)) {
+            if (hasUnsupportedMechanisms(CreateRsaKeyPairAndCertificateSample.class, session.getToken(),
+                    CKM_RSA_PKCS_KEY_PAIR_GEN) ||
+                    isRsaModulusUnsupported(CreateRsaKeyPairAndCertificateSample.class, session.getToken(),
+                            MODULUS_BITS_LENGTH))
+                return;
+
             try (var ignore = session.login(Pkcs11UserType.CKU_USER, DEFAULT_USER_PIN)) {
                 println("Generating RSA key pair");
-                final var keyPair = generateRsaKeyPair(session, MODULUS_BITS_LENGTH, PUBLIC_EXPONENT,
-                        RSA_PUBLIC_KEY_LABEL, RSA_PRIVATE_KEY_LABEL, RSA_KEY_PAIR_ID);
+                final var keyPair = session.getKeyManager().generateKeyPair(
+                        Pkcs11RsaPublicKeyObject.class,
+                        Pkcs11RsaPrivateKeyObject.class,
+                        Pkcs11Mechanism.make(CKM_RSA_PKCS_KEY_PAIR_GEN),
+                        makeRsaPublicKeyTemplate(session.getAttributeFactory(), MODULUS_BITS_LENGTH, PUBLIC_EXPONENT,
+                                RSA_PUBLIC_KEY_LABEL, RSA_KEY_PAIR_ID),
+                        makeRsaPrivateKeyTemplate(session.getAttributeFactory(), PUBLIC_EXPONENT, RSA_PRIVATE_KEY_LABEL,
+                                RSA_KEY_PAIR_ID)
+                );
 
                 println("Creating certificate signing request (CSR)");
                 final var csr =
@@ -62,6 +78,7 @@ public class CreateRsaKeyPairAndCertificateSample {
             printError(CreateRsaKeyPairAndCertificateSample.class, e);
         } finally {
             module.finalizeModule();
+            printSampleDelimiter();
         }
     }
 

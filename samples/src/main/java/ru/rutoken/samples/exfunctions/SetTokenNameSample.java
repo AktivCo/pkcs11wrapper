@@ -26,6 +26,7 @@ public class SetTokenNameSample {
             printError(SetTokenNameSample.class, e);
         } finally {
             module.finalizeModule();
+            printSampleDelimiter();
         }
     }
 

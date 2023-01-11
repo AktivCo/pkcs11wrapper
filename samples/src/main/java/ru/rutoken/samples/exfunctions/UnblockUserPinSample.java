@@ -45,6 +45,7 @@ public class UnblockUserPinSample {
             printError(UnblockUserPinSample.class, e);
         } finally {
             module.finalizeModule();
+            printSampleDelimiter();
         }
     }
 
