@@ -14,6 +14,19 @@ public final class Utils {
         System.out.println(text);
     }
 
+    public static void println() {
+        System.out.println();
+    }
+
+    public static void printf(String format, Object... args) {
+        System.out.printf(format, args);
+    }
+
+    public static void printlnf(String format, Object... args) {
+        printf(format, args);
+        println();
+    }
+
     public static <T> void printSuccessfulExit(Class<T> clazz) {
         println(clazz.getSimpleName() + " has been completed successfully");
         println("--------------------------------------------------------");
@@ -30,9 +43,9 @@ public final class Utils {
         for (var i = 0; i < data.length; ++i) {
             System.out.printf(" %02X", data[i]);
             if ((i + 1) % 16 == 0)
-                System.out.println();
+                println();
         }
-        System.out.println();
+        println();
     }
 
     public static void printCsr(byte[] csrDer) {
