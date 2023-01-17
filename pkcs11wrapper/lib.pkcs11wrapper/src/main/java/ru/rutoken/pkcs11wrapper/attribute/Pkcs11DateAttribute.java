@@ -36,7 +36,7 @@ public class Pkcs11DateAttribute extends Pkcs11AbstractAttribute {
     @NotNull
     @Override
     public Object getValue() {
-        return new Object();
+        return getDateValue();
     }
 
     @Override
