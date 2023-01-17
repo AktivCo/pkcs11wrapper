@@ -36,6 +36,8 @@ public interface CkTokenInfoExtended {
 
     byte[] getAtr();
 
+    long getAtrLen();
+
     long getTokenClass();
 
     long getBatteryVoltage();

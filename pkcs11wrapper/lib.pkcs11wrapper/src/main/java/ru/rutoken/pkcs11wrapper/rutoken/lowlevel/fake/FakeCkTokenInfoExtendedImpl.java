@@ -96,6 +96,11 @@ public class FakeCkTokenInfoExtendedImpl implements CkTokenInfoExtended {
     }
 
     @Override
+    public long getAtrLen() {
+        return 0;
+    }
+
+    @Override
     public long getTokenClass() {
         return 0;
     }

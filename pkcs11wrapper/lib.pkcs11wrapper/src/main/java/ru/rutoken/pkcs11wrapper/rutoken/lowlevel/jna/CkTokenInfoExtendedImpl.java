@@ -100,6 +100,11 @@ class CkTokenInfoExtendedImpl implements CkTokenInfoExtended {
     }
 
     @Override
+    public long getAtrLen() {
+        return mData.ulATRLen.longValue();
+    }
+
+    @Override
     public long getTokenClass() {
         return mData.ulTokenClass.longValue();
     }
