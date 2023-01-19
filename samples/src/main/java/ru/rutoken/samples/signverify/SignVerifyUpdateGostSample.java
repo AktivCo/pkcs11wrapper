@@ -16,9 +16,9 @@ import ru.rutoken.samples.utils.RtPkcs11Module;
 import static ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11AttributeType.CKA_VALUE;
 import static ru.rutoken.pkcs11wrapper.rutoken.constant.RtPkcs11MechanismType.CKM_GOSTR3410_WITH_GOSTR3411_12_256;
 import static ru.rutoken.pkcs11wrapper.rutoken.constant.RtPkcs11MechanismType.CKM_GOSTR3410_WITH_GOSTR3411_12_512;
-import static ru.rutoken.samples.signverify.Utils.findCertificateById;
-import static ru.rutoken.samples.signverify.Utils.findKeyPairByCertificateValue;
 import static ru.rutoken.samples.utils.Constants.DEFAULT_USER_PIN;
+import static ru.rutoken.samples.utils.Pkcs11Operations.findCertificateById;
+import static ru.rutoken.samples.utils.Pkcs11Operations.findKeyPairByCertificateValue;
 import static ru.rutoken.samples.utils.Pkcs11Operations.initializePkcs11AndGetFirstToken;
 import static ru.rutoken.samples.utils.PkiUtils.certificateToPem;
 import static ru.rutoken.samples.utils.Utils.*;
@@ -35,8 +35,8 @@ public class SignVerifyUpdateGostSample {
      * We will find certificate by its ID. Change this field to your certificate ID.
      * Also change GOST key algorithm by setting field {@link #GOST_KEY_PAIR_PARAMS}
      */
-    private static final byte[] CERTIFICATE_ID = GostKeyPairParams.GOST_2012_256.getId();
-    private static final GostKeyPairParams GOST_KEY_PAIR_PARAMS = GostKeyPairParams.GOST_2012_256;
+    private static final byte[] CERTIFICATE_ID = GostKeyPairParams.GOST_2012_512.getId();
+    private static final GostKeyPairParams GOST_KEY_PAIR_PARAMS = GostKeyPairParams.GOST_2012_512;
 
     public static void runSample(RtPkcs11Module module) {
         try (var session = initializePkcs11AndGetFirstToken(module).openSession(true)) {

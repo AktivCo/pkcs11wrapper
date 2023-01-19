@@ -6,6 +6,9 @@
 
 package ru.rutoken.samples;
 
+import ru.rutoken.samples.derive.DeriveGost2012Sample;
+import ru.rutoken.samples.derive.DeriveGostKegSample;
+import ru.rutoken.samples.derive.DeriveVkoGost512Sample;
 import ru.rutoken.samples.signverify.SignVerifyGostCmsSample;
 import ru.rutoken.samples.createobjects.CreateEcdsaKeyPairSample;
 import ru.rutoken.samples.signverify.*;
@@ -36,6 +39,10 @@ public class GlobalRun {
         SignVerifyUpdateGostSample.runSample(pkcs11Module);
         SignVerifyRsaSample.runSample(pkcs11Module);
         SignVerifyEcdsaSample.runSample(pkcs11Module);
+
+        DeriveGost2012Sample.runSample(pkcs11Module);
+        DeriveGostKegSample.runSample(pkcs11Module);
+        DeriveVkoGost512Sample.runSample(pkcs11Module);
 
         GetTokenInfoExtendedSample.runSample(pkcs11Module);
         SetTokenNameSample.runSample(pkcs11Module);

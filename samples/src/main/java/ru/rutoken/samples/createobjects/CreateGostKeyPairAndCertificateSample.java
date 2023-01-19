@@ -25,7 +25,7 @@ public class CreateGostKeyPairAndCertificateSample {
     /**
      * You can change GOST key algorithm here.
      */
-    private static final GostKeyPairParams GOST_KEY_PAIR_PARAMS = GostKeyPairParams.GOST_2012_256;
+    private static final GostKeyPairParams GOST_KEY_PAIR_PARAMS = GostKeyPairParams.GOST_2012_512;
 
     public static void runSample(RtPkcs11Module module) {
         try (var session = initializePkcs11AndGetFirstToken(module).openSession(true)) {

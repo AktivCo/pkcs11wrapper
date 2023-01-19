@@ -120,11 +120,10 @@ final class Utils {
         if (modulus.signum() < 0 && publicExp.signum() < 0)
             throw new IllegalStateException("Modulus or public exponent is less than zero");
 
-        final var result = new ArrayList<Pkcs11Attribute>();
-        result.add(new Pkcs11ByteArrayAttribute(CKA_MODULUS, dropPrecedingZeros(modulus.toByteArray())));
-        result.add(new Pkcs11ByteArrayAttribute(CKA_PUBLIC_EXPONENT, publicExp.toByteArray()));
-
-        return result;
+        return Arrays.asList(
+                new Pkcs11ByteArrayAttribute(CKA_MODULUS, dropPrecedingZeros(modulus.toByteArray())),
+                new Pkcs11ByteArrayAttribute(CKA_PUBLIC_EXPONENT, publicExp.toByteArray())
+        );
     }
 
     @Nullable

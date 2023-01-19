@@ -21,11 +21,9 @@ import ru.rutoken.samples.utils.RtPkcs11Module;
 import static ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11AttributeType.CKA_VALUE;
 import static ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11MaskGenerationFunction.CKG_MGF1_SHA256;
 import static ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11MechanismType.*;
-import static ru.rutoken.samples.signverify.Utils.findCertificateById;
-import static ru.rutoken.samples.signverify.Utils.findKeyPairByCertificateValue;
 import static ru.rutoken.samples.utils.Constants.DEFAULT_USER_PIN;
 import static ru.rutoken.samples.utils.Constants.RSA_KEY_PAIR_ID;
-import static ru.rutoken.samples.utils.Pkcs11Operations.initializePkcs11AndGetFirstToken;
+import static ru.rutoken.samples.utils.Pkcs11Operations.*;
 import static ru.rutoken.samples.utils.PkiUtils.certificateToPem;
 import static ru.rutoken.samples.utils.Utils.*;
 

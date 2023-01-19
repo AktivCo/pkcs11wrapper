@@ -20,10 +20,8 @@ import java.util.ArrayList;
 import static ru.rutoken.pkcs11jna.RtPkcs11Constants.*;
 import static ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11AttributeType.CKA_VALUE;
 import static ru.rutoken.pkcs11wrapper.rutoken.manager.RtPkcs11CmsManager.CrlCheckMode.OPTIONAL_CRL_CHECK;
-import static ru.rutoken.samples.signverify.Utils.findCertificateById;
-import static ru.rutoken.samples.signverify.Utils.findPrivateKeyByCertificateValue;
 import static ru.rutoken.samples.utils.Constants.DEFAULT_USER_PIN;
-import static ru.rutoken.samples.utils.Pkcs11Operations.initializePkcs11AndGetFirstToken;
+import static ru.rutoken.samples.utils.Pkcs11Operations.*;
 import static ru.rutoken.samples.utils.PkiUtils.certificateToPem;
 import static ru.rutoken.samples.utils.PkiUtils.cmsToPem;
 import static ru.rutoken.samples.utils.Utils.*;
@@ -61,7 +59,7 @@ public class SignVerifyGostCmsSample {
     /**
      * We will find certificate by its ID. Change this field to your certificate ID.
      */
-    private static final byte[] CERTIFICATE_ID = GostKeyPairParams.GOST_2012_256.getId();
+    private static final byte[] CERTIFICATE_ID = GostKeyPairParams.GOST_2012_512.getId();
 
     public static void runSample(RtPkcs11Module module) {
         try (var session = initializePkcs11AndGetFirstToken(module).openSession(true)) {

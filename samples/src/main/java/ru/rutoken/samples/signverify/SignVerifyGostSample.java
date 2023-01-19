@@ -16,10 +16,8 @@ import ru.rutoken.samples.utils.RtPkcs11Module;
 import static ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11AttributeType.CKA_VALUE;
 import static ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11MechanismType.CKM_GOSTR3410;
 import static ru.rutoken.pkcs11wrapper.rutoken.constant.RtPkcs11MechanismType.*;
-import static ru.rutoken.samples.signverify.Utils.findCertificateById;
-import static ru.rutoken.samples.signverify.Utils.findKeyPairByCertificateValue;
 import static ru.rutoken.samples.utils.Constants.*;
-import static ru.rutoken.samples.utils.Pkcs11Operations.initializePkcs11AndGetFirstToken;
+import static ru.rutoken.samples.utils.Pkcs11Operations.*;
 import static ru.rutoken.samples.utils.PkiUtils.certificateToPem;
 import static ru.rutoken.samples.utils.Utils.*;
 
@@ -34,8 +32,8 @@ public class SignVerifyGostSample {
      * We will find certificate by its ID. Change this field to your certificate ID.
      * Also change GOST key algorithm by setting field {@link #GOST_KEY_PAIR_PARAMS}
      */
-    private static final byte[] CERTIFICATE_ID = GostKeyPairParams.GOST_2012_256.getId();
-    private static final GostKeyPairParams GOST_KEY_PAIR_PARAMS = GostKeyPairParams.GOST_2012_256;
+    private static final byte[] CERTIFICATE_ID = GostKeyPairParams.GOST_2012_512.getId();
+    private static final GostKeyPairParams GOST_KEY_PAIR_PARAMS = GostKeyPairParams.GOST_2012_512;
     /**
      * Change this flag to false if you want to digest data by yourself.
      */
