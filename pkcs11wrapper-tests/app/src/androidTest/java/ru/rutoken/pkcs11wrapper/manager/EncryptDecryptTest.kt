@@ -74,8 +74,8 @@ class EncryptDecryptTest {
         private val secretKey =
             GenerateSecretKeyRule(session, Pkcs11Mechanism.make(CKM_KUZNECHIK_KEY_GEN), SECRET_KEY_TEMPLATE)
 
-        @JvmStatic
-        @get:ClassRule
+        @ClassRule
+        @JvmField
         val ruleChain: TestRule =
             RuleChain.outerRule(module).around(slot).around(token).around(session).around(login).around(secretKey)
     }

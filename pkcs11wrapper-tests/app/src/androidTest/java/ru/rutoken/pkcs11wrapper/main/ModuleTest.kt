@@ -45,8 +45,8 @@ class ModuleTest {
     }
 
     companion object {
-        @JvmStatic
-        @get:ClassRule
+        @ClassRule
+        @JvmField
         val module = ModuleRule()
     }
 }

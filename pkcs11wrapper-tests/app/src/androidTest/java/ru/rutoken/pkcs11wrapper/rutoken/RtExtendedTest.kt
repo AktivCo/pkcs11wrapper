@@ -50,8 +50,8 @@ class RtExtendedTest {
         private val certificate =
             CreateGostCertificateRule(session, keyPair, "GOST R 34.10-2012 (256 bits) Certificate")
 
-        @get:ClassRule
-        @JvmStatic
+        @ClassRule
+        @JvmField
         val ruleChain: TestRule = RuleChain.outerRule(module).around(slot).around(token).around(session)
             .around(login).around(keyPair).around(certificate)
     }

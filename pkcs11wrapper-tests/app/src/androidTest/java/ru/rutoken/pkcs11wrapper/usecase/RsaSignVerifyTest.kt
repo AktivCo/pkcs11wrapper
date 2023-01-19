@@ -67,8 +67,8 @@ class RsaSignVerifyTest {
         private val login = LoginRule(session, Pkcs11UserType.CKU_USER, DEFAULT_USER_PIN)
         private val keyPair = module.value.attributeFactory.makeRsaKeyPairRule(session)
 
-        @JvmStatic
-        @get:ClassRule
+        @ClassRule
+        @JvmField
         val ruleChain: TestRule =
             RuleChain.outerRule(module).around(slot).around(token).around(session).around(login).around(keyPair)
     }

@@ -54,8 +54,8 @@ class Gost2012_256DeriveTest {
             "$TEST_2012_256_PRIVATE_KEY_LABEL recipient"
         )
 
-        @JvmStatic
-        @get:ClassRule
+        @ClassRule
+        @JvmField
         val sRuleChain: TestRule = RuleChain.outerRule(module).around(slot).around(token)
             .around(session).around(login).around(senderKeyPair).around(recipientKeyPair)
     }

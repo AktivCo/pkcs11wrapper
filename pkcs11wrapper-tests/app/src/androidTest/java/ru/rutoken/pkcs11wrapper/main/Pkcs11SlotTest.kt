@@ -27,8 +27,8 @@ class Pkcs11SlotTest {
         private val module = ModuleRule()
         private val slot = SlotRule(module)
 
-        @JvmField
         @ClassRule
+        @JvmField
         val ruleChain: TestRule = RuleChain.outerRule(module).around(slot)
     }
 }

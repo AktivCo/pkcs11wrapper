@@ -53,8 +53,8 @@ class SignVerifyTest {
         private val login = LoginRule(session, CKU_USER, DEFAULT_USER_PIN)
         private val keyPair = module.value.attributeFactory.makeGostR3410_2012_256KeyPairRule(session)
 
-        @JvmStatic
-        @get:ClassRule
+        @ClassRule
+        @JvmField
         val ruleChain: TestRule =
             RuleChain.outerRule(module).around(slot).around(token).around(session).around(login).around(keyPair)
     }

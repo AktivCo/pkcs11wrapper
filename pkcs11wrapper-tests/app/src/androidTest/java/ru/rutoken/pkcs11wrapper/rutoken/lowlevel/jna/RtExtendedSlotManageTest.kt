@@ -52,8 +52,8 @@ class RtExtendedSlotManageTest {
         private val module = RtModuleRule()
         private val slot = SlotRule(module)
 
-        @JvmStatic
-        @get:ClassRule
+        @ClassRule
+        @JvmField
         val ruleChain: TestRule = RuleChain.outerRule(module).around(slot)
     }
 }

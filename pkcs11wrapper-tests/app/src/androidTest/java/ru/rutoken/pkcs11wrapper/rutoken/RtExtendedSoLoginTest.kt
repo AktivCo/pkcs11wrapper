@@ -21,8 +21,8 @@ class RtExtendedSoLoginTest {
         private val session = RtSessionRule(token)
         private val login = LoginRule(session, Pkcs11UserType.CKU_SO, DEFAULT_ADMIN_PIN)
 
-        @get:ClassRule
-        @JvmStatic
+        @ClassRule
+        @JvmField
         val ruleChain: TestRule = RuleChain.outerRule(module).around(slot).around(token).around(session).around(login)
     }
 }

@@ -71,8 +71,8 @@ class Pkcs11SessionTest {
         private val token = TokenRule(slot)
         private val session = SessionRule(token)
 
-        @JvmField
         @ClassRule
+        @JvmField
         val ruleChain: TestRule = RuleChain.outerRule(module).around(slot).around(token).around(session)
     }
 }

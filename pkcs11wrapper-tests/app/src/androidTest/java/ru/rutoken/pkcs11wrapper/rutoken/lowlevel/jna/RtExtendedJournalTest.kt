@@ -55,8 +55,8 @@ class RtExtendedJournalTest {
         private val login = LoginRule(module, session, CKU_USER, DEFAULT_USER_PIN)
         private val keyPair = GenerateKeyPairRule(module, session)
 
-        @JvmStatic
-        @get:ClassRule
+        @ClassRule
+        @JvmField
         val ruleChain: TestRule = RuleChain.outerRule(module).around(slot).around(session).around(login).around(keyPair)
     }
 }

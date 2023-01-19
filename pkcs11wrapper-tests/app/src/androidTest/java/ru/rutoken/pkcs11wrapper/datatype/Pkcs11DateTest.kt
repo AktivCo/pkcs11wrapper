@@ -27,8 +27,8 @@ class Pkcs11DateTest {
     }
 
     companion object {
-        @get:ClassRule
-        @JvmStatic
+        @ClassRule
+        @JvmField
         val module = ModuleRule()
     }
 }

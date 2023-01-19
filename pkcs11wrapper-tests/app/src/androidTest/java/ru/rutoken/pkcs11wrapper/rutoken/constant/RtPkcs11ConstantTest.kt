@@ -5,8 +5,8 @@ import ru.rutoken.pkcs11wrapper.rule.highlevel.RtModuleRule
 
 open class RtPkcs11ConstantTest {
     companion object {
-        @get:ClassRule
-        @JvmStatic
+        @ClassRule
+        @JvmField
         val module = RtModuleRule()
     }
 }

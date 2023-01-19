@@ -80,8 +80,8 @@ class RtPkcs11FlashManagerTest {
         private val slot = SlotRule(module)
         private val token = RtTokenRule(slot)
 
-        @JvmStatic
-        @get:ClassRule
+        @ClassRule
+        @JvmField
         val sRuleChain: TestRule = RuleChain.outerRule(module).around(slot).around(token)
     }
 }

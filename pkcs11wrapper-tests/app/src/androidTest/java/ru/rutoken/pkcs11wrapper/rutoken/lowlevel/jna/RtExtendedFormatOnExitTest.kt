@@ -37,8 +37,8 @@ class RtExtendedFormatOnExitTest {
         private val formatTokenRule = FormatTokenOnExitRule(module, slot)
         private val session = SessionRule(module, slot)
 
-        @JvmStatic
-        @get:ClassRule
+        @ClassRule
+        @JvmField
         val ruleChain: TestRule = RuleChain.outerRule(module).around(slot).around(formatTokenRule).around(session)
     }
 }

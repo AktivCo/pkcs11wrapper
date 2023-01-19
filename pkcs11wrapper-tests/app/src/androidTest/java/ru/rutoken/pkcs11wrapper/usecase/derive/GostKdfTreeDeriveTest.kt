@@ -60,8 +60,8 @@ class GostKdfTreeDeriveTest {
         private val session = SessionRule(token)
         private val login = LoginRule(session, Pkcs11UserType.CKU_USER, DEFAULT_USER_PIN)
 
-        @JvmStatic
-        @get:ClassRule
+        @ClassRule
+        @JvmField
         val sRuleChain: TestRule = RuleChain.outerRule(module).around(slot).around(token).around(session).around(login)
     }
 }
