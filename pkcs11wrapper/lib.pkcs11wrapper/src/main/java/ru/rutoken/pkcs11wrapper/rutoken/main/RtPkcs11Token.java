@@ -4,9 +4,9 @@ import org.jetbrains.annotations.Nullable;
 import ru.rutoken.pkcs11wrapper.main.Pkcs11Slot;
 import ru.rutoken.pkcs11wrapper.main.Pkcs11TokenImpl;
 import ru.rutoken.pkcs11wrapper.rutoken.datatype.RutokenInitParam;
+import ru.rutoken.pkcs11wrapper.rutoken.datatype.TokenInfoExtended;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.IRtPkcs11LowLevelApi;
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.IRtPkcs11LowLevelFactory;
-import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkTokenInfoExtended;
 import ru.rutoken.pkcs11wrapper.rutoken.manager.RtPkcs11FlashManager;
 
 public class RtPkcs11Token extends Pkcs11TokenImpl {
@@ -17,8 +17,8 @@ public class RtPkcs11Token extends Pkcs11TokenImpl {
         mFlashManager = new RtPkcs11FlashManager(this);
     }
 
-    public CkTokenInfoExtended getTokenInfoExtended() {
-        return getApi().C_EX_GetTokenInfoExtended(getSlot().getId());
+    public TokenInfoExtended getTokenInfoExtended() {
+        return new TokenInfoExtended(getApi().C_EX_GetTokenInfoExtended(getSlot().getId()));
     }
 
     public void initToken(@Nullable String adminPin, RutokenInitParam param) {

@@ -1,6 +1,6 @@
 package ru.rutoken.samples.exfunctions;
 
-import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkTokenInfoExtended;
+import ru.rutoken.pkcs11wrapper.rutoken.datatype.TokenInfoExtended;
 import ru.rutoken.samples.utils.RtPkcs11Module;
 
 import static ru.rutoken.pkcs11jna.RtPkcs11Constants.*;
@@ -25,12 +25,12 @@ public class GetTokenInfoExtendedSample {
         runSample(RtPkcs11Module.getInstance(args));
     }
 
-    private static void printInfo(CkTokenInfoExtended tokenInfoExtended) {
+    private static void printInfo(TokenInfoExtended tokenInfoExtended) {
         println("Extended token info:");
         printSerialNumber(tokenInfoExtended.getSerialNumber());
         printTokenClass(tokenInfoExtended.getTokenClass());
         printFlags(tokenInfoExtended.getFlags());
-        printAtr(tokenInfoExtended.getAtr(), tokenInfoExtended.getAtrLen());
+        printAtr(tokenInfoExtended.getAtr());
         printColor(tokenInfoExtended.getBodyColor());
         printHex("Protocol number", tokenInfoExtended.getProtocolNumber());
         printHex("Microcode number", tokenInfoExtended.getMicrocodeNumber());
@@ -51,26 +51,32 @@ public class GetTokenInfoExtendedSample {
         printLong("Battery flags", tokenInfoExtended.getBatteryFlags());
     }
 
-    private static void printTokenClass(long tokenClass) {
+    private static void printTokenClass(TokenInfoExtended.TokenClass tokenClass) {
         var tokenClassName = "Unknown";
-        if (tokenClass == TOKEN_CLASS_ECP) {
-            tokenClassName = "Rutoken ECP";
-        } else if (tokenClass == TOKEN_CLASS_LITE) {
-            tokenClassName = "Rutoken Lite";
-        } else if (tokenClass == TOKEN_CLASS_ECP_BT) {
-            tokenClassName = "Rutoken ECP BT";
-        } else if (tokenClass == TOKEN_CLASS_S) {
-            tokenClassName = "Rutoken S";
+        switch (tokenClass) {
+            case TOKEN_CLASS_ECP:
+                tokenClassName = "Rutoken ECP";
+                break;
+            case TOKEN_CLASS_LITE:
+                tokenClassName = "Rutoken Lite";
+                break;
+            case TOKEN_CLASS_ECP_BT:
+                tokenClassName = "Rutoken ECP BT";
+                break;
+            case TOKEN_CLASS_S:
+                tokenClassName = "Rutoken S";
         }
         printlnf("\t%-30s %s", "Token class", tokenClassName);
     }
 
-    private static void printColor(long color) {
+    private static void printColor(TokenInfoExtended.TokenBodyColor color) {
         var colorText = "Unknown";
-        if (color == TOKEN_BODY_COLOR_WHITE) {
-            colorText = "White";
-        } else if (color == TOKEN_BODY_COLOR_BLACK) {
-            colorText = "Black";
+        switch (color) {
+            case TOKEN_BODY_COLOR_WHITE:
+                colorText = "White";
+                break;
+            case TOKEN_BODY_COLOR_BLACK:
+                colorText = "Black";
         }
         printlnf("\t%-30s %s", "Body color", colorText);
     }
@@ -93,10 +99,10 @@ public class GetTokenInfoExtendedSample {
                 (flags & TOKEN_FLAGS_USER_PIN_NOT_DEFAULT) == TOKEN_FLAGS_USER_PIN_NOT_DEFAULT);
     }
 
-    private static void printAtr(byte[] atr, long length) {
+    private static void printAtr(byte[] atr) {
         printf("\t%-30s ", "ATR");
-        for (var i = 0; i < length; i++) {
-            printf("%02X", atr[i]);
+        for (var b : atr) {
+            printf("%02X", b);
         }
         println();
     }
