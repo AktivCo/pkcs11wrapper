@@ -62,7 +62,6 @@ const val TEST_2012_512_PRIVATE_KEY_LABEL = "test 2012 512 private key"
 const val TEST_RSA_PUBLIC_KEY_LABEL = "test RSA public key"
 const val TEST_RSA_PRIVATE_KEY_LABEL = "test RSA private key"
 
-@JvmField
 val DN = listOf(
     "CN",
     "Ivanoff",
@@ -76,7 +75,15 @@ val DN = listOf(
     "Moscow"
 )
 
-@JvmField
+val ATTRIBUTES = listOf(
+    "1.7.2.21.1.15.41.43",
+    "NULL",
+    "1.4.22.43",
+    "test string 1",
+    "1.4.22.43",
+    "Тестовая строка 2"
+)
+
 val EXTENSIONS = listOf(
     "keyUsage",
     "digitalSignature,nonRepudiation,keyEncipherment,dataEncipherment",

@@ -6,17 +6,16 @@
 
 package ru.rutoken.pkcs11wrapper.rutoken
 
+import io.kotest.matchers.collections.shouldContainInOrder
 import io.kotest.matchers.shouldBe
+import org.bouncycastle.pkcs.PKCS10CertificationRequest
 import org.junit.ClassRule
 import org.junit.Test
 import org.junit.rules.RuleChain
 import org.junit.rules.TestRule
 import ru.rutoken.pkcs11wrapper.constant.IPkcs11ReturnValue
 import ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11UserType
-import ru.rutoken.pkcs11wrapper.main.DEFAULT_USER_PIN
-import ru.rutoken.pkcs11wrapper.main.DN
-import ru.rutoken.pkcs11wrapper.main.EXTENSIONS
-import ru.rutoken.pkcs11wrapper.main.makeGostR3410_2012_256KeyPairRule
+import ru.rutoken.pkcs11wrapper.main.*
 import ru.rutoken.pkcs11wrapper.rule.highlevel.*
 import ru.rutoken.pkcs11wrapper.rutoken.GostDemoCA.issueCertificate
 import ru.rutoken.pkcs11wrapper.rutoken.constant.RtPkcs11ReturnValue.CKR_CORRUPTED_MAPFILE
@@ -29,8 +28,35 @@ class RtExtendedTest {
 
     @Test
     fun createCsr() {
-        val csr = session.value.createCsr(keyPair.value.publicKey, DN, keyPair.value.privateKey, null, EXTENSIONS)
+        val csr = session.value.createCsr(keyPair.value.publicKey, DN, keyPair.value.privateKey, ATTRIBUTES, EXTENSIONS)
         val encodedCertificate = issueCertificate(csr)
+    }
+
+    @Test
+    fun createCsrWithNullDn() {
+        val csr =
+            session.value.createCsr(keyPair.value.publicKey, null, keyPair.value.privateKey, ATTRIBUTES, EXTENSIONS)
+        val encodedCertificate = issueCertificate(csr)
+    }
+
+    @Test
+    fun createCsrWithNullExtensions() {
+        val csr = session.value.createCsr(keyPair.value.publicKey, DN, keyPair.value.privateKey, ATTRIBUTES, null)
+        val encodedCertificate = issueCertificate(csr)
+    }
+
+    @Test
+    fun checkAttributesInCertificationRequest() {
+        val csr = session.value.createCsr(keyPair.value.publicKey, DN, keyPair.value.privateKey, ATTRIBUTES, EXTENSIONS)
+        val expectedAttributes = buildList<String> {
+            PKCS10CertificationRequest(csr).attributes.forEach { attribute ->
+                attribute.attributeValues.forEach { attributeValue ->
+                    add(attribute.attrType.id)
+                    add(attributeValue.toString())
+                }
+            }
+        }
+        expectedAttributes shouldContainInOrder ATTRIBUTES
     }
 
     @Test
