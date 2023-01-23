@@ -5,6 +5,7 @@ import ru.rutoken.pkcs11jna.Pkcs11Constants.CKR_OK
 import ru.rutoken.pkcs11jna.RtPkcs11Constants.*
 import ru.rutoken.pkcs11wrapper.main.DEFAULT_ADMIN_PIN
 import ru.rutoken.pkcs11wrapper.main.DEFAULT_USER_PIN
+import ru.rutoken.pkcs11wrapper.main.TOKEN_LABEL
 import ru.rutoken.pkcs11wrapper.rutoken.lowlevel.datatype.CkRutokenInitParam
 
 const val MIN_PIN_LENGTH = 6L
@@ -24,5 +25,5 @@ fun CkRutokenInitParam.fillWithDefaultValues() = apply {
     setMaxAdminRetryCount(MAX_RETRY_COUNT)
     setMaxUserRetryCount(MAX_RETRY_COUNT)
     setSmMode(SECURE_MESSAGING_DEFAULT)
-    setTokenLabel("Rutoken Label Init".toByteArray())
+    setTokenLabel(TOKEN_LABEL.toByteArray())
 }

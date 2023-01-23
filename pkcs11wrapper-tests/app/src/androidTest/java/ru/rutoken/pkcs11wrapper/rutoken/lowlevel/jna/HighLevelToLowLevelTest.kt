@@ -4,7 +4,10 @@ import io.kotest.matchers.shouldBe
 import org.junit.Test
 import ru.rutoken.pkcs11wrapper.main.DEFAULT_ADMIN_PIN
 import ru.rutoken.pkcs11wrapper.main.DEFAULT_USER_PIN
+import ru.rutoken.pkcs11wrapper.main.TOKEN_LABEL
 import ru.rutoken.pkcs11wrapper.rule.highlevel.RtModuleRule
+import ru.rutoken.pkcs11wrapper.rule.lowlevel.jna.MAX_RETRY_COUNT
+import ru.rutoken.pkcs11wrapper.rule.lowlevel.jna.MIN_PIN_LENGTH
 import ru.rutoken.pkcs11wrapper.rutoken.datatype.RutokenInitParam
 import ru.rutoken.pkcs11wrapper.rutoken.datatype.RutokenInitParam.ChangeUserPinPolicy.TOKEN_FLAGS_ADMIN_AND_USER_CHANGE_USER_PIN
 import ru.rutoken.pkcs11wrapper.rutoken.datatype.RutokenInitParam.SmMode.SECURE_MESSAGING_DEFAULT
@@ -18,11 +21,11 @@ class HighLevelToLowLevelTest {
             DEFAULT_ADMIN_PIN,
             DEFAULT_USER_PIN,
             TOKEN_FLAGS_ADMIN_AND_USER_CHANGE_USER_PIN,
-            6,
-            6,
-            10,
-            10,
-            "Rutoken Label Init",
+            MIN_PIN_LENGTH,
+            MIN_PIN_LENGTH,
+            MAX_RETRY_COUNT,
+            MAX_RETRY_COUNT,
+            TOKEN_LABEL,
             SECURE_MESSAGING_DEFAULT
         )
 
@@ -35,7 +38,7 @@ class HighLevelToLowLevelTest {
             0,
             lowLevelParamJnaValue.ulNewAdminPinLen.toInt()
         ) shouldBe DEFAULT_ADMIN_PIN.toByteArray()
-        lowLevelParamJnaValue.ulMinAdminPinLen.toLong() shouldBe 6L
+        lowLevelParamJnaValue.ulMinAdminPinLen.toLong() shouldBe MIN_PIN_LENGTH
     }
 
     companion object {

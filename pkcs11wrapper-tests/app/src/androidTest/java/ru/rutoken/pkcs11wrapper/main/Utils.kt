@@ -38,6 +38,7 @@ val GOSTR3411_2012_512_OID = byteArrayOf(0x06, 0x08, 0x2a, 0x85.toByte(), 0x03, 
 val DATA = byteArrayOf(0x01, 0x02, 0x03)
 const val DEFAULT_USER_PIN = "12345678"
 const val DEFAULT_ADMIN_PIN = "87654321"
+const val TOKEN_LABEL = "Rutoken Label Init"
 
 val IPkcs11AttributeFactory.dataObjectAttributes: List<Pkcs11Attribute>
     get() = listOf(
