@@ -1,3 +1,4 @@
+import org.jetbrains.gradle.ext.copyright
 import org.jetbrains.gradle.ext.settings
 import org.jetbrains.gradle.ext.taskTriggers
 
@@ -5,7 +6,7 @@ setBuildDir("gradleBuild")
 
 plugins {
     kotlin("jvm") version AppConfig.kotlinVersion apply false
-    id("org.jetbrains.gradle.plugin.idea-ext") version AppConfig.ideaExtPluginVersion
+    idea_ext
 }
 
 allprojects {
@@ -26,6 +27,16 @@ idea.project?.settings {
         taskTriggers {
             afterBuild(assembleTask)
             afterRebuild(assembleTask)
+        }
+    }
+
+    copyright {
+        useDefault = "bsd-copyright"
+        profiles {
+            create("bsd-copyright") {
+                notice = file("../copyright-template").readText(Charsets.UTF_8).trimIndent()
+                keyword = "Copyright"
+            }
         }
     }
 }

@@ -1,6 +1,10 @@
+import org.jetbrains.gradle.ext.copyright
+import org.jetbrains.gradle.ext.settings
+
 plugins {
     java
     application
+    idea_ext
 }
 
 java {
@@ -23,6 +27,18 @@ dependencies {
 
     implementation(Dependencies.pkcs11jna)
     implementation(Dependencies.bouncyCastleBcpkixJdk15on)
+}
+
+idea.project?.settings {
+    copyright {
+        useDefault = "bsd-copyright"
+        profiles {
+            create("bsd-copyright") {
+                notice = file("../copyright-template").readText(Charsets.UTF_8).trimIndent()
+                keyword = "Copyright"
+            }
+        }
+    }
 }
 
 tasks.jar {

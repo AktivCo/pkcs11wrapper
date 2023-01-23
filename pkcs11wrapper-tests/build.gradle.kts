@@ -1,3 +1,6 @@
+import org.jetbrains.gradle.ext.copyright
+import org.jetbrains.gradle.ext.settings
+
 buildscript {
     dependencies {
         classpath(Dependencies.androidGradlePlugin)
@@ -9,6 +12,7 @@ buildscript {
 
 plugins {
     kotlin("android") version Dependencies.kotlin apply false
+    idea_ext
 }
 
 setBuildDir("gradleBuild")
@@ -33,6 +37,18 @@ allprojects {
     }
     // Uncomment to build fat tests, like on CI
 //    ext.set("disableArchFlavors", "true")
+}
+
+idea.project?.settings {
+    copyright {
+        useDefault = "bsd-copyright"
+        profiles {
+            create("bsd-copyright") {
+                notice = file("../copyright-template").readText(Charsets.UTF_8).trimIndent()
+                keyword = "Copyright"
+            }
+        }
+    }
 }
 
 tasks.register("clean") {
