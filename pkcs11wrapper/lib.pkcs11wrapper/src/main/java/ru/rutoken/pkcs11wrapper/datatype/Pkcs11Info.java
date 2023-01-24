@@ -1,7 +1,5 @@
 package ru.rutoken.pkcs11wrapper.datatype;
 
-import java.util.Objects;
-
 import ru.rutoken.pkcs11wrapper.lowlevel.datatype.CkInfo;
 
 /**
@@ -20,15 +18,6 @@ public class Pkcs11Info {
         mFlags = info.getFlags();
         mLibraryDescription = new String(info.getLibraryDescription());
         mLibraryVersion = new Pkcs11Version(info.getLibraryVersion());
-    }
-
-    public Pkcs11Info(Pkcs11Version cryptokiVersion, String manufacturerId, long flags,
-                      String libraryDescription, Pkcs11Version libraryVersion) {
-        mCryptokiVersion = Objects.requireNonNull(cryptokiVersion);
-        mManufacturerId = Objects.requireNonNull(manufacturerId);
-        mFlags = flags;
-        mLibraryDescription = Objects.requireNonNull(libraryDescription);
-        mLibraryVersion = Objects.requireNonNull(libraryVersion);
     }
 
     @Override

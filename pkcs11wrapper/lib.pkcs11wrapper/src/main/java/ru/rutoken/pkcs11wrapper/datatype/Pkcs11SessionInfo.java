@@ -1,7 +1,5 @@
 package ru.rutoken.pkcs11wrapper.datatype;
 
-import java.util.Objects;
-
 import ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11Flag;
 import ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11SessionState;
 import ru.rutoken.pkcs11wrapper.lowlevel.datatype.CkSessionInfo;
@@ -21,13 +19,6 @@ public class Pkcs11SessionInfo {
         mState = Pkcs11SessionState.fromValue(sessionInfo.getState());
         mDeviceError = sessionInfo.getDeviceError();
         mFlags = sessionInfo.getFlags();
-    }
-
-    public Pkcs11SessionInfo(long slotId, Pkcs11SessionState state, long deviceError, long flags) {
-        mSlotId = slotId;
-        mState = Objects.requireNonNull(state);
-        mDeviceError = deviceError;
-        mFlags = flags;
     }
 
     public long getSlotId() {

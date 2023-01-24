@@ -10,28 +10,12 @@ public class VolumeInfoExtended {
     private final long mOwner;
     private final long mFlags;
 
-    public VolumeInfoExtended() {
-        mId = 0L;
-        mSize = 0L;
-        mAccessMode = AccessMode.fromValue(0L);
-        mOwner = 0L;
-        mFlags = 0L;
-    }
-
     public VolumeInfoExtended(CkVolumeInfoExtended volumeInfo) {
         mId = volumeInfo.getVolumeId();
         mSize = volumeInfo.getVolumeSize();
         mAccessMode = AccessMode.fromValue(volumeInfo.getAccessMode());
         mOwner = volumeInfo.getVolumeOwner();
         mFlags = volumeInfo.getFlags();
-    }
-
-    public VolumeInfoExtended(long id, long size, AccessMode accessMode, long owner, long flags) {
-        mId = id;
-        mSize = size;
-        mAccessMode = accessMode;
-        mOwner = owner;
-        mFlags = flags;
     }
 
     public long getId() {

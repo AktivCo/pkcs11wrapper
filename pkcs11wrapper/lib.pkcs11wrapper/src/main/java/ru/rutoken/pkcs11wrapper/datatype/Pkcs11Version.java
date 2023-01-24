@@ -14,11 +14,6 @@ public class Pkcs11Version {
         mMinor = version.getMinor();
     }
 
-    public Pkcs11Version(byte major, byte minor) {
-        mMajor = major;
-        mMinor = minor;
-    }
-
     public byte getMajor() {
         return mMajor;
     }

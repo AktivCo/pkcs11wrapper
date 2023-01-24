@@ -18,12 +18,6 @@ public class Pkcs11MechanismInfo {
         mFlags = mechanismInfo.getFlags();
     }
 
-    public Pkcs11MechanismInfo(long minKeySize, long maxKeySize, long flags) {
-        mMinKeySize = minKeySize;
-        mMaxKeySize = maxKeySize;
-        mFlags = flags;
-    }
-
     public long getMinKeySize() {
         return mMinKeySize;
     }

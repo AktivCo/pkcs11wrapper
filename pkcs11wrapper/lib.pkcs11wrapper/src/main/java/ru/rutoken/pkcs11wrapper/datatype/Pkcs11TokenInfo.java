@@ -1,13 +1,11 @@
 package ru.rutoken.pkcs11wrapper.datatype;
 
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Date;
-import java.util.Objects;
-
 import ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11Flag;
 import ru.rutoken.pkcs11wrapper.lowlevel.datatype.CkTokenInfo;
 import ru.rutoken.pkcs11wrapper.util.Pkcs11Utility;
+
+import java.util.Date;
 
 /**
  * Immutable high-level representation of {@link CkTokenInfo}.
@@ -54,31 +52,6 @@ public class Pkcs11TokenInfo {
         mFlags = tokenInfo.getFlags();
         if (isClockOnToken() && null != tokenInfo.getUtcTime())
             mTime = Pkcs11Utility.parseTime(tokenInfo.getUtcTime());
-    }
-
-    public Pkcs11TokenInfo(String label, String manufacturerId, String model, String serialNumber, long maxSessionCount,
-                           long sessionCount, long maxRwSessionCount, long rwSessionCount, long maxPinLen,
-                           long minPinLen, long totalPublicMemory, long freePublicMemory,
-                           long totalPrivateMemory, long freePrivateMemory, Pkcs11Version hardwareVersion,
-                           Pkcs11Version firmwareVersion, Date time, long flags) {
-        mLabel = Objects.requireNonNull(label);
-        mManufacturerId = Objects.requireNonNull(manufacturerId);
-        mModel = Objects.requireNonNull(model);
-        mSerialNumber = Objects.requireNonNull(serialNumber);
-        mMaxSessionCount = maxSessionCount;
-        mSessionCount = sessionCount;
-        mMaxRwSessionCount = maxRwSessionCount;
-        mRwSessionCount = rwSessionCount;
-        mMaxPinLen = maxPinLen;
-        mMinPinLen = minPinLen;
-        mTotalPublicMemory = totalPublicMemory;
-        mFreePublicMemory = freePublicMemory;
-        mTotalPrivateMemory = totalPrivateMemory;
-        mFreePrivateMemory = freePrivateMemory;
-        mHardwareVersion = Objects.requireNonNull(hardwareVersion);
-        mFirmwareVersion = Objects.requireNonNull(firmwareVersion);
-        mTime = Objects.requireNonNull(time);
-        mFlags = flags;
     }
 
     public String getLabel() {

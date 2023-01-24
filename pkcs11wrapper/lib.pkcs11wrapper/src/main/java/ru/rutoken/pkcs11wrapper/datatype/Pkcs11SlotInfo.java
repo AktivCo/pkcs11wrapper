@@ -1,7 +1,5 @@
 package ru.rutoken.pkcs11wrapper.datatype;
 
-import java.util.Objects;
-
 import ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11Flag;
 import ru.rutoken.pkcs11wrapper.lowlevel.datatype.CkSlotInfo;
 
@@ -22,16 +20,6 @@ public class Pkcs11SlotInfo {
         mHardwareVersion = new Pkcs11Version(slotInfo.getHardwareVersion());
         mFirmwareVersion = new Pkcs11Version(slotInfo.getFirmwareVersion());
         mFlags = slotInfo.getFlags();
-    }
-
-    public Pkcs11SlotInfo(String slotDescription, String manufacturerId,
-                          Pkcs11Version hardwareVersion, Pkcs11Version firmwareVersion,
-                          long flags) {
-        mSlotDescription = Objects.requireNonNull(slotDescription);
-        mManufacturerId = Objects.requireNonNull(manufacturerId);
-        mHardwareVersion = Objects.requireNonNull(hardwareVersion);
-        mFirmwareVersion = Objects.requireNonNull(firmwareVersion);
-        mFlags = flags;
     }
 
     public String getSlotDescription() {
