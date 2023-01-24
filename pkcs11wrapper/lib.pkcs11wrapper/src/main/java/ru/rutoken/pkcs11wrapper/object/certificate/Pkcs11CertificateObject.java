@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2018, Aktiv-Soft JSC.
+ * See the LICENSE file at the top-level directory of this distribution.
+ * All Rights Reserved.
+ */
+
 package ru.rutoken.pkcs11wrapper.object.certificate;
 
 import static ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11AttributeType.CKA_CERTIFICATE_CATEGORY;
