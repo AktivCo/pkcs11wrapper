@@ -44,7 +44,8 @@ public final class RtPkcs11Module extends Pkcs11BaseModule {
             try {
 //                final String pkcs11FrameworkPath = Paths.get(System.getProperty("user.dir"),
 //                        "external/pkcs11ecp/osx-x86_64+arm64/rtpkcs11ecp.framework").toString();
-                final String pkcs11FrameworkPath = TODO("Insert full path to the rtpkcs11ecp framework");
+                final String pkcs11FrameworkPath = args.length > 0 ? args[0] :
+                        TODO("Insert full path to the rtpkcs11ecp framework");
 
                 PKCS11_LIBRARY_NAME = copyPkcs11FrameworkToResources(pkcs11FrameworkPath);
             } catch (Exception e) {

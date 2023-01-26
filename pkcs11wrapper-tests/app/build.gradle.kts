@@ -1,5 +1,4 @@
 import com.android.build.gradle.internal.tasks.factory.dependsOn
-import java.io.File
 import ru.rutoken.copyFromBinaryDeps
 import ru.rutoken.isArchFlavorsEnabled
 
@@ -55,9 +54,7 @@ dependencies {
     androidTestImplementation(Dependencies.Test.kotestAssertionsCore)
     androidTestImplementation(Dependencies.Test.hamcrestLibrary)
 
-    val path = if (File("$rootDir/external").exists()) "$rootDir/external/rtpcsc/java/" else "../../../../pcsc/"
-    androidTestImplementation(fileTree(path) { include("rtpcsc*.aar") })
-
+    androidTestImplementation(fileTree("$rootDir/external/rtpcsc/java/") { include("rtpcsc*.aar") })
     androidTestImplementation(
         fileTree("../../pkcs11wrapper/lib.pkcs11wrapper-ktx/build/libs/") { include("pkcs11wrapper-ktx*.jar") }
     )
