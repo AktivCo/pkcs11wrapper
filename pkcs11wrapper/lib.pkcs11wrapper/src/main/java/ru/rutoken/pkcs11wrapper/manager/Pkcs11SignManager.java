@@ -23,7 +23,7 @@ public interface Pkcs11SignManager extends SessionReference {
      *
      * @param data               data to sign
      * @param maxSignatureLength maximum length of result signature
-     * @return byte array of proper length (<= maxSignatureLength) with signature
+     * @return byte array of proper length ({@literal <= maxSignatureLength}) with signature
      */
     byte[] sign(byte[] data, int maxSignatureLength);
 

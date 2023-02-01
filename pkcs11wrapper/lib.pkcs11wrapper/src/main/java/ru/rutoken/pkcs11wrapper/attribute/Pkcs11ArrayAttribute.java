@@ -19,7 +19,7 @@ import ru.rutoken.pkcs11wrapper.lowlevel.main.IPkcs11LowLevelFactory;
 /**
  * Represents an array of {@link Pkcs11Attribute} instances. Used to pass an array of attributes as a single attribute.
  * This is a special kind of a single attribute,
- * if you need an array of attributes as a template, use List<Pkcs11Attribute>.
+ * if you need an array of attributes as a template, use {@code List<Pkcs11Attribute>}.
  */
 public class Pkcs11ArrayAttribute extends Pkcs11AbstractAttribute {
     private List<Pkcs11Attribute> mValue = new ArrayList<>();

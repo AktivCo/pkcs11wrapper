@@ -124,7 +124,7 @@ public class Pkcs11JnaLowLevelApi implements IPkcs11LowLevelApi {
     }
 
     /**
-     * Helper method to protect from casting & comparison problems with negative 4 byte native longs.
+     * Helper method to protect from casting {@literal &} comparison problems with negative 4 byte native longs.
      */
     public static long unsigned(NativeLong value) {
         return new NativeLong(value.longValue(), true).longValue();

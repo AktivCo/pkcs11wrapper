@@ -22,7 +22,7 @@ public interface Pkcs11DigestManager extends SessionReference {
      *
      * @param data            data to make a digest from
      * @param maxDigestLength maximum length of result digest
-     * @return byte array of proper length (<= maxDigestLength) with digest
+     * @return byte array of proper length ({@literal <= maxDigestLength}) with digest
      */
     byte[] digest(byte[] data, int maxDigestLength);
 
