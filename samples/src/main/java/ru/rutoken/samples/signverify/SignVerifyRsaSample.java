@@ -48,6 +48,7 @@ public class SignVerifyRsaSample {
     private static final boolean USE_PSS_PADDING = true;
 
     public static void runSample(RtPkcs11Module module) {
+        printSampleLaunchMessage(SignVerifyRsaSample.class);
         try (var session = initializePkcs11AndGetFirstToken(module).openSession(true)) {
             IPkcs11MechanismType signMechanismType;
             IPkcs11MechanismType digestMechanismType = null;

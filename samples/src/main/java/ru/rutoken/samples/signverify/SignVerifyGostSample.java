@@ -45,6 +45,7 @@ public class SignVerifyGostSample {
     private static final boolean USE_PROGRAM_HASH = false;
 
     public static void runSample(RtPkcs11Module module) {
+        printSampleLaunchMessage(SignVerifyGostSample.class);
         try (var session = initializePkcs11AndGetFirstToken(module).openSession(true)) {
             Pkcs11Mechanism signMechanism = null;
             Pkcs11Mechanism digestMechanism = null;

@@ -62,6 +62,7 @@ public class SignVerifyGostCmsSample {
     private static final byte[] CERTIFICATE_ID = GostKeyPairParams.GOST_2012_512.getId();
 
     public static void runSample(RtPkcs11Module module) {
+        printSampleLaunchMessage(SignVerifyGostCmsSample.class);
         try (var session = initializePkcs11AndGetFirstToken(module).openSession(true)) {
             try (var ignore = session.login(Pkcs11UserType.CKU_USER, DEFAULT_USER_PIN)) {
                 // Side A signs data into CMS with attached/detached content using key pair on Rutoken device.

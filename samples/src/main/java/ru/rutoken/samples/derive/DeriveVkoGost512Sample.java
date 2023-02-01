@@ -32,6 +32,7 @@ import static ru.rutoken.samples.utils.Utils.*;
  */
 public class DeriveVkoGost512Sample {
     public static void runSample(RtPkcs11Module module) {
+        printSampleLaunchMessage(DeriveVkoGost512Sample.class);
         try (var session = initializePkcs11AndGetFirstToken(module).openSession(true)) {
             if (hasUnsupportedMechanisms(DeriveVkoGost512Sample.class, session.getToken(),
                     CKM_VKO_GOSTR3410_2012_512, CKM_MAGMA_KEY_GEN, CKM_MAGMA_KEXP_15_WRAP))

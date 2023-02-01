@@ -18,6 +18,7 @@ import static ru.rutoken.samples.utils.Utils.printError;
 public class InitTokenExtendedSample {
 
     public static void runSample(RtPkcs11Module module) {
+        printSampleLaunchMessage(InitTokenExtendedSample.class);
         try {
             println("Running extended initialization of token");
             final var initParam = new RutokenInitParam(false,

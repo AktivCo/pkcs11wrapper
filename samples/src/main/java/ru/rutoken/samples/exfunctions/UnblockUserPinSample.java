@@ -20,6 +20,7 @@ import static ru.rutoken.samples.utils.Utils.*;
 public class UnblockUserPinSample {
 
     public static void runSample(RtPkcs11Module module) {
+        printSampleLaunchMessage(UnblockUserPinSample.class);
         try (var session = initializePkcs11AndGetFirstToken(module).openSession(true)) {
             printLoginAttemptsLeft(session.getToken());
             println("Blocking user PIN");

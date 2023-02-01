@@ -33,6 +33,7 @@ public class SignVerifyEcdsaSample {
     private static final byte[] KEY_PAIR_ID = ECDSA_KEY_PAIR_ID;
 
     public static void runSample(RtPkcs11Module module) {
+        printSampleLaunchMessage(SignVerifyEcdsaSample.class);
         try (var session = initializePkcs11AndGetFirstToken(module).openSession(true)) {
             if (hasUnsupportedMechanisms(SignVerifyEcdsaSample.class, session.getToken(), CKM_SHA256, CKM_ECDSA))
                 return;

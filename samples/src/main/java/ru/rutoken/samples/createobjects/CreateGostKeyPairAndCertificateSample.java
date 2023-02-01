@@ -28,6 +28,7 @@ public class CreateGostKeyPairAndCertificateSample {
     private static final GostKeyPairParams GOST_KEY_PAIR_PARAMS = GostKeyPairParams.GOST_2012_512;
 
     public static void runSample(RtPkcs11Module module) {
+        printSampleLaunchMessage(CreateGostKeyPairAndCertificateSample.class);
         try (var session = initializePkcs11AndGetFirstToken(module).openSession(true)) {
             if (hasUnsupportedMechanisms(CreateGostKeyPairAndCertificateSample.class, session.getToken(),
                     GOST_KEY_PAIR_PARAMS.getMechanismType()))

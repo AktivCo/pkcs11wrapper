@@ -144,4 +144,8 @@ public final class Utils {
         println("--------------------------------------------------------");
         println("--------------------------------------------------------");
     }
+
+    public static <T> void printSampleLaunchMessage(Class<T> clazz) {
+        println("Launch " + clazz.getSimpleName());
+    }
 }

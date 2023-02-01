@@ -16,6 +16,7 @@ import static ru.rutoken.samples.utils.Utils.*;
 public class GetTokenInfoExtendedSample {
 
     public static void runSample(RtPkcs11Module module) {
+        printSampleLaunchMessage(GetTokenInfoExtendedSample.class);
         try {
             printInfo(initializePkcs11AndGetFirstToken(module).getTokenInfoExtended());
             printSuccessfulExit(GetTokenInfoExtendedSample.class);

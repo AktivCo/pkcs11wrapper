@@ -39,6 +39,7 @@ public class DeriveGostKegSample {
     private final static int UKM_LENGTH = GOST_KEY_PAIR_PARAMS == GOST_2012_256 ? 24 : 16;
 
     public static void runSample(RtPkcs11Module module) {
+        printSampleLaunchMessage(DeriveGostKegSample.class);
         try (var session = initializePkcs11AndGetFirstToken(module).openSession(true)) {
             if (hasUnsupportedMechanisms(DeriveGostKegSample.class, session.getToken(),
                     CKM_GOST_KEG, CKM_MAGMA_KEY_GEN, CKM_MAGMA_KEXP_15_WRAP))

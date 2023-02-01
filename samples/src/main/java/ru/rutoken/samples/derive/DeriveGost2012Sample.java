@@ -35,6 +35,7 @@ public class DeriveGost2012Sample {
     private final static GostKeyPairParams GOST_KEY_PAIR_PARAMS = GOST_2012_512;
 
     public static void runSample(RtPkcs11Module module) {
+        printSampleLaunchMessage(DeriveGost2012Sample.class);
         try (var session = initializePkcs11AndGetFirstToken(module).openSession(true)) {
             if (hasUnsupportedMechanisms(DeriveGost2012Sample.class, session.getToken(), CKM_GOSTR3410_12_DERIVE))
                 return;

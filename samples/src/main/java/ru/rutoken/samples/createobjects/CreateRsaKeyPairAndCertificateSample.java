@@ -34,6 +34,7 @@ public class CreateRsaKeyPairAndCertificateSample {
     private static final byte[] PUBLIC_EXPONENT = {0x01, 0x00, 0x01};
 
     public static void runSample(RtPkcs11Module module) {
+        printSampleLaunchMessage(CreateRsaKeyPairAndCertificateSample.class);
         try (var session = initializePkcs11AndGetFirstToken(module).openSession(true)) {
             if (hasUnsupportedMechanisms(CreateRsaKeyPairAndCertificateSample.class, session.getToken(),
                     CKM_RSA_PKCS_KEY_PAIR_GEN) ||

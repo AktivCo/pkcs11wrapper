@@ -18,6 +18,7 @@ import static ru.rutoken.samples.utils.Utils.*;
 public class SetTokenNameSample {
 
     public static void runSample(RtPkcs11Module module) {
+        printSampleLaunchMessage(SetTokenNameSample.class);
         try (var session = initializePkcs11AndGetFirstToken(module).openSession(true)) {
             try (var ignore = session.login(Pkcs11UserType.CKU_USER, DEFAULT_USER_PIN)) {
                 final var newTokenName = "Rutoken #" + new Random().nextInt(20);

@@ -28,6 +28,7 @@ import static ru.rutoken.samples.utils.Utils.*;
  */
 public class FindObjectsSample {
     public static void runSample(RtPkcs11Module module) {
+        printSampleLaunchMessage(FindObjectsSample.class);
         try (var session = initializePkcs11AndGetFirstToken(module).openSession(true)) {
             final var containers = new ArrayList<Container>();
             final var certificates =

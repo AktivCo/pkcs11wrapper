@@ -29,6 +29,7 @@ public class CreateEcdsaKeyPairSample {
     private static final byte[] EC_PARAMS = {0x06, 0x05, 0x2B, (byte) 0x81, 0x04, 0x00, 0x0A};
 
     public static void runSample(RtPkcs11Module module) {
+        printSampleLaunchMessage(CreateEcdsaKeyPairSample.class);
         try (var session = initializePkcs11AndGetFirstToken(module).openSession(true)) {
             if (hasUnsupportedMechanisms(CreateEcdsaKeyPairSample.class, session.getToken(), CKM_EC_KEY_PAIR_GEN))
                 return;

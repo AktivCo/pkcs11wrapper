@@ -15,6 +15,7 @@ import static ru.rutoken.samples.utils.Utils.*;
 
 public class InitTokenSample {
     public static void runSample(RtPkcs11Module module) {
+        printSampleLaunchMessage(InitTokenSample.class);
         try {
             final var token = initializePkcs11AndGetFirstToken(module);
             println("Token initialization");

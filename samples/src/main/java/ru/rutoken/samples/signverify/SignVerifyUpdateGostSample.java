@@ -39,6 +39,7 @@ public class SignVerifyUpdateGostSample {
     private static final GostKeyPairParams GOST_KEY_PAIR_PARAMS = GostKeyPairParams.GOST_2012_512;
 
     public static void runSample(RtPkcs11Module module) {
+        printSampleLaunchMessage(SignVerifyUpdateGostSample.class);
         try (var session = initializePkcs11AndGetFirstToken(module).openSession(true)) {
             Pkcs11Mechanism signMechanism = null;
             switch (GOST_KEY_PAIR_PARAMS) {
