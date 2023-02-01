@@ -26,6 +26,8 @@ public interface CkAttribute {
 
     /**
      * Accepts Object in underlying implementation format
+     *
+     * @param value value of the attribute
      */
     void setValue(@NotNull Object value);
 
@@ -61,6 +63,8 @@ public interface CkAttribute {
 
     /**
      * If an attribute has zero length, then its value is irrelevant.
+     *
+     * @return true if the attribute is empty and false otherwise
      */
     default boolean isEmpty() {
         return 0 >= getValueLen();
@@ -68,6 +72,8 @@ public interface CkAttribute {
 
     /**
      * Allocates space to fill attribute value by pkcs11. See C_GetAttributeValue documentation
+     *
+     * @param size size in bytes to allocate for value
      */
     void allocate(long size);
 }

@@ -74,6 +74,8 @@ public class Pkcs11FakeLowLevelApi implements IPkcs11LowLevelApi {
 
     /**
      * Creates fake objects and mechanisms. Must be called once.
+     *
+     * @param objectFactory factory for objects creation
      */
     public void createFakeTokens(IPkcs11ObjectFactory objectFactory) {
         if (mObjectFactory != null)

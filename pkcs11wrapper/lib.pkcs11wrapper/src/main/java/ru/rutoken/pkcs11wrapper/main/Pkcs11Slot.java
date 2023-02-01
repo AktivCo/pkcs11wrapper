@@ -16,6 +16,8 @@ public interface Pkcs11Slot extends ModuleReference {
 
     /**
      * It is safe to call this method at any time. It does not matter if a token is really present in slot or not.
+     *
+     * @return token associated with this slot
      */
     Pkcs11Token getToken();
 }

@@ -31,7 +31,8 @@ public interface IPkcs11LowLevelFactory extends IPkcs11VendorExtensions {
     /**
      * Converts Pkcs11MechanismParameter to low level representation
      *
-     * @return parameter in underlying implementation format
+     * @param parameter high-level mechanism parameters (of base interface type)
+     * @return low-level mechanism parameter in underlying implementation format
      */
     @NotNull
     CkMechanism.Parameter convertMechanismParams(Pkcs11MechanismParams parameter);

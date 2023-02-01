@@ -28,6 +28,9 @@ public interface IPkcs11ObjectFactory {
     /**
      * Creates a simple {@link Pkcs11BaseObject} (no inheritance take place) to wrap objectHandle.
      * No calls to pkcs11 library and hardware token are made.
+     *
+     * @param objectHandle object handle
+     * @return created object
      */
     default Pkcs11Object makeObject(long objectHandle) {
         return makeObject(Pkcs11BaseObject.class, objectHandle);
@@ -36,11 +39,20 @@ public interface IPkcs11ObjectFactory {
     /**
      * Creates an instance of {@link Pkcs11Object} of specified class.
      * No calls to pkcs11 library and hardware token are made.
+     *
+     * @param <Obj>        subclass of Pkcs11Object
+     * @param objectClass  class of object
+     * @param objectHandle object handle
+     * @return created object
      */
     <Obj extends Pkcs11Object> Obj makeObject(Class<Obj> objectClass, long objectHandle);
 
     /**
      * Creates an instance of {@link Pkcs11Object} which type is deduced using attributes read from token.
+     *
+     * @param session      pkcs11 session
+     * @param objectHandle token's object handle
+     * @return created object
      */
     Pkcs11Object makeObject(Pkcs11Session session, long objectHandle);
 
@@ -50,6 +62,10 @@ public interface IPkcs11ObjectFactory {
      * Use {@link Pkcs11BaseObject#makeClearTemplate(IPkcs11AttributeFactory)} or
      * {@link Pkcs11BaseObject#makeClearTemplate(AttributeFactoryReference)} if you need template containing all
      * object attributes.
+     *
+     * @param <Obj>       subclass of Pkcs11Object
+     * @param objectClass class of object
+     * @return attributes template
      */
     <Obj extends Pkcs11Object> List<Pkcs11Attribute> makeTemplate(Class<Obj> objectClass);
 

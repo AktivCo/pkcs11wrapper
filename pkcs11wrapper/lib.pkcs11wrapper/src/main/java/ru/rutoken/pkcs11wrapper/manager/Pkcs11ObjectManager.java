@@ -33,7 +33,9 @@ public interface Pkcs11ObjectManager extends SessionReference {
     /**
      * Finds one object that matches the template.
      *
-     * @throws IllegalStateException if multiple objects are found.
+     * @param template attributes template
+     * @return found object
+     * @throws IllegalStateException if multiple or zero objects were found
      */
     Pkcs11Object findSingleObject(List<Pkcs11Attribute> template);
 
@@ -41,7 +43,10 @@ public interface Pkcs11ObjectManager extends SessionReference {
      * Finds one object of known object class.
      * Template is completed with attributes deduced from object class.
      *
-     * @throws IllegalStateException if multiple objects are found.
+     * @param <Obj>       subclass of Pkcs11Object
+     * @param objectClass class of the object
+     * @return found object
+     * @throws IllegalStateException if multiple or zero objects were found
      */
     <Obj extends Pkcs11Object> Obj findSingleObject(Class<Obj> objectClass);
 
@@ -49,13 +54,20 @@ public interface Pkcs11ObjectManager extends SessionReference {
      * Finds one object of known class, template is provided by user.
      * Template is completed with attributes deduced from object class.
      *
-     * @throws IllegalStateException if multiple objects are found.
+     * @param <Obj>       subclass of Pkcs11Object
+     * @param objectClass class of the object
+     * @param template    attributes template
+     * @return found object
+     * @throws IllegalStateException if multiple or zero objects were found
      */
     <Obj extends Pkcs11Object> Obj findSingleObject(Class<Obj> objectClass,
                                                     List<Pkcs11Attribute> template);
 
     /**
      * Finds all objects that match the template.
+     *
+     * @param template attributes template
+     * @return all found objects
      */
     default List<Pkcs11Object> findObjectsAtOnce(List<Pkcs11Attribute> template) {
         final List<Pkcs11Object> objects = new ArrayList<>();
@@ -71,6 +83,10 @@ public interface Pkcs11ObjectManager extends SessionReference {
 
     /**
      * Finds all objects of known object class, template is deduced from object class
+     *
+     * @param <Obj>       subclass of Pkcs11Object
+     * @param objectClass class of the object
+     * @return all found objects
      */
     default <Obj extends Pkcs11Object> List<Obj> findObjectsAtOnce(Class<Obj> objectClass) {
         @SuppressWarnings("unchecked") final List<Obj> objects = (List<Obj>) findObjectsAtOnce(
@@ -81,6 +97,11 @@ public interface Pkcs11ObjectManager extends SessionReference {
     /**
      * Finds all objects of known class, template is provided by user.
      * Template is completed with template deduced from class
+     *
+     * @param <Obj>       subclass of Pkcs11Object
+     * @param objectClass class of the object
+     * @param template    attributes template
+     * @return all found objects
      */
     default <Obj extends Pkcs11Object> List<Obj> findObjectsAtOnce(Class<Obj> objectClass,
                                                                    List<Pkcs11Attribute> template) {
@@ -100,6 +121,7 @@ public interface Pkcs11ObjectManager extends SessionReference {
     /**
      * Creates object on token.
      *
+     * @param template attributes template
      * @return Object which type is dynamic and deduced automatically
      */
     Pkcs11Object createObject(List<Pkcs11Attribute> template);
@@ -108,6 +130,11 @@ public interface Pkcs11ObjectManager extends SessionReference {
      * Creates object on token. Returns an instance of specified class representing this object.
      * There is no additional interaction with a token.
      * Caller is responsible for specifying correct class that may represent created object.
+     *
+     * @param <Obj>       subclass of Pkcs11Object
+     * @param objectClass class of the object
+     * @param template    attributes template
+     * @return newly created object
      */
     <Obj extends Pkcs11Object> Obj createObject(Class<Obj> objectClass, List<Pkcs11Attribute> template);
 

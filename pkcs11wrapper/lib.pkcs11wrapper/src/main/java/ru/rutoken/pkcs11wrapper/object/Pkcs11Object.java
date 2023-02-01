@@ -34,6 +34,10 @@ public interface Pkcs11Object extends AttributeRegistrator {
     /**
      * Read one attribute from token.
      * There is no checks that specified attribute type is a member/property of this object.
+     *
+     * @param session pkcs11 session
+     * @param type    attribute type
+     * @return attribute from token
      */
     default Pkcs11Attribute getAttributeValue(Pkcs11Session session, IPkcs11AttributeType type) {
         return getAttributeValue(Pkcs11Attribute.class, session, type);
@@ -42,6 +46,12 @@ public interface Pkcs11Object extends AttributeRegistrator {
     /**
      * Read one attribute of specified class from token.
      * There is no checks that specified attribute type is a member/property of this object.
+     *
+     * @param <Attr>         subclass of Pkcs11Attribute
+     * @param attributeClass attribute class
+     * @param session        pkcs11 session
+     * @param type           attribute type
+     * @return attribute from token
      */
     <Attr extends Pkcs11Attribute> Attr getAttributeValue(Class<Attr> attributeClass,
                                                           Pkcs11Session session,
@@ -69,11 +79,18 @@ public interface Pkcs11Object extends AttributeRegistrator {
 
     /**
      * Read specified attributes from token
+     *
+     * @param session    pkcs11 session
+     * @param attributes attributes which should be read from token
+     * @return list of attributes
      */
     List<Pkcs11Attribute> getAttributeValues(Pkcs11Session session, List<Pkcs11Attribute> attributes);
 
     /**
      * Read all attributes from token
+     *
+     * @param session pkcs11 session
+     * @return list of token attributes
      */
     List<Pkcs11Attribute> getAttributeValues(Pkcs11Session session);
 

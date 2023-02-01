@@ -10,7 +10,8 @@ import org.jetbrains.annotations.Nullable;
 
 public interface CkMechanism {
     /**
-     * @param parameter in underlying implementation format
+     * @param mechanismType long value of mechanism type
+     * @param parameter     in underlying implementation format
      */
     void setMechanism(long mechanismType, @Nullable Parameter parameter);
 

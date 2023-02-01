@@ -41,6 +41,11 @@ public final class Attributes {
 
     /**
      * Read attributes values from token
+     *
+     * @param session      pkcs11 session
+     * @param objectHandle token's object handle
+     * @param attributes   template that specifies which attribute values need to be obtained;
+     *                     furthermore, this list's attributes will be modified by obtained values
      */
     public static void getAttributeValues(Pkcs11Session session, long objectHandle,
                                           List<Pkcs11Attribute> attributes) {

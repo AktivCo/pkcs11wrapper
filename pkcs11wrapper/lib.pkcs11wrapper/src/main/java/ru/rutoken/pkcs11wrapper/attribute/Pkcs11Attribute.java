@@ -28,6 +28,8 @@ public interface Pkcs11Attribute {
 
     /**
      * In some cases, attribute may be optional
+     *
+     * @return true if this attribute presents and false otherwise
      */
     boolean isPresent();
 
@@ -35,6 +37,8 @@ public interface Pkcs11Attribute {
 
     /**
      * Some attributes can not be read from token, so this flag is set for them
+     *
+     * @return true if attribute could NOT be read from token and false otherwise
      */
     boolean isSensitive();
 

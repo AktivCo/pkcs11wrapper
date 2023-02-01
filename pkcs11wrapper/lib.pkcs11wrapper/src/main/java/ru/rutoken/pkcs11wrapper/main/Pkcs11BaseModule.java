@@ -25,6 +25,8 @@ public class Pkcs11BaseModule implements Pkcs11Module {
 
     /**
      * Uses default high-level factory implementation - {@link Pkcs11HighLevelFactory}
+     *
+     * @param api pkcs11 interface
      */
     public Pkcs11BaseModule(IPkcs11Api api) {
         this(api, new Pkcs11HighLevelFactory());

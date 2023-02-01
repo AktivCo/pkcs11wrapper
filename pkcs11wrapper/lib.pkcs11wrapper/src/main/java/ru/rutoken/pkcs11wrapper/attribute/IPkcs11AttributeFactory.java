@@ -21,6 +21,9 @@ public interface IPkcs11AttributeFactory {
 
     /**
      * Registers attribute in factory. Is used for vendor defined attributes.
+     *
+     * @param type      type of the attribute
+     * @param attribute class of pkcs11 attribute
      */
     void registerAttribute(IPkcs11AttributeType type, Class<? extends Pkcs11Attribute> attribute);
 
@@ -31,6 +34,10 @@ public interface IPkcs11AttributeFactory {
     /**
      * Makes attribute by casting it to specified class. Type check is performed.
      *
+     * @param <Attr>         subclass of Pkcs11Attribute
+     * @param attributeClass pkcs11 attribute class
+     * @param type           type of the attribute
+     * @return newly created attribute
      * @throws ClassCastException if user passes inconsistent type and class
      */
     <Attr extends Pkcs11Attribute> Attr makeAttribute(Class<Attr> attributeClass, IPkcs11AttributeType type);

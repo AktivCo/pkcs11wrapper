@@ -47,6 +47,9 @@ public class MemoryStream {
      * Set byte order, default: nativeOrder().
      * As {@link Memory} mirrors a buffer in a native heap, which is expected to store
      * multibyte types in a native endianness if other is not specified for particular data structure.
+     *
+     * @param byteOrder byte order
+     * @return a reference to this object
      */
     public MemoryStream setByteOrder(ByteOrder byteOrder) {
         mByteOrder = Objects.requireNonNull(byteOrder);

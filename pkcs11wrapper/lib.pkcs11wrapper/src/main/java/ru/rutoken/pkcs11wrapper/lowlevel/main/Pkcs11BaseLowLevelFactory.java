@@ -92,6 +92,7 @@ public abstract class Pkcs11BaseLowLevelFactory<B extends Builder<B>> implements
 
         /**
          * @param factory factory to make Visitor which converts Pkcs11MechanismParams to low-level representation
+         * @return a reference to builder object
          */
         public BuilderType setMechanismParamsConverterFactory(
                 Pkcs11MechanismParams.LowLevelConverterVisitor.Factory factory) {

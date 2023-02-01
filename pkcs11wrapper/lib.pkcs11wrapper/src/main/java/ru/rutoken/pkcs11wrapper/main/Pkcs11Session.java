@@ -12,6 +12,7 @@ import java.io.Closeable;
 
 import ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11UserType;
 import ru.rutoken.pkcs11wrapper.datatype.Pkcs11SessionInfo;
+import ru.rutoken.pkcs11wrapper.datatype.Pkcs11TokenInfo;
 import ru.rutoken.pkcs11wrapper.manager.Pkcs11DecryptionManager;
 import ru.rutoken.pkcs11wrapper.manager.Pkcs11DigestManager;
 import ru.rutoken.pkcs11wrapper.manager.Pkcs11DualFunctionManager;
@@ -62,7 +63,9 @@ public interface Pkcs11Session extends TokenReference, Closeable {
     /**
      * Makes all token sessions to be logged in.
      *
-     * @param pin can be null if token uses CKF_PROTECTED_AUTHENTICATION_PATH
+     * @param userType user type
+     * @param pin      can be null if {@link Pkcs11TokenInfo#isProtectedAuthenticationPath()} is true
+     * @return closeable LoginGuard object
      */
     LoginGuard login(Pkcs11UserType userType, @Nullable String pin);
 

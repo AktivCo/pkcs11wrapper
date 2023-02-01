@@ -38,6 +38,8 @@ public class Pkcs11BaseObject implements Pkcs11Object {
 
     /**
      * Constructor for object creation by reading attributes from token
+     *
+     * @param objectHandle token's object handle
      */
     protected Pkcs11BaseObject(long objectHandle) {
         mObjectHandle = objectHandle;
@@ -88,6 +90,9 @@ public class Pkcs11BaseObject implements Pkcs11Object {
 
     /**
      * Makes template from all object attributes. Values of attributes are not set.
+     *
+     * @param factory factory for attributes creation
+     * @return attributes template
      */
     public List<Pkcs11Attribute> makeClearTemplate(IPkcs11AttributeFactory factory) {
         final List<Pkcs11Attribute> template = new ArrayList<>();
@@ -99,6 +104,9 @@ public class Pkcs11BaseObject implements Pkcs11Object {
 
     /**
      * Makes template from all object attributes. Values of attributes are not set.
+     *
+     * @param reference reference-class containing factory for attributes creation
+     * @return attributes template
      */
     public List<Pkcs11Attribute> makeClearTemplate(AttributeFactoryReference reference) {
         return makeClearTemplate(reference.getAttributeFactory());
@@ -135,6 +143,9 @@ public class Pkcs11BaseObject implements Pkcs11Object {
     /**
      * Get attribute casting it to specified class. Type check is performed.
      *
+     * @param attributeClass class of the attribute to cast to
+     * @param type           type of the attribute
+     * @return found attribute
      * @throws ClassCastException exception will be thrown if user passes inconsistent type and class
      */
     @Nullable

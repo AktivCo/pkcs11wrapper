@@ -69,6 +69,11 @@ public abstract class Pkcs11AbstractAttribute implements Pkcs11Attribute {
 
     /**
      * Reads and simply returns value from {@code attribute}, {@code attribute} value must be not empty.
+     *
+     * @param attribute        attribute to read value from
+     * @param lowLevelFactory  factory for low-level objects creation
+     * @param attributeFactory factory for attributes creation
+     * @return value of the attribute; the type of the value depends on the implementation of the attribute
      */
     @NotNull
     abstract protected Object readCkAttributeValue(CkAttribute attribute, IPkcs11LowLevelFactory lowLevelFactory,
@@ -76,6 +81,9 @@ public abstract class Pkcs11AbstractAttribute implements Pkcs11Attribute {
 
     /**
      * Writes current attribute value into {@code attribute}. Current value must be not empty.
+     *
+     * @param attribute attribute to write value to
+     * @param factory   factory for low-level objects creation
      */
     abstract protected void writeCkAttributeValue(CkAttribute attribute, IPkcs11LowLevelFactory factory);
 

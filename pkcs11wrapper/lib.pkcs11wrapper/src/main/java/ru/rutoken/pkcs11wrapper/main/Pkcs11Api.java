@@ -420,6 +420,11 @@ public class Pkcs11Api implements IPkcs11Api {
 
     /**
      * CKR_OK is always allowed
+     *
+     * @param r                  return code value
+     * @param allowedReturnCodes allowed return codes
+     * @return return code value supporting vendor-defined values
+     * @throws Pkcs11Exception if return code {@code r} is not CKR_OK and not in {@code allowedReturnCodes}
      */
     protected IPkcs11ReturnValue callAllowing(long r, IPkcs11ReturnValue... allowedReturnCodes) {
         for (IPkcs11ReturnValue allowed : allowedReturnCodes)
