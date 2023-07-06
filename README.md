@@ -52,14 +52,15 @@ dependencies {
 ```
 
 Notice that pkcs11wrapper depends on [pkcs11jna](https://search.maven.org/artifact/ru.rutoken/pkcs11jna) library that
-depends on JNA library. In case you want to include your own version of JNA in the project you should exclude
-pkcs11jna's JNA dependency. This is mandatory for Android projects.
+depends on JNA library. In case you want to include your own version of pkcs11jna and/or JNA in the project you should
+exclude pkcs11wrapper's pkcs11jna and/or pkcs11jna's JNA dependency. This is mandatory for Android projects.
 
 ### Android Gradle example
 
 ```kotlin
 dependencies {
-    implementation("ru.rutoken.pkcs11wrapper:pkcs11wrapper:${pkcs11wrapperVersion}@jar")
+    implementation("ru.rutoken.pkcs11wrapper:pkcs11wrapper:${pkcs11wrapperVersion}") { isTransitive = false }
+    implementation("ru.rutoken:pkcs11jna:${pkcs11jnaVersion}") { isTransitive = false }
     implementation("net.java.dev.jna:jna:${jnaVersion}@aar")
 }
 ```
