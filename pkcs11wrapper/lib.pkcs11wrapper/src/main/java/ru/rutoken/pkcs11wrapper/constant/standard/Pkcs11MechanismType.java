@@ -164,6 +164,9 @@ public enum Pkcs11MechanismType implements IPkcs11MechanismType {
     CKM_CAST3_MAC(0x00000313L),
     CKM_CAST3_MAC_GENERAL(0x00000314L),
     CKM_CAST3_CBC_PAD(0x00000315L),
+    /**
+     * Note that CAST128 and CAST5 are the same algorithm.
+     */
     CKM_CAST128_KEY_GEN(0x00000320L),
     CKM_CAST128_ECB(0x00000321L),
     CKM_CAST128_CBC(0x00000322L),
@@ -385,7 +388,13 @@ public enum Pkcs11MechanismType implements IPkcs11MechanismType {
     CKM_AES_CFB128(0x00002107L),
 
     CKM_AES_CFB1(0x00002108L),
+    /**
+     * WAS: 0x00001090.
+     */
     CKM_AES_KEY_WRAP(0x00002109L),
+    /**
+     * WAS: 0x00001091.
+     */
     CKM_AES_KEY_WRAP_PAD(0x0000210AL),
 
     CKM_RSA_PKCS_TPM_1_1(0x00004001L),
@@ -393,6 +402,9 @@ public enum Pkcs11MechanismType implements IPkcs11MechanismType {
 
     CKM_VENDOR_DEFINED(0x80000000L);
 
+    /**
+     * Note that CAST128 and CAST5 are the same algorithm.
+     */
     public static final Pkcs11MechanismType CKM_CAST5_KEY_GEN = CKM_CAST128_KEY_GEN;
     public static final Pkcs11MechanismType CKM_CAST5_ECB = CKM_CAST128_ECB;
     /**

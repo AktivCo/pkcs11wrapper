@@ -57,7 +57,13 @@ public class RutokenInitParam {
     }
 
     public enum ChangeUserPinPolicy implements LongValueSupplier {
+        /**
+         * If it is set, that means that Administrator (SO) can change User PIN.
+         */
         TOKEN_FLAGS_ADMIN_CHANGE_USER_PIN(0x00000001L),
+        /**
+         * If it is set, that means that User can change User PIN.
+         */
         TOKEN_FLAGS_USER_CHANGE_USER_PIN(0x00000002L),
         TOKEN_FLAGS_ADMIN_AND_USER_CHANGE_USER_PIN(TOKEN_FLAGS_ADMIN_CHANGE_USER_PIN.getAsLong() |
                 TOKEN_FLAGS_USER_CHANGE_USER_PIN.getAsLong());

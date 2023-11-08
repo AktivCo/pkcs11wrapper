@@ -7,20 +7,20 @@
 package ru.rutoken.pkcs11wrapper.rutoken.constant;
 
 import static ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11KeyType.CKK_GOSTR3410;
+import static ru.rutoken.pkcs11wrapper.rutoken.constant.internal.RtPkcs11InternalConstants.CK_VENDOR_PKCS11_RU_TEAM_TC26;
 
 import org.jetbrains.annotations.Nullable;
 
-import ru.rutoken.pkcs11jna.Pkcs11Tc26Constants;
 import ru.rutoken.pkcs11wrapper.constant.IPkcs11KeyType;
 import ru.rutoken.pkcs11wrapper.constant.standard.EnumFromValueHelper;
 import ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11KeyType;
 
 public enum RtPkcs11KeyType implements IPkcs11KeyType {
-    CKK_GOSTR3410_512(Pkcs11Tc26Constants.CKK_GOSTR3410_512),
-    CKK_KUZNECHIK(Pkcs11Tc26Constants.CKK_KUZNECHIK),
-    CKK_MAGMA(Pkcs11Tc26Constants.CKK_MAGMA),
-    CKK_KUZNECHIK_TWIN_KEY(Pkcs11Tc26Constants.CKK_KUZNECHIK_TWIN_KEY),
-    CKK_MAGMA_TWIN_KEY(Pkcs11Tc26Constants.CKK_MAGMA_TWIN_KEY);
+    CKK_GOSTR3410_512(CK_VENDOR_PKCS11_RU_TEAM_TC26 | 0x003L),
+    CKK_KUZNECHIK(CK_VENDOR_PKCS11_RU_TEAM_TC26 | 0x004L),
+    CKK_MAGMA(CK_VENDOR_PKCS11_RU_TEAM_TC26 | 0x005L),
+    CKK_KUZNECHIK_TWIN_KEY(CK_VENDOR_PKCS11_RU_TEAM_TC26 | 0x006L),
+    CKK_MAGMA_TWIN_KEY(CK_VENDOR_PKCS11_RU_TEAM_TC26 | 0x007L);
 
     public static final Pkcs11KeyType CKK_GOSTR3410_256 = CKK_GOSTR3410;
     public static final RtPkcs11KeyType CKK_KUZNYECHIK = CKK_KUZNECHIK;

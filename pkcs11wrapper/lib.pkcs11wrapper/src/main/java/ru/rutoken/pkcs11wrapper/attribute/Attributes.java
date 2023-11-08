@@ -10,13 +10,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import ru.rutoken.pkcs11jna.Pkcs11Constants;
 import ru.rutoken.pkcs11wrapper.constant.IPkcs11ReturnValue;
 import ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11ReturnValue;
 import ru.rutoken.pkcs11wrapper.lowlevel.datatype.CkAttribute;
 import ru.rutoken.pkcs11wrapper.lowlevel.main.IPkcs11LowLevelFactory;
 import ru.rutoken.pkcs11wrapper.main.Pkcs11Exception;
 import ru.rutoken.pkcs11wrapper.main.Pkcs11Session;
+import ru.rutoken.pkcs11wrapper.constant.internal.Pkcs11InternalConstants;
 
 /**
  * Defines basic methods to work with attributes.
@@ -63,7 +63,7 @@ public final class Attributes {
         for (CkAttribute attribute : ckAttributes) {
             final long size = attribute.getValueLen();
             //noinspection ConditionCoveredByFurtherCondition
-            if (size != Pkcs11Constants.CK_UNAVAILABLE_INFORMATION && size > 0) {
+            if (size != Pkcs11InternalConstants.CK_UNAVAILABLE_INFORMATION && size > 0) {
                 attribute.allocate(size);
             }
         }
@@ -80,7 +80,7 @@ public final class Attributes {
             final Pkcs11Attribute attribute = attributes.get(a);
             attribute.assignFromCkAttribute(ckAttributes.get(a), session.getLowLevelFactory(),
                     session.getAttributeFactory());
-            if (ckAttributes.get(a).getValueLen() == Pkcs11Constants.CK_UNAVAILABLE_INFORMATION) {
+            if (ckAttributes.get(a).getValueLen() == Pkcs11InternalConstants.CK_UNAVAILABLE_INFORMATION) {
                 if (res == Pkcs11ReturnValue.CKR_ATTRIBUTE_SENSITIVE) {
                     attribute.setSensitive(true);
                     attribute.setPresent(true);

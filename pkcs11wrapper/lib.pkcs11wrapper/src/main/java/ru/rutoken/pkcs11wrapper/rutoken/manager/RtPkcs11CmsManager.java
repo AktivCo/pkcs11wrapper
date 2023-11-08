@@ -10,7 +10,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-import ru.rutoken.pkcs11jna.RtPkcs11Constants;
 import ru.rutoken.pkcs11wrapper.constant.LongValueSupplier;
 import ru.rutoken.pkcs11wrapper.main.Pkcs11Exception;
 import ru.rutoken.pkcs11wrapper.object.certificate.Pkcs11CertificateObject;
@@ -94,9 +93,18 @@ public class RtPkcs11CmsManager extends RtBaseManager {
     }
 
     public enum CrlCheckMode implements LongValueSupplier {
-        OPTIONAL_CRL_CHECK(RtPkcs11Constants.OPTIONAL_CRL_CHECK),
-        LEAF_CRL_CHECK(RtPkcs11Constants.LEAF_CRL_CHECK),
-        ALL_CRL_CHECK(RtPkcs11Constants.ALL_CRL_CHECK);
+        /**
+         * If we have no suitable CRL - it won't be an error.
+         */
+        OPTIONAL_CRL_CHECK(0x00000000L),
+        /**
+         * Signer's CA CRL should be passed.
+         */
+        LEAF_CRL_CHECK(0x00000001L),
+        /**
+         * CRLs of all CA from the chain should be passed.
+         */
+        ALL_CRL_CHECK(0x00000002L);
 
         private final long mValue;
 

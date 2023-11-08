@@ -11,13 +11,13 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-import ru.rutoken.pkcs11jna.Pkcs11Constants;
 import ru.rutoken.pkcs11wrapper.constant.IPkcs11ReturnValue;
 import ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11Flag;
 import ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11ReturnValue;
 import ru.rutoken.pkcs11wrapper.datatype.IPkcs11InitializeArgs;
 import ru.rutoken.pkcs11wrapper.datatype.Pkcs11Info;
 import ru.rutoken.pkcs11wrapper.util.MutableLong;
+import ru.rutoken.pkcs11wrapper.constant.internal.Pkcs11InternalConstants;
 import ru.rutoken.pkcs11wrapper.util.callconvention.LongArrayCallConvention;
 
 /**
@@ -31,7 +31,7 @@ public interface Pkcs11Module extends IPkcs11Module {
 
     @Override
     default List<Pkcs11Slot> getSlotList(boolean tokenPresent) {
-        final byte tokenPresentFlag = tokenPresent ? Pkcs11Constants.CK_TRUE : Pkcs11Constants.CK_FALSE;
+        final byte tokenPresentFlag = tokenPresent ? Pkcs11InternalConstants.CK_TRUE : Pkcs11InternalConstants.CK_FALSE;
         final long[] slotIds = new LongArrayCallConvention("C_GetSlotList") {
             @Override
             protected int getLength() {

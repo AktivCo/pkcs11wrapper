@@ -6,15 +6,14 @@
 
 package ru.rutoken.pkcs11wrapper.constant.standard;
 
-import ru.rutoken.pkcs11jna.Pkcs11Constants;
 import ru.rutoken.pkcs11wrapper.constant.LongValueSupplier;
 
 public enum Pkcs11MaskGenerationFunction implements LongValueSupplier {
-    CKG_MGF1_SHA1(Pkcs11Constants.CKG_MGF1_SHA1),
-    CKG_MGF1_SHA256(Pkcs11Constants.CKG_MGF1_SHA256),
-    CKG_MGF1_SHA384(Pkcs11Constants.CKG_MGF1_SHA384),
-    CKG_MGF1_SHA512(Pkcs11Constants.CKG_MGF1_SHA512),
-    CKG_MGF1_SHA224(Pkcs11Constants.CKG_MGF1_SHA224);
+    CKG_MGF1_SHA1(0x00000001L),
+    CKG_MGF1_SHA256(0x00000002L),
+    CKG_MGF1_SHA384(0x00000003L),
+    CKG_MGF1_SHA512(0x00000004L),
+    CKG_MGF1_SHA224(0x00000005L);
 
     private static final EnumFromValueHelper<Pkcs11MaskGenerationFunction> FROM_VALUE_HELPER =
             new EnumFromValueHelper<>();

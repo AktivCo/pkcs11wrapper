@@ -9,8 +9,11 @@ package ru.rutoken.pkcs11wrapper.constant.standard;
 import ru.rutoken.pkcs11wrapper.constant.LongValueSupplier;
 
 public enum Pkcs11KeyDerivationFunction implements LongValueSupplier {
+    /* The following EC Key Derivation Functions are defined */
     CKD_NULL(0x00000001L),
     CKD_SHA1_KDF(0x00000002L),
+
+    /* The following X9.42 DH key derivation functions are defined */
     CKD_SHA1_KDF_ASN1(0x00000003L),
     CKD_SHA1_KDF_CONCATENATE(0x00000004L),
     CKD_SHA224_KDF(0x00000005L),

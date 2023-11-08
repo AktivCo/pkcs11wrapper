@@ -7,22 +7,20 @@
 package ru.rutoken.pkcs11wrapper.constant.standard;
 
 import org.jetbrains.annotations.Nullable;
-
-import ru.rutoken.pkcs11jna.Pkcs11Constants;
 import ru.rutoken.pkcs11wrapper.constant.IPkcs11ObjectClass;
 
 public enum Pkcs11ObjectClass implements IPkcs11ObjectClass {
-    CKO_DATA(Pkcs11Constants.CKO_DATA),
-    CKO_CERTIFICATE(Pkcs11Constants.CKO_CERTIFICATE),
-    CKO_PUBLIC_KEY(Pkcs11Constants.CKO_PUBLIC_KEY),
-    CKO_PRIVATE_KEY(Pkcs11Constants.CKO_PRIVATE_KEY),
-    CKO_SECRET_KEY(Pkcs11Constants.CKO_SECRET_KEY),
-    CKO_HW_FEATURE(Pkcs11Constants.CKO_HW_FEATURE),
-    CKO_DOMAIN_PARAMETERS(Pkcs11Constants.CKO_DOMAIN_PARAMETERS),
-    CKO_MECHANISM(Pkcs11Constants.CKO_MECHANISM),
-    CKO_OTP_KEY(Pkcs11Constants.CKO_OTP_KEY),
+    CKO_DATA(0x00000000L),
+    CKO_CERTIFICATE(0x00000001L),
+    CKO_PUBLIC_KEY(0x00000002L),
+    CKO_PRIVATE_KEY(0x00000003L),
+    CKO_SECRET_KEY(0x00000004L),
+    CKO_HW_FEATURE(0x00000005L),
+    CKO_DOMAIN_PARAMETERS(0x00000006L),
+    CKO_MECHANISM(0x00000007L),
+    CKO_OTP_KEY(0x00000008L),
 
-    CKO_VENDOR_DEFINED(Pkcs11Constants.CKO_VENDOR_DEFINED);
+    CKO_VENDOR_DEFINED(0x80000000L);
 
     private static final EnumFromValueHelper<Pkcs11ObjectClass> FROM_VALUE_HELPER = new EnumFromValueHelper<>();
     private final long mValue;

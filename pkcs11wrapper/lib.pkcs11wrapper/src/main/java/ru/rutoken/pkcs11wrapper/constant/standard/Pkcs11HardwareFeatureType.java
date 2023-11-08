@@ -7,15 +7,13 @@
 package ru.rutoken.pkcs11wrapper.constant.standard;
 
 import org.jetbrains.annotations.Nullable;
-
-import ru.rutoken.pkcs11jna.Pkcs11Constants;
 import ru.rutoken.pkcs11wrapper.constant.IPkcs11HardwareFeatureType;
 
 public enum Pkcs11HardwareFeatureType implements IPkcs11HardwareFeatureType {
-    CKH_MONOTONIC_COUNTER(Pkcs11Constants.CKH_MONOTONIC_COUNTER),
-    CKH_CLOCK(Pkcs11Constants.CKH_CLOCK),
-    CKH_USER_INTERFACE(Pkcs11Constants.CKH_USER_INTERFACE),
-    CKH_VENDOR_DEFINED(Pkcs11Constants.CKH_VENDOR_DEFINED);
+    CKH_MONOTONIC_COUNTER(0x00000001L),
+    CKH_CLOCK(0x00000002L),
+    CKH_USER_INTERFACE(0x00000003L),
+    CKH_VENDOR_DEFINED(0x80000000L);
 
     private static final EnumFromValueHelper<Pkcs11HardwareFeatureType> FROM_VALUE_HELPER = new EnumFromValueHelper<>();
     private final long mValue;

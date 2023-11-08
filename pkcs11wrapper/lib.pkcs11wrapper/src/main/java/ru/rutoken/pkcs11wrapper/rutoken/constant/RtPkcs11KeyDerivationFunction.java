@@ -6,7 +6,6 @@
 
 package ru.rutoken.pkcs11wrapper.rutoken.constant;
 
-import ru.rutoken.pkcs11jna.RtPkcs11Constants;
 import ru.rutoken.pkcs11wrapper.constant.LongValueSupplier;
 import ru.rutoken.pkcs11wrapper.constant.standard.EnumFromValueHelper;
 
@@ -19,8 +18,10 @@ public enum RtPkcs11KeyDerivationFunction implements LongValueSupplier {
      * rtpkcs11 extension KDF type for GOST 2001.
      */
     CKD_NULL_KDF_JRT(0x90000001L),
-    CKD_KDF_4357(RtPkcs11Constants.CKD_KDF_4357),
-    CKD_KDF_GOSTR3411_2012_256(RtPkcs11Constants.CKD_KDF_GOSTR3411_2012_256);
+
+    /* GOST DIVERSIFICATION TYPES */
+    CKD_KDF_4357(RtPkcs11MechanismType.CKM_KDF_4357.getAsLong()),
+    CKD_KDF_GOSTR3411_2012_256(RtPkcs11MechanismType.CKM_KDF_GOSTR3411_2012_256.getAsLong());
 
     private static final EnumFromValueHelper<RtPkcs11KeyDerivationFunction> FROM_VALUE_HELPER =
             new EnumFromValueHelper<>();

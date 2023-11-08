@@ -8,15 +8,14 @@ package ru.rutoken.pkcs11wrapper.constant.standard;
 
 import org.jetbrains.annotations.Nullable;
 
-import ru.rutoken.pkcs11jna.Pkcs11Constants;
 import ru.rutoken.pkcs11wrapper.constant.IPkcs11CertificateType;
 
 @SuppressWarnings("SpellCheckingInspection")
 public enum Pkcs11CertificateType implements IPkcs11CertificateType {
-    CKC_X_509(Pkcs11Constants.CKC_X_509),
-    CKC_X_509_ATTR_CERT(Pkcs11Constants.CKC_X_509_ATTR_CERT),
-    CKC_WTLS(Pkcs11Constants.CKC_WTLS),
-    CKC_VENDOR_DEFINED(Pkcs11Constants.CKC_VENDOR_DEFINED);
+    CKC_X_509(0x00000000L),
+    CKC_X_509_ATTR_CERT(0x00000001L),
+    CKC_WTLS(0x00000002L),
+    CKC_VENDOR_DEFINED(0x80000000L);
 
     private static final EnumFromValueHelper<Pkcs11CertificateType> FROM_VALUE_HELPER = new EnumFromValueHelper<>();
     private final long mValue;

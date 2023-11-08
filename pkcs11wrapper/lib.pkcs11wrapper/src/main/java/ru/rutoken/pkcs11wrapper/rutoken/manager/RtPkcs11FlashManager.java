@@ -113,6 +113,9 @@ public class RtPkcs11FlashManager extends BaseTokenManager {
         return result;
     }
 
+    /**
+     * Access modes for TM2.
+     */
     public enum AccessMode implements LongValueSupplier {
         ACCESS_MODE_HIDDEN(0x00000000L),
         ACCESS_MODE_RO(0x00000001L),

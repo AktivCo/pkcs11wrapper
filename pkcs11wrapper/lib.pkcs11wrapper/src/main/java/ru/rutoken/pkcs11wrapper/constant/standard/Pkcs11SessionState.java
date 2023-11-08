@@ -6,15 +6,14 @@
 
 package ru.rutoken.pkcs11wrapper.constant.standard;
 
-import ru.rutoken.pkcs11jna.Pkcs11Constants;
 import ru.rutoken.pkcs11wrapper.constant.LongValueSupplier;
 
 public enum Pkcs11SessionState implements LongValueSupplier {
-    CKS_RO_PUBLIC_SESSION(Pkcs11Constants.CKS_RO_PUBLIC_SESSION),
-    CKS_RO_USER_FUNCTIONS(Pkcs11Constants.CKS_RO_USER_FUNCTIONS),
-    CKS_RW_PUBLIC_SESSION(Pkcs11Constants.CKS_RW_PUBLIC_SESSION),
-    CKS_RW_USER_FUNCTIONS(Pkcs11Constants.CKS_RW_USER_FUNCTIONS),
-    CKS_RW_SO_FUNCTIONS(Pkcs11Constants.CKS_RW_SO_FUNCTIONS);
+    CKS_RO_PUBLIC_SESSION(0L),
+    CKS_RO_USER_FUNCTIONS(1L),
+    CKS_RW_PUBLIC_SESSION(2L),
+    CKS_RW_USER_FUNCTIONS(3L),
+    CKS_RW_SO_FUNCTIONS(4L);
 
     private static final EnumFromValueHelper<Pkcs11SessionState> FROM_VALUE_HELPER = new EnumFromValueHelper<>();
     private final long mValue;

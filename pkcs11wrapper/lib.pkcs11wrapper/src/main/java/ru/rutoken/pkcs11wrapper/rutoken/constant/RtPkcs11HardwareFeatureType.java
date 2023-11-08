@@ -8,17 +8,17 @@ package ru.rutoken.pkcs11wrapper.rutoken.constant;
 
 import org.jetbrains.annotations.Nullable;
 
-import ru.rutoken.pkcs11jna.RtPkcs11Constants;
 import ru.rutoken.pkcs11wrapper.constant.IPkcs11HardwareFeatureType;
 import ru.rutoken.pkcs11wrapper.constant.standard.EnumFromValueHelper;
+import ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11HardwareFeatureType;
 
 public enum RtPkcs11HardwareFeatureType implements IPkcs11HardwareFeatureType {
-    CKH_VENDOR_TOKEN_INFO(RtPkcs11Constants.CKH_VENDOR_TOKEN_INFO),
-    CKH_VENDOR_EMITENT_KEY(RtPkcs11Constants.CKH_VENDOR_EMITENT_KEY),
-    CKH_VENDOR_SECURE_COUNTER(RtPkcs11Constants.CKH_VENDOR_SECURE_COUNTER),
-    CKH_VENDOR_NDEF_TAG(RtPkcs11Constants.CKH_VENDOR_NDEF_TAG),
-    CKH_VENDOR_RNG(RtPkcs11Constants.CKH_VENDOR_RNG),
-    CKH_VENDOR_PIN_POLICY(RtPkcs11Constants.CKH_VENDOR_PIN_POLICY);
+    CKH_VENDOR_TOKEN_INFO(Pkcs11HardwareFeatureType.CKH_VENDOR_DEFINED.getAsLong() + 0x01),
+    CKH_VENDOR_EMITENT_KEY(Pkcs11HardwareFeatureType.CKH_VENDOR_DEFINED.getAsLong() + 0x02),
+    CKH_VENDOR_SECURE_COUNTER(Pkcs11HardwareFeatureType.CKH_VENDOR_DEFINED.getAsLong() + 0x03),
+    CKH_VENDOR_NDEF_TAG(Pkcs11HardwareFeatureType.CKH_VENDOR_DEFINED.getAsLong() + 0x04),
+    CKH_VENDOR_RNG(Pkcs11HardwareFeatureType.CKH_VENDOR_DEFINED.getAsLong() + 0x05),
+    CKH_VENDOR_PIN_POLICY(Pkcs11HardwareFeatureType.CKH_VENDOR_DEFINED.getAsLong() + 0x06);
 
     private static final EnumFromValueHelper<RtPkcs11HardwareFeatureType> FROM_VALUE_HELPER =
             new EnumFromValueHelper<>();

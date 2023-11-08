@@ -12,7 +12,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
-import ru.rutoken.pkcs11jna.RtPkcs11Constants;
 import ru.rutoken.pkcs11wrapper.attribute.Pkcs11Attribute;
 import ru.rutoken.pkcs11wrapper.attribute.Pkcs11BooleanAttribute;
 import ru.rutoken.pkcs11wrapper.attribute.Pkcs11ByteArrayAttribute;
@@ -20,83 +19,158 @@ import ru.rutoken.pkcs11wrapper.attribute.longvalue.Pkcs11LongAttribute;
 import ru.rutoken.pkcs11wrapper.constant.IPkcs11AttributeType;
 import ru.rutoken.pkcs11wrapper.constant.standard.EnumFromValueHelper;
 import ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11AttributeType;
+import ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11Flag;
 import ru.rutoken.pkcs11wrapper.rutoken.attribute.RtPkcs11ByteAttribute;
 import ru.rutoken.pkcs11wrapper.rutoken.attribute.RtPkcs11LongArrayAttribute;
 
 public enum RtPkcs11AttributeType implements IPkcs11AttributeType {
+    /* Attributes for CKH_VENDOR_TOKEN_INFO hardware feature */
     CKA_VENDOR_SECURE_MESSAGING_AVAILABLE(
-            RtPkcs11Constants.CKA_VENDOR_SECURE_MESSAGING_AVAILABLE, Pkcs11BooleanAttribute.class
+            Pkcs11AttributeType.CKA_VENDOR_DEFINED.getAsLong() | 0x3000, Pkcs11BooleanAttribute.class
     ),
     CKA_VENDOR_CURRENT_SECURE_MESSAGING_MODE(
-            RtPkcs11Constants.CKA_VENDOR_CURRENT_SECURE_MESSAGING_MODE, Pkcs11LongAttribute.class
+            Pkcs11AttributeType.CKA_VENDOR_DEFINED.getAsLong() | 0x3001, Pkcs11LongAttribute.class
     ),
     CKA_VENDOR_SUPPORTED_SECURE_MESSAGING_MODES(
-            RtPkcs11Constants.CKA_VENDOR_SUPPORTED_SECURE_MESSAGING_MODES, RtPkcs11LongArrayAttribute.class
+            Pkcs11AttributeType.CKA_VENDOR_DEFINED.getAsLong() | 0x3002, RtPkcs11LongArrayAttribute.class
     ),
 
-    CKA_VENDOR_CURRENT_TOKEN_INTERFACE(RtPkcs11Constants.CKA_VENDOR_CURRENT_TOKEN_INTERFACE, Pkcs11LongAttribute.class),
+    CKA_VENDOR_CURRENT_TOKEN_INTERFACE(
+            Pkcs11AttributeType.CKA_VENDOR_DEFINED.getAsLong() | 0x3003, Pkcs11LongAttribute.class
+    ),
     CKA_VENDOR_SUPPORTED_TOKEN_INTERFACE(
-            RtPkcs11Constants.CKA_VENDOR_SUPPORTED_TOKEN_INTERFACE, Pkcs11LongAttribute.class
+            Pkcs11AttributeType.CKA_VENDOR_DEFINED.getAsLong() | 0x3004, Pkcs11LongAttribute.class
     ),
 
     CKA_VENDOR_EXTERNAL_AUTHENTICATION(
-            RtPkcs11Constants.CKA_VENDOR_EXTERNAL_AUTHENTICATION, Pkcs11BooleanAttribute.class
+            Pkcs11AttributeType.CKA_VENDOR_DEFINED.getAsLong() | 0x3005, Pkcs11BooleanAttribute.class
     ),
     CKA_VENDOR_BIOMETRIC_AUTHENTICATION(
-            RtPkcs11Constants.CKA_VENDOR_BIOMETRIC_AUTHENTICATION, Pkcs11LongAttribute.class
+            Pkcs11AttributeType.CKA_VENDOR_DEFINED.getAsLong() | 0x3006, Pkcs11LongAttribute.class
     ),
 
-    CKA_VENDOR_SUPPORT_CUSTOM_PIN(RtPkcs11Constants.CKA_VENDOR_SUPPORT_CUSTOM_PIN, Pkcs11BooleanAttribute.class),
-    CKA_VENDOR_CUSTOM_ADMIN_PIN(RtPkcs11Constants.CKA_VENDOR_CUSTOM_ADMIN_PIN, Pkcs11BooleanAttribute.class),
-    CKA_VENDOR_CUSTOM_USER_PIN(RtPkcs11Constants.CKA_VENDOR_CUSTOM_USER_PIN, Pkcs11BooleanAttribute.class),
+    CKA_VENDOR_SUPPORT_CUSTOM_PIN(
+            Pkcs11AttributeType.CKA_VENDOR_DEFINED.getAsLong() | 0x3007, Pkcs11BooleanAttribute.class
+    ),
+    CKA_VENDOR_CUSTOM_ADMIN_PIN(
+            Pkcs11AttributeType.CKA_VENDOR_DEFINED.getAsLong() | 0x3008, Pkcs11BooleanAttribute.class
+    ),
+    CKA_VENDOR_CUSTOM_USER_PIN(
+            Pkcs11AttributeType.CKA_VENDOR_DEFINED.getAsLong() | 0x3009, Pkcs11BooleanAttribute.class
+    ),
 
     CKA_VENDOR_SUPPORT_INTERNAL_TRUSTED_CERTS(
-            RtPkcs11Constants.CKA_VENDOR_SUPPORT_INTERNAL_TRUSTED_CERTS, Pkcs11BooleanAttribute.class
+            Pkcs11AttributeType.CKA_VENDOR_DEFINED.getAsLong() | 0x300A, Pkcs11BooleanAttribute.class
     ),
-    CKA_VENDOR_SUPPORT_FKC2(RtPkcs11Constants.CKA_VENDOR_SUPPORT_FKC2, Pkcs11BooleanAttribute.class),
+    CKA_VENDOR_SUPPORT_FKC2(
+            Pkcs11AttributeType.CKA_VENDOR_DEFINED.getAsLong() | 0x300B, Pkcs11BooleanAttribute.class
+    ),
     CKA_VENDOR_SUPPORT_HW_RESULT_FOR_GOST28147_KEY_UNWRAP(
-            RtPkcs11Constants.CKA_VENDOR_SUPPORT_HW_RESULT_FOR_GOST28147_KEY_UNWRAP, Pkcs11BooleanAttribute.class
+            Pkcs11AttributeType.CKA_VENDOR_DEFINED.getAsLong() | 0x300C, Pkcs11BooleanAttribute.class
     ),
-    CKA_VENDOR_SUPPORT_HW_KDF_TREE(RtPkcs11Constants.CKA_VENDOR_SUPPORT_HW_KDF_TREE, Pkcs11BooleanAttribute.class),
-    CKA_VENDOR_SUPPORT_KIMP15(RtPkcs11Constants.CKA_VENDOR_SUPPORT_KIMP15, Pkcs11BooleanAttribute.class),
+    CKA_VENDOR_SUPPORT_HW_KDF_TREE(
+            Pkcs11AttributeType.CKA_VENDOR_DEFINED.getAsLong() | 0x300D, Pkcs11BooleanAttribute.class
+    ),
+    CKA_VENDOR_SUPPORT_KIMP15(
+            Pkcs11AttributeType.CKA_VENDOR_DEFINED.getAsLong() | 0x300E, Pkcs11BooleanAttribute.class
+    ),
 
-    CKA_VENDOR_CHECKSUM(RtPkcs11Constants.CKA_VENDOR_CHECKSUM, Pkcs11ByteArrayAttribute.class),
-    CKA_VENDOR_HMAC_VALUE(RtPkcs11Constants.CKA_VENDOR_HMAC_VALUE, Pkcs11ByteArrayAttribute.class),
-    CKA_VENDOR_INTERNAL_TRUSTED_CERT(RtPkcs11Constants.CKA_VENDOR_INTERNAL_TRUSTED_CERT, Pkcs11BooleanAttribute.class),
-    CKA_VENDOR_IV(RtPkcs11Constants.CKA_VENDOR_IV, Pkcs11ByteArrayAttribute.class),
+    /* KTI attributes */
+    /**
+     * Array of bytes containing the checksum of the object.
+     */
+    CKA_VENDOR_CHECKSUM(
+            Pkcs11AttributeType.CKA_VENDOR_DEFINED.getAsLong() | 0x3100, Pkcs11ByteArrayAttribute.class
+    ),
+    /**
+     * Byte array containing the HMAC from the transmitted data.
+     */
+    CKA_VENDOR_HMAC_VALUE(
+            Pkcs11AttributeType.CKA_VENDOR_DEFINED.getAsLong() | 0x3101, Pkcs11ByteArrayAttribute.class
+    ),
+    /**
+     * Certificate attribute - a trusted certificate enrolled using an issuer key.
+     */
+    CKA_VENDOR_INTERNAL_TRUSTED_CERT(
+            Pkcs11AttributeType.CKA_VENDOR_DEFINED.getAsLong() | 0x3102, Pkcs11BooleanAttribute.class
+    ),
+    /**
+     * Attribute of the initialization vector used when entering data using the issuer key.
+     */
+    CKA_VENDOR_IV(
+            Pkcs11AttributeType.CKA_VENDOR_DEFINED.getAsLong() | 0x3103, Pkcs11ByteArrayAttribute.class
+    ),
 
-    CKA_VENDOR_PIN_POLICY_STATE(RtPkcs11Constants.CKA_VENDOR_PIN_POLICY_STATE, Pkcs11LongAttribute.class),
+    /**
+     * PIN state.
+     */
+    CKA_VENDOR_PIN_POLICY_STATE(
+            Pkcs11AttributeType.CKA_VENDOR_DEFINED.getAsLong() | 0x3200, Pkcs11LongAttribute.class
+    ),
+    /**
+     * Pin policies will be removed during format.
+     */
     CKA_VENDOR_PIN_POLICIES_DELETABLE(
-            RtPkcs11Constants.CKA_VENDOR_PIN_POLICIES_DELETABLE, Pkcs11BooleanAttribute.class
+            Pkcs11AttributeType.CKA_VENDOR_DEFINED.getAsLong() | 0x3201, Pkcs11BooleanAttribute.class
     ),
+    /**
+     * Get array of CK_ATTRIBUTE_TYPE of supported policies.
+     */
     CKA_VENDOR_SUPPORTED_PIN_POLICIES(
-            RtPkcs11Constants.CKA_VENDOR_SUPPORTED_PIN_POLICIES, RtPkcs11LongArrayAttribute.class
+            Pkcs11AttributeType.CKA_VENDOR_DEFINED.getAsLong() | Pkcs11Flag.CKF_ARRAY_ATTRIBUTE.getAsLong() | 0x3202,
+            RtPkcs11LongArrayAttribute.class
     ),
+    /**
+     * Minimal PIN length.
+     */
     CKA_VENDOR_PIN_POLICY_MIN_LENGTH(
-            RtPkcs11Constants.CKA_VENDOR_PIN_POLICY_MIN_LENGTH, RtPkcs11ByteAttribute.class
+            Pkcs11AttributeType.CKA_VENDOR_DEFINED.getAsLong() | 0x3203, RtPkcs11ByteAttribute.class
     ),
+    /**
+     * Number of previous PINs remembered. New PINs cannot be set to those values.
+     */
     CKA_VENDOR_PIN_POLICY_HISTORY_DEPTH(
-            RtPkcs11Constants.CKA_VENDOR_PIN_POLICY_HISTORY_DEPTH, RtPkcs11ByteAttribute.class
+            Pkcs11AttributeType.CKA_VENDOR_DEFINED.getAsLong() | 0x3204, RtPkcs11ByteAttribute.class
     ),
+    /**
+     * Permits operations with default PIN.
+     */
     CKA_VENDOR_PIN_POLICY_ALLOW_DEFAULT_PIN_USAGE(
-            RtPkcs11Constants.CKA_VENDOR_PIN_POLICY_ALLOW_DEFAULT_PIN_USAGE, Pkcs11BooleanAttribute.class
+            Pkcs11AttributeType.CKA_VENDOR_DEFINED.getAsLong() | 0x3205, Pkcs11BooleanAttribute.class
     ),
+    /**
+     * PIN contains at least one digit.
+     */
     CKA_VENDOR_PIN_POLICY_DIGIT_REQUIRED(
-            RtPkcs11Constants.CKA_VENDOR_PIN_POLICY_DIGIT_REQUIRED, Pkcs11BooleanAttribute.class
+            Pkcs11AttributeType.CKA_VENDOR_DEFINED.getAsLong() | 0x3206, Pkcs11BooleanAttribute.class
     ),
+    /**
+     * PIN contains at least one upper case letter.
+     */
     CKA_VENDOR_PIN_POLICY_UPPERCASE_REQUIRED(
-            RtPkcs11Constants.CKA_VENDOR_PIN_POLICY_UPPERCASE_REQUIRED, Pkcs11BooleanAttribute.class
+            Pkcs11AttributeType.CKA_VENDOR_DEFINED.getAsLong() | 0x3207, Pkcs11BooleanAttribute.class
     ),
+    /**
+     * PIN contains at least one lower case letter.
+     */
     CKA_VENDOR_PIN_POLICY_LOWERCASE_REQUIRED(
-            RtPkcs11Constants.CKA_VENDOR_PIN_POLICY_LOWERCASE_REQUIRED, Pkcs11BooleanAttribute.class
+            Pkcs11AttributeType.CKA_VENDOR_DEFINED.getAsLong() | 0x3208, Pkcs11BooleanAttribute.class
     ),
+    /**
+     * PIN contains at least one special character.
+     */
     CKA_VENDOR_PIN_POLICY_SPEC_CHAR_REQUIRED(
-            RtPkcs11Constants.CKA_VENDOR_PIN_POLICY_SPEC_CHAR_REQUIRED, Pkcs11BooleanAttribute.class
+            Pkcs11AttributeType.CKA_VENDOR_DEFINED.getAsLong() | 0x3209, Pkcs11BooleanAttribute.class
     ),
+    /**
+     * PIN doesn't consist of one repeated character.
+     */
     CKA_VENDOR_PIN_POLICY_DIFF_CHARS_REQUIRED(
-            RtPkcs11Constants.CKA_VENDOR_PIN_POLICY_DIFF_CHARS_REQUIRED, Pkcs11BooleanAttribute.class
+            Pkcs11AttributeType.CKA_VENDOR_DEFINED.getAsLong() | 0x320a, Pkcs11BooleanAttribute.class
     ),
-    CKA_VENDOR_USER_TYPE(RtPkcs11Constants.CKA_VENDOR_USER_TYPE, Pkcs11LongAttribute.class);
+    CKA_VENDOR_USER_TYPE(
+            Pkcs11AttributeType.CKA_VENDOR_DEFINED.getAsLong() | 0x320b, Pkcs11LongAttribute.class
+    );
 
     public static final Pkcs11AttributeType CKA_GOSTR3410_256PARAMS = CKA_GOSTR3410_PARAMS;
 
