@@ -15,6 +15,7 @@ import java.util.Objects;
 import ru.rutoken.pkcs11wrapper.attribute.Pkcs11Attribute;
 import ru.rutoken.pkcs11wrapper.attribute.Pkcs11BooleanAttribute;
 import ru.rutoken.pkcs11wrapper.attribute.Pkcs11ByteArrayAttribute;
+import ru.rutoken.pkcs11wrapper.attribute.Pkcs11StringAttribute;
 import ru.rutoken.pkcs11wrapper.attribute.longvalue.Pkcs11LongAttribute;
 import ru.rutoken.pkcs11wrapper.constant.IPkcs11AttributeType;
 import ru.rutoken.pkcs11wrapper.constant.standard.EnumFromValueHelper;
@@ -73,6 +74,13 @@ public enum RtPkcs11AttributeType implements IPkcs11AttributeType {
     ),
     CKA_VENDOR_SUPPORT_KIMP15(
             Pkcs11AttributeType.CKA_VENDOR_DEFINED.getAsLong() | 0x300E, Pkcs11BooleanAttribute.class
+    ),
+
+    /**
+     * An UTF-8 string, that contains symbolic token model name
+     */
+    CKA_VENDOR_MODEL_NAME(
+            Pkcs11AttributeType.CKA_VENDOR_DEFINED.getAsLong() | 0x3010, Pkcs11StringAttribute.class
     ),
 
     /* KTI attributes */
