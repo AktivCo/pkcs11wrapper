@@ -32,15 +32,7 @@ import ru.rutoken.pkcs11wrapper.object.hardwarefeature.Pkcs11ClockObject;
 import ru.rutoken.pkcs11wrapper.object.hardwarefeature.Pkcs11HardwareFeatureObject;
 import ru.rutoken.pkcs11wrapper.object.hardwarefeature.Pkcs11MonotonicCounterObject;
 import ru.rutoken.pkcs11wrapper.object.hardwarefeature.Pkcs11UserInterfaceObject;
-import ru.rutoken.pkcs11wrapper.object.key.Pkcs11Gost256PrivateKeyObject;
-import ru.rutoken.pkcs11wrapper.object.key.Pkcs11Gost256PublicKeyObject;
-import ru.rutoken.pkcs11wrapper.object.key.Pkcs11Gost512PrivateKeyObject;
-import ru.rutoken.pkcs11wrapper.object.key.Pkcs11Gost512PublicKeyObject;
-import ru.rutoken.pkcs11wrapper.object.key.Pkcs11PrivateKeyObject;
-import ru.rutoken.pkcs11wrapper.object.key.Pkcs11PublicKeyObject;
-import ru.rutoken.pkcs11wrapper.object.key.Pkcs11RsaPrivateKeyObject;
-import ru.rutoken.pkcs11wrapper.object.key.Pkcs11RsaPublicKeyObject;
-import ru.rutoken.pkcs11wrapper.object.key.Pkcs11SecretKeyObject;
+import ru.rutoken.pkcs11wrapper.object.key.*;
 import ru.rutoken.pkcs11wrapper.object.mechanism.Pkcs11MechanismObject;
 import ru.rutoken.pkcs11wrapper.rutoken.constant.RtPkcs11KeyType;
 
@@ -138,6 +130,8 @@ public class Pkcs11ObjectFactory implements IPkcs11ObjectFactory {
 
         publicKey.addChild(Pkcs11KeyType.CKK_RSA.getAsLong(),
                 new ObjectFactoryNode<>(Pkcs11RsaPublicKeyObject.class, null));
+        publicKey.addChild(Pkcs11KeyType.CKK_EC.getAsLong(),
+                new ObjectFactoryNode<>(Pkcs11EcPublicKeyObject.class, null));
         publicKey.addChild(Pkcs11KeyType.CKK_GOSTR3410.getAsLong(),
                 new ObjectFactoryNode<>(Pkcs11Gost256PublicKeyObject.class, null));
         // FIXME: Do not use Rt types here as Pkcs11ObjectFactory should register standard Pkcs11 classes, not
@@ -147,6 +141,8 @@ public class Pkcs11ObjectFactory implements IPkcs11ObjectFactory {
 
         privateKey.addChild(Pkcs11KeyType.CKK_RSA.getAsLong(),
                 new ObjectFactoryNode<>(Pkcs11RsaPrivateKeyObject.class, null));
+        privateKey.addChild(Pkcs11KeyType.CKK_EC.getAsLong(),
+                new ObjectFactoryNode<>(Pkcs11EcPrivateKeyObject.class, null));
         privateKey.addChild(Pkcs11KeyType.CKK_GOSTR3410.getAsLong(),
                 new ObjectFactoryNode<>(Pkcs11Gost256PrivateKeyObject.class, null));
         privateKey.addChild(RtPkcs11KeyType.CKK_GOSTR3410_512.getAsLong(),

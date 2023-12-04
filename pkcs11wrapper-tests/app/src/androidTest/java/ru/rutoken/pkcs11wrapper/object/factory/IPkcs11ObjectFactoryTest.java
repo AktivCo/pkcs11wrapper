@@ -22,10 +22,13 @@ import ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11AttributeType;
 import ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11KeyType;
 import ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11ObjectClass;
 import ru.rutoken.pkcs11wrapper.object.Pkcs11Object;
+import ru.rutoken.pkcs11wrapper.object.key.Pkcs11EcPrivateKeyObject;
+import ru.rutoken.pkcs11wrapper.object.key.Pkcs11EcPublicKeyObject;
 import ru.rutoken.pkcs11wrapper.object.key.Pkcs11GostPrivateKeyObject;
 import ru.rutoken.pkcs11wrapper.object.key.Pkcs11GostPublicKeyObject;
 import ru.rutoken.pkcs11wrapper.object.key.Pkcs11KeyObject;
 import ru.rutoken.pkcs11wrapper.object.key.Pkcs11RsaPrivateKeyObject;
+import ru.rutoken.pkcs11wrapper.object.key.Pkcs11RsaPublicKeyObject;
 import ru.rutoken.pkcs11wrapper.rule.highlevel.ModuleRule;
 
 @RunWith(AndroidJUnit4.class)
@@ -40,8 +43,16 @@ public class IPkcs11ObjectFactoryTest {
 
     @Test
     public void makeObjectOfSpecifiedClass() {
+        final var rsaPublicKey = getFactory().makeObject(Pkcs11RsaPublicKeyObject.class, 0);
+        assertNotNull(rsaPublicKey);
         final var rsaPrivateKey = getFactory().makeObject(Pkcs11RsaPrivateKeyObject.class, 0);
         assertNotNull(rsaPrivateKey);
+
+        final var ecPublicKey = getFactory().makeObject(Pkcs11EcPublicKeyObject.class, 0);
+        assertNotNull(ecPublicKey);
+        final var ecPrivateKey = getFactory().makeObject(Pkcs11EcPrivateKeyObject.class, 0);
+        assertNotNull(ecPrivateKey);
+
         final var gostPublicKey = getFactory().makeObject(Pkcs11GostPublicKeyObject.class, 0);
         assertNotNull(gostPublicKey);
         final var gostPrivateKey = getFactory().makeObject(Pkcs11GostPrivateKeyObject.class, 0);

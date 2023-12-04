@@ -6,12 +6,8 @@
 
 package ru.rutoken.pkcs11wrapper.main
 
-import ru.rutoken.pkcs11wrapper.`object`.key.Pkcs11GostPrivateKeyObject
-import ru.rutoken.pkcs11wrapper.`object`.key.Pkcs11GostPublicKeyObject
-import ru.rutoken.pkcs11wrapper.`object`.key.Pkcs11RsaPrivateKeyObject
-import ru.rutoken.pkcs11wrapper.`object`.key.Pkcs11RsaPublicKeyObject
-import ru.rutoken.pkcs11wrapper.attribute.Pkcs11Attribute
 import ru.rutoken.pkcs11wrapper.attribute.IPkcs11AttributeFactory
+import ru.rutoken.pkcs11wrapper.attribute.Pkcs11Attribute
 import ru.rutoken.pkcs11wrapper.attribute.Pkcs11ByteArrayAttribute
 import ru.rutoken.pkcs11wrapper.constant.IPkcs11AttributeType
 import ru.rutoken.pkcs11wrapper.constant.IPkcs11KeyType
@@ -19,15 +15,15 @@ import ru.rutoken.pkcs11wrapper.constant.IPkcs11MechanismType
 import ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11AttributeType.*
 import ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11CertificateType.CKC_X_509
 import ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11KeyType.*
-import ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11MechanismType.CKM_GOSTR3410_KEY_PAIR_GEN
-import ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11MechanismType.CKM_RSA_PKCS_KEY_PAIR_GEN
+import ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11MechanismType.*
 import ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11ObjectClass.*
 import ru.rutoken.pkcs11wrapper.mechanism.Pkcs11Mechanism
+import ru.rutoken.pkcs11wrapper.`object`.key.*
 import ru.rutoken.pkcs11wrapper.rule.highlevel.GenerateKeyPairRule
 import ru.rutoken.pkcs11wrapper.rule.highlevel.SessionRule
 import ru.rutoken.pkcs11wrapper.rutoken.constant.RtPkcs11KeyType.*
 import ru.rutoken.pkcs11wrapper.rutoken.constant.RtPkcs11MechanismType.CKM_GOSTR3410_512_KEY_PAIR_GEN
-import java.util.*
+import java.util.Random
 
 val CRYPTO_PRO_A_GOST28147_89_OID = byteArrayOf(0x06, 0x07, 0x2A, 0x85.toByte(), 0x03, 0x02, 0x02, 0x1f, 0x01)
 val CRYPTO_PRO_A_GOSTR3410_2001_OID = byteArrayOf(0x06, 0x07, 0x2A, 0x85.toByte(), 0x03, 0x02, 0x02, 0x23, 0x01)
@@ -39,6 +35,9 @@ val CRYPTO_PRO_A_GOSTR3410_2012_512_OID =
 val GOSTR3411_1994_OID = byteArrayOf(0x06, 0x07, 0x2a, 0x85.toByte(), 0x03, 0x02, 0x02, 0x1e, 0x01)
 val GOSTR3411_2012_256_OID = byteArrayOf(0x06, 0x08, 0x2a, 0x85.toByte(), 0x03, 0x07, 0x01, 0x01, 0x02, 0x02)
 val GOSTR3411_2012_512_OID = byteArrayOf(0x06, 0x08, 0x2a, 0x85.toByte(), 0x03, 0x07, 0x01, 0x01, 0x02, 0x03)
+
+val EC_PARAMS_SECP256K1_OID = byteArrayOf(0x06, 0x05, 0x2B, 0x81.toByte(), 0x04, 0x00, 0x0A)
+val EC_PARAMS_SECP384R1_OID = byteArrayOf(0x06, 0x05, 0x2B, 0x81.toByte(), 0x04, 0x00, 0x22)
 
 @JvmField
 val DATA = byteArrayOf(0x01, 0x02, 0x03)
@@ -61,6 +60,8 @@ const val TEST_2012_512_PUBLIC_KEY_LABEL = "test 2012 512 public key"
 const val TEST_2012_512_PRIVATE_KEY_LABEL = "test 2012 512 private key"
 const val TEST_RSA_PUBLIC_KEY_LABEL = "test RSA public key"
 const val TEST_RSA_PRIVATE_KEY_LABEL = "test RSA private key"
+const val TEST_ECDSA_PUBLIC_KEY_LABEL = "test ECDSA public key"
+const val TEST_ECDSA_PRIVATE_KEY_LABEL = "test ECDSA private key"
 
 val DN = listOf(
     "CN",
@@ -143,6 +144,25 @@ fun IPkcs11AttributeFactory.makeRsaPrivateKeyTemplate(label: String) = listOf(
     makePkcs11Attribute(CKA_PRIVATE, true),
     makePkcs11Attribute(CKA_DECRYPT, true),
     makePkcs11Attribute(CKA_TOKEN, true)
+)
+
+fun IPkcs11AttributeFactory.makeEcdsaPublicKeyTemplate(ecParams: ByteArray, label: String) = listOf(
+    makePkcs11Attribute(CKA_CLASS, CKO_PUBLIC_KEY),
+    makePkcs11Attribute(CKA_KEY_TYPE, CKK_EC),
+    makePkcs11Attribute(CKA_LABEL, label),
+    makePkcs11Attribute(CKA_PRIVATE, false),
+    makePkcs11Attribute(CKA_TOKEN, true),
+    makePkcs11Attribute(CKA_EC_PARAMS, ecParams),
+    makePkcs11Attribute(CKA_VERIFY, true)
+)
+
+fun IPkcs11AttributeFactory.makeEcdsaPrivateKeyTemplate(label: String) = listOf(
+    makePkcs11Attribute(CKA_CLASS, CKO_PRIVATE_KEY),
+    makePkcs11Attribute(CKA_KEY_TYPE, CKK_EC),
+    makePkcs11Attribute(CKA_LABEL, label),
+    makePkcs11Attribute(CKA_PRIVATE, true),
+    makePkcs11Attribute(CKA_TOKEN, true),
+    makePkcs11Attribute(CKA_SIGN, true)
 )
 
 fun IPkcs11AttributeFactory.makeSessionGostSecretKeyTemplate() = listOf(
@@ -248,6 +268,22 @@ fun IPkcs11AttributeFactory.makeRsaKeyPairRule(
     Pkcs11Mechanism.make(CKM_RSA_PKCS_KEY_PAIR_GEN),
     makeRsaPublicKeyTemplate(modulusBits, publicKeyLabel),
     makeRsaPrivateKeyTemplate(privateKeyLabel)
+)
+
+fun IPkcs11AttributeFactory.makeEcdsaKeyPairRule(
+    sessionRule: SessionRule,
+    ecParams: ByteArray,
+    publicKeyLabel: String = TEST_ECDSA_PUBLIC_KEY_LABEL,
+    privateKeyLabel: String = TEST_ECDSA_PRIVATE_KEY_LABEL,
+    beforeGenerationCheck: ((Pkcs11Session) -> Boolean)? = null
+) = GenerateKeyPairRule(
+    Pkcs11EcPublicKeyObject::class.java,
+    Pkcs11EcPrivateKeyObject::class.java,
+    sessionRule,
+    Pkcs11Mechanism.make(CKM_EC_KEY_PAIR_GEN),
+    makeEcdsaPublicKeyTemplate(ecParams, publicKeyLabel),
+    makeEcdsaPrivateKeyTemplate(privateKeyLabel),
+    beforeGenerationCheck
 )
 
 fun IPkcs11AttributeFactory.makeCertificateTemplate(id: ByteArray, value: ByteArray) = listOf(
