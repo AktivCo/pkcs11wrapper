@@ -8,7 +8,7 @@ package ru.rutoken.pkcs11wrapper.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -31,25 +31,20 @@ public class Pkcs11Utility {
         throw new RuntimeException("time parse error");
     }
 
-    public static Date parseDate(byte[] year, byte[] month, byte[] day) {
+    public static LocalDate parseDate(byte[] year, byte[] month, byte[] day) {
         try {
-            // TODO use LocalDate when go to api 26
-            final Calendar calendar = Calendar.getInstance();
-            calendar.set(Integer.parseInt(parseDateCharacters(year)),
+            return LocalDate.of(Integer.parseInt(parseDateCharacters(year)),
                     Short.parseShort(parseDateCharacters(month)),
                     Short.parseShort(parseDateCharacters(day)));
-            return calendar.getTime();
         } catch (Exception e) {
             throw new RuntimeException("data parse error", e);
         }
     }
 
-    public static void assignCkDate(CkDate ckDate, Date date) {
-        final Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        ckDate.setYear(String.format(Locale.US, "%tY", calendar).getBytes());
-        ckDate.setMonth(String.format(Locale.US, "%tm", calendar).getBytes());
-        ckDate.setDay(String.format(Locale.US, "%td", calendar).getBytes());
+    public static void assignCkDate(CkDate ckDate, LocalDate date) {
+        ckDate.setYear(String.format(Locale.US, "%04d", date.getYear()).getBytes());
+        ckDate.setMonth(String.format(Locale.US, "%02d", date.getMonthValue()).getBytes());
+        ckDate.setDay(String.format(Locale.US, "%02d", date.getDayOfMonth()).getBytes());
     }
 
     private static String parseDateCharacters(byte[] characters) {

@@ -12,8 +12,6 @@ import org.junit.Test;
 import org.junit.rules.RuleChain;
 import org.junit.rules.TestRule;
 
-import java.util.Calendar;
-
 import ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11AttributeType;
 import ru.rutoken.pkcs11wrapper.datatype.Pkcs11Date;
 import ru.rutoken.pkcs11wrapper.object.Pkcs11Object;
@@ -95,13 +93,11 @@ public class ListObjectsTest {
     }
 
     private void checkDate(Pkcs11Date date) {
-        final var calendar = Calendar.getInstance();
-        calendar.setTime(date.getDate());
-        assertThat("year is out of range", calendar.get(Calendar.YEAR),
+        assertThat("year is out of range", date.getDate().getYear(),
                 allOf(greaterThanOrEqualTo(1900), lessThanOrEqualTo(9999)));
-        assertThat("month is out of range", calendar.get(Calendar.MONTH),
+        assertThat("month is out of range", date.getDate().getMonthValue(),
                 allOf(greaterThanOrEqualTo(1), lessThanOrEqualTo(12)));
-        assertThat("day is out of range", calendar.get(Calendar.DAY_OF_MONTH),
+        assertThat("day is out of range", date.getDate().getDayOfMonth(),
                 allOf(greaterThanOrEqualTo(1), lessThanOrEqualTo(31)));
     }
 }

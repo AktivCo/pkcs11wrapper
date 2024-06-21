@@ -11,9 +11,9 @@ import org.jetbrains.annotations.Nullable;
 import java.io.ByteArrayInputStream;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -155,10 +155,8 @@ public class Pkcs11FakeLowLevelApi implements IPkcs11LowLevelApi {
     }
 
     private CkDate makeDate(int year, int month, int day) {
-        final Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month, day);
         final CkDate date = new FakeCkDateImpl();
-        Pkcs11Utility.assignCkDate(date, calendar.getTime());
+        Pkcs11Utility.assignCkDate(date, LocalDate.of(year, month, day));
         return date;
     }
 
