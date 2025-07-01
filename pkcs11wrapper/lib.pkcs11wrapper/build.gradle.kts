@@ -70,7 +70,7 @@ publishing {
             name = "Maven"
             url = if (isProduction) {
                 // Maven Central
-                uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+                uri("https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/")
             } else {
                 // Internal Aktiv repository
                 uri("https://nexus.aktivco.ru/repository/maven-snapshots/")
