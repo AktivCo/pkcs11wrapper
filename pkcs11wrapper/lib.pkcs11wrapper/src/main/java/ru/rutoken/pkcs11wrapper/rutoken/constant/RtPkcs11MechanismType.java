@@ -12,6 +12,7 @@ import static ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11MechanismType.CKM
 import static ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11MechanismType.CKM_GOSTR3410_WITH_GOSTR3411;
 import static ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11MechanismType.CKM_GOSTR3411;
 import static ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11MechanismType.CKM_GOSTR3411_HMAC;
+import static ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11MechanismType.CKM_VENDOR_DEFINED;
 import static ru.rutoken.pkcs11wrapper.rutoken.constant.internal.RtPkcs11InternalConstants.CK_VENDOR_PKCS11_RU_TEAM_TC26;
 
 import org.jetbrains.annotations.Nullable;
@@ -61,7 +62,28 @@ public enum RtPkcs11MechanismType implements IPkcs11MechanismType {
 
     CKM_VENDOR_SECURE_IMPORT(Pkcs11MechanismType.CKM_VENDOR_DEFINED.getAsLong() + 3),
     CKM_VKO_GOSTR3410_2012_512(CK_VENDOR_PKCS11_RU_TEAM_TC26 | 0x038L),
-    CKM_GOST_KEG(CK_VENDOR_PKCS11_RU_TEAM_TC26 | 0x039L);
+    CKM_GOST_KEG(CK_VENDOR_PKCS11_RU_TEAM_TC26 | 0x039L),
+
+    /**
+     * BIP32 key pair generation mechanism
+     */
+    CKM_VENDOR_BIP32_KEY_PAIR_GEN(CKM_VENDOR_DEFINED.getAsLong() + 6L),
+    /**
+     * A mechanism for creating a private key through diversification
+     */
+    CKM_VENDOR_BIP32_DERIVE_PRIVATE_FROM_PRIVATE(CKM_VENDOR_DEFINED.getAsLong() + 7L),
+    /**
+     * A mechanism for creating a public key through diversification
+     */
+    CKM_VENDOR_BIP32_DERIVE_PUBLIC_FROM_PRIVATE(CKM_VENDOR_DEFINED.getAsLong() + 8L),
+    /**
+     * BIP32 key pair generation mechanism with BIP39 mnemonic code generation
+     */
+    CKM_VENDOR_BIP32_WITH_BIP39_KEY_PAIR_GEN(CKM_VENDOR_DEFINED.getAsLong() + 9L),
+
+    // backported defines from pkcs3.0 header required for eddsa support
+    CKM_EC_EDWARDS_KEY_PAIR_GEN(0x00001055L),
+    CKM_EDDSA(0x00001057L);
 
     public static final Pkcs11MechanismType CKM_GOSTR3410_256_KEY_PAIR_GEN = CKM_GOSTR3410_KEY_PAIR_GEN;
     public static final Pkcs11MechanismType CKM_GOSTR3410_256 = CKM_GOSTR3410;

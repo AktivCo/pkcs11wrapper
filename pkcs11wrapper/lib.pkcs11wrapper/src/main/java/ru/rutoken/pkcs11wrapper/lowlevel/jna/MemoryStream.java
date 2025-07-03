@@ -43,6 +43,12 @@ public class MemoryStream {
         return memory;
     }
 
+    private static Memory wrap(long[] data) {
+        final Memory memory = new Memory((long) data.length * NativeLong.SIZE);
+        memory.write(0, data, 0, data.length);
+        return memory;
+    }
+
     /**
      * Set byte order, default: nativeOrder().
      * As {@link Memory} mirrors a buffer in a native heap, which is expected to store
@@ -93,6 +99,14 @@ public class MemoryStream {
     }
 
     public MemoryStream writeAsPointerWithLength(byte @Nullable [] data) {
+        if (data == null) {
+            return writePointer(Pointer.NULL).writeNativeLong(0);
+        } else {
+            return writePointer(wrap(data)).writeNativeLong(data.length);
+        }
+    }
+
+    public MemoryStream writeAsPointerWithLength(long @Nullable [] data) {
         if (data == null) {
             return writePointer(Pointer.NULL).writeNativeLong(0);
         } else {

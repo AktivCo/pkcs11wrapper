@@ -28,6 +28,8 @@ import ru.rutoken.pkcs11wrapper.mechanism.parameter.CkGostR3410DeriveParams;
 import ru.rutoken.pkcs11wrapper.mechanism.parameter.CkGostR3410KeyWrapParams;
 import ru.rutoken.pkcs11wrapper.mechanism.parameter.CkKdfTreeGostParams;
 import ru.rutoken.pkcs11wrapper.mechanism.parameter.CkRsaPkcsPssParams;
+import ru.rutoken.pkcs11wrapper.mechanism.parameter.CkVendorBip32DeriveParams;
+import ru.rutoken.pkcs11wrapper.mechanism.parameter.CkVendorBip32WithBip39KeyPairGenParams;
 import ru.rutoken.pkcs11wrapper.mechanism.parameter.CkVendorGostKegParams;
 import ru.rutoken.pkcs11wrapper.mechanism.parameter.CkVendorVkoGostR3410_2012_512Params;
 import ru.rutoken.pkcs11wrapper.mechanism.parameter.Pkcs11ByteArrayMechanismParams;
@@ -160,6 +162,20 @@ public class Pkcs11JnaMechanismParamsLowLevelConverterVisitor
                 .writeNativeLong(parameter.getHashAlgorithm())
                 .writeNativeLong(parameter.getMgf())
                 .writeNativeLong(parameter.getSaltLength());
+    }
+
+    @Override
+    public void visit(CkVendorBip32DeriveParams parameter) {
+        mBuffer = new MemoryStream.MemoryBuffer(Native.POINTER_SIZE + NativeLong.SIZE);
+        new MemoryStream(mBuffer).writeAsPointerWithLength(parameter.getDerivationPath());
+    }
+
+    @Override
+    public void visit(CkVendorBip32WithBip39KeyPairGenParams parameter) {
+        mBuffer = new MemoryStream.MemoryBuffer(Native.POINTER_SIZE + 2 * NativeLong.SIZE);
+        new MemoryStream(mBuffer)
+                .writeAsPointerWithLength(parameter.getPassphrase())
+                .writeNativeLong(parameter.getMnemonicLength());
     }
 
     @NotNull

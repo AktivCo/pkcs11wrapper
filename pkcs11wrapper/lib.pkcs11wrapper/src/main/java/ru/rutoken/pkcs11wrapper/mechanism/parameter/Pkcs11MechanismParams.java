@@ -43,6 +43,10 @@ public interface Pkcs11MechanismParams {
         void visit(CkEcdh1DeriveParams parameter);
 
         void visit(CkRsaPkcsPssParams ckRsaPkcsPssParams);
+
+        void visit(CkVendorBip32DeriveParams parameter);
+
+        void visit(CkVendorBip32WithBip39KeyPairGenParams parameter);
     }
 
     interface LowLevelConverterVisitor extends Visitor {

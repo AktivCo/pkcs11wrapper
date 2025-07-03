@@ -23,6 +23,7 @@ import ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11AttributeType;
 import ru.rutoken.pkcs11wrapper.constant.standard.Pkcs11Flag;
 import ru.rutoken.pkcs11wrapper.rutoken.attribute.RtPkcs11ByteAttribute;
 import ru.rutoken.pkcs11wrapper.rutoken.attribute.RtPkcs11LongArrayAttribute;
+import ru.rutoken.pkcs11wrapper.rutoken.constant.internal.RtPkcs11InternalConstants;
 
 public enum RtPkcs11AttributeType implements IPkcs11AttributeType {
     /* Attributes for CKH_VENDOR_TOKEN_INFO hardware feature */
@@ -178,7 +179,32 @@ public enum RtPkcs11AttributeType implements IPkcs11AttributeType {
     ),
     CKA_VENDOR_USER_TYPE(
             Pkcs11AttributeType.CKA_VENDOR_DEFINED.getAsLong() | 0x320b, Pkcs11LongAttribute.class
-    );
+    ),
+
+    /**
+     * Chaincode value
+     */
+    CKA_VENDOR_BIP32_CHAINCODE(RtPkcs11InternalConstants.BIP32, Pkcs11ByteArrayAttribute.class),
+    /**
+     * HASH160 from public key
+     */
+    CKA_VENDOR_BIP32_ID(RtPkcs11InternalConstants.BIP32 | 0x01, Pkcs11ByteArrayAttribute.class),
+    /**
+     * First 32 bits of CKA_VENDOR_BIP32_ID
+     */
+    KA_VENDOR_BIP32_FINGERPRINT(RtPkcs11InternalConstants.BIP32 | 0x02, Pkcs11ByteArrayAttribute.class),
+    /**
+     * Master key was generated with BIP39 mnemonic code generation
+     */
+    CKA_VENDOR_BIP39_MNEMONIC_TRACE(RtPkcs11InternalConstants.BIP32 | 0x03, Pkcs11BooleanAttribute.class),
+    /**
+     * Mnemonic sentence which was used for key generation
+     */
+    CKA_VENDOR_BIP39_MNEMONIC(RtPkcs11InternalConstants.BIP32 | 0x04, Pkcs11StringAttribute.class),
+    /**
+     * Can mnemonic sentence be extracted
+     */
+    CKA_VENDOR_BIP39_MNEMONIC_IS_EXTRACTABLE(RtPkcs11InternalConstants.BIP32 | 0x05, Pkcs11BooleanAttribute.class);
 
     public static final Pkcs11AttributeType CKA_GOSTR3410_256PARAMS = CKA_GOSTR3410_PARAMS;
 
