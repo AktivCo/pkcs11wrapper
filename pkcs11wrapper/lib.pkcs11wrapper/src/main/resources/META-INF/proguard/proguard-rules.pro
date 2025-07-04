@@ -1,0 +1,1 @@
+-keep class ru.rutoken.pkcs11wrapper.** { *; }
